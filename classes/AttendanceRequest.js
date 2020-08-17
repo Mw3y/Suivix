@@ -115,19 +115,19 @@ class Request {
         let categoriesString = this.parseListIntoString(categoriesList, TextTranslation.connector);
         let categories = categoriesString.length > 55 ? TextTranslation.errors.tooMuchCategories : categoriesString;
 
-        let absentsTextTranslation = "";
-        let presentsTextTranslation = "";
+        let absentsText = "";
+        let presentsText = "";
         let absents;
         let presents;
 
         //Creating the list string of absents users
         let data = this.dataToString(TextTranslation.infos.noAbsent, TextTranslation.infos.absentsList, students, channelStudents);
-        absentsTextTranslation = data.get("TextTranslation");
+        absentsText = data.get("TextTranslation");
         absents = data.get("diff");
 
         //Creating the list string of presents users
         data = this.dataToString("", TextTranslation.infos.presentsList, students, absents);
-        presentsTextTranslation = data.get("TextTranslation");
+        presentsText = data.get("TextTranslation");
         presents = data.get("diff");
 
         //Parsing TextTranslation
@@ -147,11 +147,11 @@ class Request {
         });
 
         //Check if the message is too long to be send on Discord
-        if ((intro + absentsTextTranslation + presentsTextTranslation + presentSentence + absentSentence).length >= 2048) {
+        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
             if (channelStudents.length !== students.length) {
-                absentsTextTranslation = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
+                absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
             } else if (presentUsers.length > 0) {
-                presentsTextTranslation = TextTranslation.infos.presentsList + TextTranslation.errors.tooMuchPresents; //Minimize TextTranslation
+                presentsText = TextTranslation.infos.presentsList + TextTranslation.errors.tooMuchPresents; //Minimize TextTranslation
             }
         }
 
@@ -161,7 +161,7 @@ class Request {
 
         //Send result to the user in dm
         const resultMessage = await this.author.send(new Discord.MessageEmbed().setTitle(TextTranslation.title + channelsString).setFooter(TextTranslation.credits) //send result
-                .setDescription(intro + presentSentence + absentSentence + absentsTextTranslation + presentsTextTranslation).setColor(color))
+                .setDescription(intro + presentSentence + absentSentence + absentsText + presentsText).setColor(color))
             .catch(function (err) {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
@@ -172,7 +172,7 @@ class Request {
             statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
         }
 
-        if (statement.error) console.log(
+        if (statement.success) console.log(
             "{username}#{discriminator}".formatUnicorn({
                 username: this.author.user.username,
                 discriminator: this.author.user.discriminator

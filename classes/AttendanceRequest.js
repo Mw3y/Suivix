@@ -122,12 +122,12 @@ class Request {
 
         //Creating the list string of absents users
         let data = this.dataToString(TextTranslation.infos.noAbsent, TextTranslation.infos.absentsList, students, channelStudents);
-        absentsText = data.get("TextTranslation");
+        absentsText = data.get("text");
         absents = data.get("diff");
 
         //Creating the list string of presents users
         data = this.dataToString("", TextTranslation.infos.presentsList, students, absents);
-        presentsText = data.get("TextTranslation");
+        presentsText = data.get("text");
         presents = data.get("diff");
 
         //Parsing TextTranslation
@@ -197,7 +197,7 @@ class Request {
      */
     dataToString(basicSentence, sentence, usersList, channelUsers) {
         const guild = this.guild;
-        let TextTranslation = basicSentence;
+        let text = basicSentence;
         let collection = usersList.filter(x => channelUsers.indexOf(x) === -1); //compare the two arrays
         let users = Array.from(collection.values()); //Convert into an array
         let usersName = new Array();
@@ -208,15 +208,15 @@ class Request {
         usersName.sort(); //Sort it A -> Z
 
         if (users.length > 0) { //If there is more than 1 user
-            TextTranslation = sentence; //Display the sentence when there is users
+            text = sentence; //Display the sentence when there is users
             for (let i in usersName) { //Create the list
                 let user = users.find(u => (u.displayName + "#" + u.user.discriminator) === usersName[i]);
                 let member = guild.member(user);
-                TextTranslation += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
+                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
             }
-            TextTranslation += "```";
+            text += "```";
         }
-        return new Map().set("TextTranslation", TextTranslation).set("diff", users);
+        return new Map().set("text", text).set("diff", users);
     }
 
     /**

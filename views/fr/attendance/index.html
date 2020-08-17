@@ -28,11 +28,6 @@
             document.getElementsByTagName('head')[0].appendChild(css);
         })();
     </script>
-    <script>
-        window.onerror = function () {
-            location.reload();
-        }
-    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
     <script>
@@ -67,8 +62,7 @@
             <span style="display: none;" class="centered" id="success-button">
                 <button class="popup-button blue centered margin-right-10"
                     onclick="redirect('SERVERS_SELECTION', undefined);">Sélectionner un Nouveau Serveur</button>
-                <button class="popup-button blue centered margin-left-10" id="newRequest">Refaire le Suivi avec ce
-                    Serveur</button>
+                <button class="popup-button blue centered margin-left-10" id="newRequest">Refaire le même Suivi</button>
             </span>
         </div>
     </div>
@@ -78,8 +72,10 @@
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar" id="avatar"
-                src=""></p>
+            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
+                id="avatar"></p>
+        <a href="javascript:void(0)" class="language margin">FR.</a>
+        <a href="?language=en" class="language margin-15">EN.</a>
     </div>
     <div class="container">
         <div class="attendance-card" id="card">

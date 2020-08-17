@@ -43,6 +43,7 @@ global.getGuildInvite = async (guild) => {
 }
 global.oauth = new(require("discord-oauth2"));
 global.Text = {
+    global: require('./app/text/global.json'),
     suivix: require('./app/text/suivix.json'),
 }
 

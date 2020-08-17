@@ -28,11 +28,6 @@
             document.getElementsByTagName('head')[0].appendChild(css);
         })();
     </script>
-    <script>
-        window.onerror = function () {
-            location.reload();
-        }
-    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
     <script>
@@ -65,10 +60,11 @@
                 style="display: none;">I Understand</button>
 
             <span style="display: none;" class="centered" id="success-button">
-                <button class="popup-button blue centered margin-right-10" onclick="redirect('SERVERS_SELECTION', undefined);">Go
+                <button class="popup-button blue centered margin-right-10"
+                    onclick="redirect('SERVERS_SELECTION', undefined);">Go
                     Back to Server Selection</button>
                 <button class="popup-button blue centered margin-left-10" id="newRequest">Take
-                    Attendance on this Server Again</button>
+                    Attendance Again</button>
             </span>
         </div>
     </div>
@@ -78,8 +74,10 @@
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar" id="avatar"
-                src=""></p>
+            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
+                id="avatar"></p>
+        <a href="?language=fr" class="language margin">FR.</a>
+        <a href="javascript:void(0)" class="language margin-15">EN.</a>
     </div>
     <div class="container">
         <div class="attendance-card" id="card">

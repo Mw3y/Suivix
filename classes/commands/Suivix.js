@@ -4,7 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 const Discord = require('discord.js'),
-    RequestManager = require('../managers/RequestManager');
+    UserManager = require('../managers/UserManager');
 
 /**
  * Launch the command
@@ -13,38 +13,18 @@ const Discord = require('discord.js'),
  * @param client - The bot client 
  */
 const suivixCommand = async function(message, args, client, sequelize) {
-    const guild = message.guild;
-    const channel = message.channel;
-    const author = message.author;
-
-    let [dbUser] = await sequelize.query(`SELECT * FROM users WHERE id = "${author.id}"`, {
-        raw: true
-    });
-    if (!dbUser[0])[dbUser] = await createUser(author, guild, sequelize);
-
-    const language = dbUser[0].language === "fr" ? "fr" : "en";
+    const user = await new UserManager().getUserById(message.author.id, "en");
+    const language = user.language === "fr" ? "fr" : "en";
     const TextTranslation = Text.suivix.translations[language];
 
-    let msg = (args.includes("help") || args.includes("aide")) ? await generateAttendanceHelpMessage(channel, author, TextTranslation) :
-        await generateAttendanceRequestMessage(channel, author, TextTranslation);
+    let msg = (args.includes("help") || args.includes("aide")) ? await generateAttendanceHelpMessage(message.channel, message.author, TextTranslation) :
+        await generateAttendanceRequestMessage(message.channel, message.author, TextTranslation);
 
     if (msg) {
         msg.react("🇫🇷");
         msg.react("🇬🇧");
     }
 };
-
-/**
- * Add a user in the database
- * @param {*} author - The command author
- */
-async function createUser(author, server, sequelize) {
-    console.log("A new user has been created in database : ".blue + '{username}#{discriminator}'.formatUnicorn({ username: author.username, discriminator: author.discriminator }).yellow + ".".blue + " (on server '{server}')".formatUnicorn({ server: server.name }) + separator);
-    await sequelize.query(`INSERT INTO users (id, language) VALUES (${author.id}, "fr")`);
-    return await sequelize.query(`SELECT * FROM users WHERE id = "${author.id}"`, {
-        raw: true
-    });
-}
 
 /**
  * Returns the message for the suivix command

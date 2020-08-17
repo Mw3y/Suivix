@@ -23,10 +23,10 @@ const suivixCommand = async function(message, args, client, sequelize) {
     if (!dbUser[0])[dbUser] = await createUser(author, guild, sequelize);
 
     const language = dbUser[0].language === "fr" ? "fr" : "en";
-    const Text = require('../../app/text/suivix.json').translations[language];
+    const TextTranslation = Text.suivix.translations[language];
 
-    let msg = (args.includes("help") || args.includes("aide")) ? await generateAttendanceHelpMessage(channel, author, Text) :
-        await generateAttendanceRequestMessage(channel, author, Text);
+    let msg = (args.includes("help") || args.includes("aide")) ? await generateAttendanceHelpMessage(channel, author, TextTranslation) :
+        await generateAttendanceRequestMessage(channel, author, TextTranslation);
 
     if (msg) {
         msg.react("🇫🇷");

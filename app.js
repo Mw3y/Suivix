@@ -36,14 +36,18 @@ global.sequelize = new Sequelize({ //Initialize Database
     logging: false,
 });
 global.SuivixClient = new BotClient(); //Launch the Discord bot instance
-global.client = SuivixClient.client; //The bot client
-global.getGuildInvite = async(guild) => {
+global.client = SuivixClient.login(); //The bot client
+global.getGuildInvite = async (guild) => {
     const invite = [...await guild.fetchInvites()][0]
     return invite ? invite.toString().split(',')[1] : "No";
 }
 global.oauth = new(require("discord-oauth2"));
+global.Text = {
+    suivix: require('./app/text/suivix.json'),
+}
 
-//App configuration
+/** ******************************************************** EXPRESS APP CONFIG **********************************************************/
+
 app.use(compression());
 app.use(
     express.static("public", {
@@ -52,7 +56,7 @@ app.use(
 );
 
 //Auto redirect to secure connection if HTTPS_ENABLED
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     if (!req.secure && Config.HTTPS_ENABLED) {
         // request was via http, so redirect to https
         res.redirect("https://" + req.headers.host + req.url);
@@ -66,7 +70,9 @@ app.use(cookieParser()); //Used for a better support of cookies
 app.use(locale(Language.supportedLanguages, Language.defaultLanguage)); //Used to find user language
 
 var SQLiteStore = require('connect-sqlite3')(session); //Storing session data
-const sessionStorage = new SQLiteStore({ dir: './database/' })
+const sessionStorage = new SQLiteStore({
+    dir: './database/'
+})
 
 app.use(session({
     store: sessionStorage,
@@ -74,25 +80,22 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     expires: new Date(Date.now() + (365 * 60 * 60 * 24)),
-    cookie: { secure: Config.HTTPS_ENABLED, maxAge: 365 * 60 * 60 * 24 }
+    cookie: {
+        secure: Config.HTTPS_ENABLED,
+        maxAge: 365 * 60 * 60 * 24
+    }
 }))
 
-const DiscordOauth = require('./classes/auth/DiscordOauth');
-const passport = DiscordOauth.init();
-
+const passport = require('./classes/auth/DiscordOauth').init();
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Bot Client events
+/** ******************************************************** DISCORD BOT EVENTS **********************************************************/
+
 //Trigger when the discord client has loaded
-client.on("ready", async() => {
+client.on("ready", async () => {
     //Connect all routes to the website
     app.use("/", RoutesList.getRoutes(passport));
-
-    //Post some bot stats on the Discord Bot List
-    setInterval(() => {
-        SuivixClient.postDBLStats();
-    }, 1800000);
 
     //Change suivix activity on Discord
     const activities = [
@@ -103,13 +106,9 @@ client.on("ready", async() => {
         "{requests} requêtes",
     ];
     let activityNumber = 0;
-    setInterval(async() => {
+    setInterval(async () => {
         if (activityNumber >= activities.length) activityNumber = 0; //Check if the number is too big
-        let [requestsQuery] = await sequelize.query(
-            `SELECT count(*) AS requests FROM history`, {
-                raw: true,
-            }
-        );
+        let [requestsQuery] = await sequelize.query(`SELECT SUM(attendance_requests + poll_requests) AS requests FROM stats`);
         const dblGuild = client.guilds.cache.get("264445053596991498");
         const activity = activities[activityNumber].formatUnicorn({
             servercount: client.guilds.cache.size,
@@ -142,32 +141,39 @@ client.on("message", (message) => {
 });
 
 //Trigger when a reaction is add on a message
-client.on("messageReactionAdd", async(reaction, user) => {
+client.on("messageReactionAdd", async (reaction, user) => {
     if (user.bot) return; //If the user is a bot
     if (reaction.message.author !== client.user) return; //if the message is not sent by the bot
     await Language.handleLanguageChange(reaction, user);
 });
 
 //Trigger when the bot joins a guild
-client.on("guildCreate", async(guild) => {
+client.on("guildCreate", async (guild) => {
     SuivixClient.displayConsoleChannel(separator + `\n✅ The bot has joined a new server! \`(server: '${guild.name}', members: '${guild.memberCount}')\``);
-    console.log(
-        `✅ The bot has joined a new server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator
-    );
+    console.log(`✅ The bot has joined a new server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
+
+    //Join Message
     guild.owner.send(await SuivixClient.getJoinMessage(guild, "fr")).catch(err => console.log("Cannot send join message!".red + separator));
     guild.owner.send(await SuivixClient.getJoinMessage(guild, "en")).catch(err => console.log("Cannot send join message!".red + separator));
+
+    //Update the bot guilds number on the Discord Bot List
+    SuivixClient.postDBLStats();
 });
 
 //Trigger when the bot leaves a guild
-client.on("guildDelete", async(guild) => {
+client.on("guildDelete", async (guild) => {
     SuivixClient.displayConsoleChannel(separator + `\n❌ The bot has left a server! \`(server: '${guild.name}', members: '${guild.memberCount}')\``);
-    console.log(
-        `❌ The bot has left a server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator
-    );
+    console.log(`❌ The bot has left a server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
+
+    //Leave Message
     guild.owner.send(await SuivixClient.getLeaveMessage(guild)).catch(err => console.log("Unable to send the leave message.".red + separator));
+
+    //Update the bot guilds number on the Discord Bot List
+    SuivixClient.postDBLStats();
 });
 
-//Launching web servers
+/** ******************************************************** WEB SERVERS **********************************************************/
+
 // * Check for https certificate path in the config file before enabling https.
 Server.initHttpServer(app, Config.HTTP_PORT);
 Server.initHttpsServer(app, Config.HTTPS_PORT, Config.HTTPS_ENABLED);

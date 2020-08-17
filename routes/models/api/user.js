@@ -5,7 +5,7 @@
  */
 const RequestManager = require('../../../classes/managers/RequestManager');
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
     if (!req.session.passport.user.ticket) {
         res.status(404).json({
             error: "Unknown User"
@@ -21,14 +21,17 @@ module.exports = async(req, res) => {
                 discriminator: req.session.passport.user.identity.discriminator
             }).yellow + separator);
         }
-        const request = await new RequestManager().getRequest(req.session.passport.user.attendance_request); //Fetch the attendance request
-        if (!request) { //Check if there is an user and an attendance request
-            res.send(req.session.passport.user.identity);
-        } else {
-            res.send(Object.assign(req.session.passport.user.identity, {
-                requestID: request.getId()
-            }));
-        }
+
+        const manager = new RequestManager();
+        let attendance_request;
+        let poll_request;
+        if(await manager.getRequest(req.session.passport.user.attendance_request)) attendance_request = req.session.passport.user.attendance_request;
+        if(await manager.getRequest(req.session.passport.user.poll_request)) poll_request = req.session.passport.user.poll_request;
+        
+        res.send(Object.assign(req.session.passport.user.identity, {
+            attendance_request: attendance_request,
+            poll_request: poll_request,
+        }));
     }
 
 };

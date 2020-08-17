@@ -28,6 +28,18 @@
                     "title": "Request for assistance",
                     "description": "Suivix includes 1 command and a website:\n```• !suivix\n• {host} (Official Website)```\nUsages :\n-\n`!suivix <aide or help>`\n• Creates an online attendance request\n(Add option \"aide\" or \"help\" will display this page)\n\n:warning: You must not put `<` and `>` in the command synthax. **Options are optional.**\n-\nChangez de langue en utilisant les réactions sous ce message."
                 }
+            },
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Your attendance request has failed",
+                        "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord."
+                    },
+                    "success": {
+                        "title": "Your request has been finalized",
+                        "description": "You have finished your attendance request. You will find the result in your Discord private messages."
+                    }
+                }
             }
         },
         "fr": {
@@ -57,6 +69,18 @@
                     "content": "Pour toute information ou aide supplémentaire, rendez-vous sur https://discord.gg/xRNEzGM.",
                     "title": "Demande d'aide",
                     "description": "Suivix comporte deux commandes et un site internet :\n```• !suivix\n• !suivixcmd\n• {host} (Site Internet Officiel)```\nUtilisations :\n-\n`!suivix <aide ou help>`\n• Crée une demande de suivi visuel en ligne\n(Ajouter l'option \"aide\" ou \"help\" vous affichera cette page)\n-\n`!suivixcmd <numéro du salon> <numéro du rôle>`\n• Crée une demande de suivi directement sur Discord\n(Ces deux options vous permettent d'effectuer votre suivi sans passer par toutes les étapes)\n\n:warning: Vous ne devez pas mettre `<` et `>` dans la syntaxe de votre commande. **Les options sont facultatives.**\n-\nChange language by using reactions under this message."
+                }
+            },
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Votre suivi n'a pas abouti",
+                        "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord."
+                    },
+                    "success": {
+                        "title": "Votre demande de suivi a abouti",
+                        "description": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans vos messages privés Discord."
+                    }
                 }
             }
         }

@@ -7,27 +7,19 @@ const RequestManager = require('../../../classes/managers/RequestManager');
 
 module.exports = async (req, res) => {
     try {
-        if (!req.session.passport.user.identity) {
+        if (!req.session.passport) {
+            req.session.pending_request = {
+                guild_id: req.query.guild_id,
+                channel_id: req.query.channel_id
+            }
             res.redirect(Routes.LOGIN_PAGE);
         } else {
             if (req.query.guild_id) {
                 const request = await new RequestManager().createNewRequest("attendance", +new Date(), req.session.passport.user.identity, req.query.guild_id);
                 req.session.passport.user.attendance_request = request;
-                console.log(
-                    '{username}#{discriminator}'.formatUnicorn({
-                        username: req.session.passport.user.identity.username,
-                        discriminator: req.session.passport.user.identity.discriminator
-                    }).yellow +
-                    " created a new attendance request.".blue +
-                    " (id: '{id}', server: '{server}')".formatUnicorn({
-                        id: +new Date(),
-                        server: req.query.guild_id,
-                    }) +
-                    separator
-                );
                 res.redirect(Routes.ATTENDANCE_PAGE);
             } else {
-                res.redirect(Routes.ATTENDANCE_SERVERS);
+                res.redirect(Routes.SERVERS_SELECTION);
             }
         }
     } catch (err) {

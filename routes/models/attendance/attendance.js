@@ -6,7 +6,9 @@
 module.exports = (req, res) => {
     if (!req.session.passport.user.identity) {
         res.redirect(Routes.LOGIN_PAGE);
+    } else if (!req.session.passport.user.attendance_request) {
+        res.redirect(Routes.SERVERS_SELECTION);
     } else {
-        res.sendFile(Server.getViewsFile(req, res, Routes.ATTENDANCE_SERVERS, "/", req.query.language ? req.query.language : undefined));
+        res.sendFile(Server.getViewsFile(req, res, Routes.ATTENDANCE_PAGE, "/", req.query.language ? req.query.language : undefined));
     }
 };

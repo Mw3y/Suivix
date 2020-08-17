@@ -6,19 +6,21 @@
     <title>Suivix - Requête de Suivi</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+    <meta name="description"
+        content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
     <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
 
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/css/attendance-main.css">
-    <link rel="stylesheet" href="/css/changelog.css">
+    <link rel="stylesheet" href="/css/popup.css">
     <link href="/css/select2.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="/js/jqueryui.js"></script>
     <script src="/utils/Utils.js"></script>
     <script type="text/javascript">
-        (function() {
+        (function () {
             var css = document.createElement('link');
             css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
             css.rel = 'stylesheet';
@@ -27,7 +29,7 @@
         })();
     </script>
     <script>
-        window.onerror = function() {
+        window.onerror = function () {
             location.reload();
         }
     </script>
@@ -45,12 +47,29 @@
 </head>
 
 <body>
-    <div id="overlay">
-        <div id="popup">
-            <div class="news centered"><img src="img/news.svg" class="img" alt="newspaper" height="110px" width="110px"></div>
-            <div class="centered colorHeaderPrimary title">Version <var id="version">Inconnue</var></div>
-            <div class="centered colorHeaderSecondary changelog size16"><var id="changelogText">Impossible de récupérer la liste des changements.</var></div>
+    <div class="overlay" style="display: none;" id="overlay">
+        <div class="popup">
+            <div class="centered"><img class="news" src="/img/news.svg"></div>
+            <div class="title centered margin-top">Version <var id="version">Inconnue</var></div>
+            <div class="changelog centered"><var id="changelogText">Impossible de récupérer la liste des
+                    changements.</var></div>
             <div id="close"><i class="fas fa-times-circle"></i></div>
+            <p class="close-info centered">Fermez ce popup en cliquant sur la croix en haut à droite.</p>
+        </div>
+    </div>
+    <div class="overlay" style="display: none;" id="statement">
+        <div class="popup">
+            <div class="centered"><img class="warning" src="/icons/error-warning.svg"></div>
+            <div class="title centered margin-top" id="statement-title"></div>
+            <div class="changelog centered"><var id="statement-description"></var></div>
+            <button class="popup-button yellow centered" onclick="closePopup('statement');" id="warning-button"
+                style="display: none;">Je comprends</button>
+            <span style="display: none;" class="centered" id="success-button">
+                <button class="popup-button blue centered margin-right-10"
+                    onclick="redirect('SERVERS_SELECTION', undefined);">Sélectionner un Nouveau Serveur</button>
+                <button class="popup-button blue centered margin-left-10" id="newRequest">Refaire le Suivi avec ce
+                    Serveur</button>
+            </span>
         </div>
     </div>
     <div class="navbar">
@@ -59,16 +78,17 @@
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar" id="avatar" src=""></p>
+            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar" id="avatar"
+                src=""></p>
     </div>
     <div class="container">
-        <var id="requestID" style="display:none"></var>
         <div class="attendance-card" id="card">
             <div class="content">
                 <div class="header">
-                    <img src="images/list.png" class="logo">
+                    <img src="/images/suivix.png" class="logo">
                     <h1 class="title">FAIRE UN SUIVI</h1>
-                    <p class="description">Le résultat de votre suivi est défini par les salons audios et les rôles que vous avez sélectionnés. Suivix vous permet d'utiliser plusieurs salons et rôles pour faire face à n'importe quelle situation.</p>
+                    <p class="description">Suivix vous permet d'utiliser plusieurs salons et rôles pour faire face
+                        à la plupart des situations.</p>
                 </div>
                 <div class="infos ">
                     <img src="/icons/clock.svg" class="emoji"></img>
@@ -81,10 +101,19 @@
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select "></div>
                 </div>
+                <div class="infos margin-top-5">
+                    <p class="select">Sélectionnez votre fuseau horaire :</p>
+                </div>
+                <div class="select-custom" id="select-timezone">
+                    <div style="width: 100%; " class="loading-select "></div>
+                </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection() " title="Tout désélectionner "><i class="fas fa-redo-alt "></i></button>
-                    <button class="btn black-btn " onclick="deleteRequest() " title="Supprimer cette requête de suivi "><i class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance(document.getElementById('requestID').innerHTML);" title="Effectuer le suivi "><i class="fas fa-check "></i></button>
+                    <button class="btn white-btn m-right " onclick="clearSelection() " title="Tout désélectionner "><i
+                            class="fas fa-redo-alt "></i></button>
+                    <button class="btn black-btn " onclick="deleteRequest()"
+                        title="Supprimer cette requête de suivi "><i class="fas fa-times "></i></button>
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" title="Effectuer le suivi "><i
+                            class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>
             </div>
@@ -97,7 +126,6 @@
 </body>
 <script>
     initAttendance("fr");
-    saveTimezoneCookie();
 </script>
 
 </html>

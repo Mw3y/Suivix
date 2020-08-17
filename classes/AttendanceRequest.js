@@ -88,71 +88,70 @@ class Request {
     }
 
     /**
-     * Check if the attendance request is expired
-     * @returns {Boolean} - If the request is expired or not
-     */
-    isExpired() {
-        return (Math.abs(new Date(this.date) - new Date()) / 36e5) > parseInt(Config.ATTENDANCE_VALIDITY_TIME);
-    }
-
-    /**
      * Does the suivi
+     * @returns {Json} - The statement of the request
      * @param {String} channels - The voice channels
      * @param {String} roles - The roles
      * @param {String} timezone - The user timezone
      * @param {String} language - The user language
      */
     async doAttendance(channels, roles, timezone, language) {
-        const Text = require('../app/text/suivix.json').translations[language];
+        const TextTranslation = Text.suivix.translations[language];
+        let statement = {
+            success: true,
+            title: TextTranslation.website.statement.success.title,
+            description: TextTranslation.website.statement.success.description,
+            guild_id: this.guild.id
+        };
 
         let parsedRoles = this.transformStringListIntoArray(roles, "roles");
         let parsedChannels = this.transformStringListIntoArray(channels, "channels");
         let students = this.getUsersFromRoles(parsedRoles); //fetch users with roles
         let channelStudents = this.getChannelsPresents(parsedChannels, parsedRoles); //fetch users in voice channels
 
-        let rolesString = this.parseListIntoString(parsedRoles, Text.connector, true, this.channel === undefined ? true : false, "`@", "`");
-        let channelsString = this.parseListIntoString(parsedChannels, Text.connector, false, true);
-        let categoriesList = this.getCategoriesList(parsedChannels, Text.unknown);
-        let categoriesString = this.parseListIntoString(categoriesList, Text.connector);
-        let categories = categoriesString.length > 55 ? Text.errors.tooMuchCategories : categoriesString;
+        let rolesString = this.parseListIntoString(parsedRoles, TextTranslation.connector, true, this.channel === undefined ? true : false, "`@", "`");
+        let channelsString = this.parseListIntoString(parsedChannels, TextTranslation.connector, false, true);
+        let categoriesList = this.getCategoriesList(parsedChannels, TextTranslation.unknown);
+        let categoriesString = this.parseListIntoString(categoriesList, TextTranslation.connector);
+        let categories = categoriesString.length > 55 ? TextTranslation.errors.tooMuchCategories : categoriesString;
 
-        let absentsText = "";
-        let presentsText = "";
+        let absentsTextTranslation = "";
+        let presentsTextTranslation = "";
         let absents;
         let presents;
 
         //Creating the list string of absents users
-        let data = this.dataToString(Text.infos.noAbsent, Text.infos.absentsList, students, channelStudents);
-        absentsText = data.get("text");
+        let data = this.dataToString(TextTranslation.infos.noAbsent, TextTranslation.infos.absentsList, students, channelStudents);
+        absentsTextTranslation = data.get("TextTranslation");
         absents = data.get("diff");
 
         //Creating the list string of presents users
-        data = this.dataToString("", Text.infos.presentsList, students, absents);
-        presentsText = data.get("text");
+        data = this.dataToString("", TextTranslation.infos.presentsList, students, absents);
+        presentsTextTranslation = data.get("TextTranslation");
         presents = data.get("diff");
 
-        //Parsing text
-        const intro = Text.intro.formatUnicorn({
+        //Parsing TextTranslation
+        const intro = TextTranslation.intro.formatUnicorn({
             username: (this.author.displayName === this.author.user.username ? this.author.user.username : this.author.nickname + ` (@${this.author.user.username})`),
             category: categories,
             date: this.generateDate(timezone, language),
             role: rolesString
         });
-        const presentSentence = Text.infos.presentsTotal.formatUnicorn({
+        const presentSentence = TextTranslation.infos.presentsTotal.formatUnicorn({
             presents: presents.length,
             total: students.length
         });
-        const absentSentence = Text.infos.absentsTotal.formatUnicorn({
+        const absentSentence = TextTranslation.infos.absentsTotal.formatUnicorn({
             absents: absents.length,
             total: students.length
         });
 
         //Check if the message is too long to be send on Discord
-        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
+        if ((intro + absentsTextTranslation + presentsTextTranslation + presentSentence + absentSentence).length >= 2048) {
             if (channelStudents.length !== students.length) {
-                absentsText = Text.infos.absentsList + Text.errors.tooMuchAbsents; //Minimize text
+                absentsTextTranslation = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
             } else if (presentUsers.length > 0) {
-                presentsText = Text.infos.presentsList + Text.errors.tooMuchPresents; //Minimize text
+                presentsTextTranslation = TextTranslation.infos.presentsList + TextTranslation.errors.tooMuchPresents; //Minimize TextTranslation
             }
         }
 
@@ -161,12 +160,19 @@ class Request {
         const color = selectedColor ? selectedColor.color : 0; //Picking a random one
 
         //Send result to the user in dm
-        this.author.send(new Discord.MessageEmbed().setTitle(Text.title + channelsString).setFooter(Text.credits) //send result
-            .setDescription(intro + presentSentence + absentSentence + absentsText + presentsText).setColor(color)).catch((err) => {
-            console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red)
-        });
+        const resultMessage = await this.author.send(new Discord.MessageEmbed().setTitle(TextTranslation.title + channelsString).setFooter(TextTranslation.credits) //send result
+                .setDescription(intro + presentSentence + absentSentence + absentsTextTranslation + presentsTextTranslation).setColor(color))
+            .catch(function (err) {
+                console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
+            });
 
-        console.log(
+        if(!resultMessage) {
+            statement.success = false;
+            statement.title = TextTranslation.website.statement.errors.title;
+            statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
+        }
+
+        if (statement.error) console.log(
             "{username}#{discriminator}".formatUnicorn({
                 username: this.author.user.username,
                 discriminator: this.author.user.discriminator
@@ -178,6 +184,8 @@ class Request {
             }) +
             separator
         );
+
+        return statement;
     }
 
     /**
@@ -189,7 +197,7 @@ class Request {
      */
     dataToString(basicSentence, sentence, usersList, channelUsers) {
         const guild = this.guild;
-        let text = basicSentence;
+        let TextTranslation = basicSentence;
         let collection = usersList.filter(x => channelUsers.indexOf(x) === -1); //compare the two arrays
         let users = Array.from(collection.values()); //Convert into an array
         let usersName = new Array();
@@ -200,15 +208,15 @@ class Request {
         usersName.sort(); //Sort it A -> Z
 
         if (users.length > 0) { //If there is more than 1 user
-            text = sentence; //Display the sentence when there is users
+            TextTranslation = sentence; //Display the sentence when there is users
             for (let i in usersName) { //Create the list
                 let user = users.find(u => (u.displayName + "#" + u.user.discriminator) === usersName[i]);
                 let member = guild.member(user);
-                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
+                TextTranslation += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
             }
-            text += "```";
+            TextTranslation += "```";
         }
-        return new Map().set("text", text).set("diff", users);
+        return new Map().set("TextTranslation", TextTranslation).set("diff", users);
     }
 
     /**

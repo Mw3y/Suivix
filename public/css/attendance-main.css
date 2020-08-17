@@ -103,6 +103,7 @@ body {
     0% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -113,7 +114,7 @@ body {
     padding: 10px 75px;
     white-space: nowrap;
     background: #131615;
-    z-index: 100000;
+    z-index: 350;
 }
 
 .navbar .title {
@@ -198,7 +199,7 @@ body {
 }
 
 .container .attendance-card .content .header .logo {
-    max-width: 225px;
+    max-width: 175px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -227,7 +228,7 @@ body {
 
 .container .attendance-card .content .infos .select {
     color: #fff;
-    font-size: 17px;
+    font-size: 14px;
     text-align: left;
     font-weight: 500;
 }
@@ -265,6 +266,10 @@ button {
     width: 45px;
 }
 
+.margin-top-5 {
+    margin-top: 5px;
+}
+
 .blue-btn {
     background: rgb(63, 94, 251);
     background: linear-gradient(45deg, rgba(63, 94, 251, 1) 0%, rgba(114, 137, 218, 1) 100%);
@@ -292,9 +297,11 @@ button {
     0% {
         transform: translatey(0px);
     }
+
     50% {
         transform: translatey(-5px);
     }
+
     100% {
         transform: translatey(0px);
     }
@@ -308,19 +315,23 @@ button {
 }
 
 @keyframes shake {
+
     10%,
     90% {
         transform: translate3d(-1px, 0, 0);
     }
+
     20%,
     80% {
         transform: translate3d(2px, 0, 0);
     }
+
     30%,
     50%,
     70% {
         transform: translate3d(-8px, 0, 0);
     }
+
     40%,
     60% {
         transform: translate3d(8px, 0, 0);
@@ -507,59 +518,71 @@ button {
     .layer1 {
         display: none;
     }
+
     .layer2 {
         display: none;
     }
+
     .layer3 {
         background-image: url("../ressources/backgrounds/layers/base.jpg");
         background-size: cover;
         background-position: center;
     }
+
     .container .attendance-card {
         min-width: 300px;
         max-width: 350px;
         max-height: 500px;
     }
+
     .container .attendance-card .content .header {
         margin-bottom: 25px;
     }
+
     .container .attendance-card .content .header .logo {
-        max-width: 150px;
+        max-width: 125px;
         display: block;
         margin-left: auto;
         margin-right: auto;
         animation: float 6s ease-in-out infinite;
     }
+
     .container .attendance-card .content .header .title {
         color: #fff;
         font-size: 20px;
         text-align: center;
     }
+
     .container .attendance-card .content .header .description {
         color: #fff;
         font-size: 12px;
         text-align: center;
     }
+
     .container .attendance-card .content .infos .expiresIn {
         color: #fff;
         font-size: 11px;
         text-align: left;
     }
+
     .container .attendance-card .content .infos .select {
         color: #fff;
-        font-size: 14px;
+        font-size: 12px;
         text-align: left;
         font-weight: 500;
     }
+
     #username,
     #discriminator,
     #user-loader,
     #user-loader-image {
         display: none;
     }
+
     #cookies {
         display: none;
     }
+
     .navbar .margin {
         margin-right: 5px;
     }

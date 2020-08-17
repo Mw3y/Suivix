@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Suivix - Server Selection</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="You are a professor or maybe even a business manager and you want to take attendance on Discord. No worries! Suivix will take care of it for you.">
+    <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/css/attendance-main.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/utils/Utils.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var css = document.createElement('link');
+            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <script>
+        window.onerror = function () {
+            location.reload();
+        }
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-108500515-2');
+    </script>
+</head>
+
+<body>
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <div class="centered"><img class="avatar" src="/ressources/unknown-server.png"></div>
+            <div class="title centered">Hello <var class="username">...</var></div>
+            <div class="description">WHAT WOULD YOU LIKE TO DO?</div>
+            <div class="options">
+                <div class="option" id="attendance-option">
+                    <img class="emoji" src="/ressources/done.png">
+                    <div class="optionTitle" id="take-attendance">Take Attendance</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+                <div class="option" id="poll-option">
+                    <img class="emoji" src="/ressources/paull.png">
+                    <div class="optionTitle" id="create-poll">Create a Poll</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+            </div>
+            <div class="help">NEED SOME HELP?</div>
+            <div class="options">
+                <div class="option" id="support-option">
+                    <img class="emoji" src="/ressources/support-icon.png">
+                    <div class="optionTitle">Join Suivix Support server</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+            </div>
+            <a href="?language=fr" class="language-option centered">Vous n'êtes pas Anglais? Optez pour la version
+                Française.</a>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="/" class="title">SUIVIX</a>
+        <a href="?language=fr" class="language margin">FR.</a>
+        <a href="?language=en" class="language margin-15">EN.</a>
+    </div>
+    <div class="container">
+        <div class="attendance-card" id="card">
+            <div class="content">
+                <div class="header">
+                    <img src="/images/suivix.png" class="logo">
+                    <h1 class="title">SELECT A SERVER</h1>
+                    <p class="description" id="attendance-desc">Before anything, click on the server in which you want
+                        to take attendance.
+                        <strong>You must allow suivix to send you private messages before starting an attendance request.</strong></p>
+                    <p class="description" id="poll-desc" style="display: none;">Before anything, click on the server in
+                        which you want to create a new poll.</p>
+                </div>
+                <div class="servers-container">
+                    <div class="servers">
+                        <div class="server-card" id="support">
+                            <p>Suivix © Support<img src="/ressources/support-icon.png"></p>
+                        </div>
+                        <div class="server-card load">
+                            <div width="40" class="loading-image"></div>
+                            <p>Loading</p>
+                        </div>
+                        <div class="server-card load">
+                            <div width="40" class="loading-image"></div>
+                            <p>Loading</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer ">
+        <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
+    </div>
+    <div id="cookies"></div>
+</body>
+<script>
+    initChoice("en");
+    askCookies("en");
+</script>
+
+</html>

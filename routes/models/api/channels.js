@@ -6,7 +6,7 @@
 const RequestManager = require('../../../classes/managers/RequestManager');
 
 module.exports = async(req, res) => {
-    const request = await new RequestManager().getRequest(req.session.passport.user.attendance_request);
+    const request = await new RequestManager().getRequest(req.session.passport.user[req.headers.referer.split("/")[3].replace("paull", "poll") + "_request"]);
     if (!request) {
         res.status(404).json("Request does not exists")
     } else {

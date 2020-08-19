@@ -638,15 +638,18 @@ function initChoice(language) {
     request.onload = function () {
         const response = JSON.parse(this.response);
         $(".username").text(response.username);
-        $(".avatar").attr("src", "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar)
+        $("#user-loader-image").html(`<img class="avatar" src="${response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "/icons/avatar.png"}"></div>`)
+
+        $("#user-loader").hide();
+        $("#welcome").show();
+
         $("#support-option").on("click", function () {
             redirect("API_SUPPORT_URL", undefined)
         });
-
         $("#donate-option").on("click", function () {
             window.open("https://utip.io/mw3y")
         });
-        
+
         if (response.attendance_request && !response.attendance_request.isExpired) {
             if (language === "en") {
                 $("#take-attendance").text("Continue the attendance request in progress");

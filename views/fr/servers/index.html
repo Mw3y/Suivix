@@ -46,8 +46,9 @@
 <body>
     <div class="overlay" id="overlay">
         <div class="popup">
-            <div class="centered"><img class="avatar" src="/ressources/unknown-server.png"></div>
-            <div class="title centered">Bonjour <var class="username">...</var></div>
+            <div class="centered" id="user-loader-image"><div class="loading-user-image"></div></div>
+            <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
+            <div class="title centered" style="display: none;" id="welcome">Bonjour <var class="username"></var></div>
             <div class="description">QUE VOULEZ-VOUS FAIRE ?</div>
             <div class="options">
                 <div class="option" id="attendance-option">

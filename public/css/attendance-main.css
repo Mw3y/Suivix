@@ -91,6 +91,16 @@ body {
     margin-left: 5px;
 }
 
+.loading-user-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    background: linear-gradient(90deg, rgb(60, 66, 69) 0%, rgb(60, 66, 69) 40%, rgb(66, 73, 76) 50%, rgb(60, 66, 69) 60%, rgb(60, 66, 69) 100%) 0% 0% / 400%;
+    animation: 0.7s linear 0s infinite normal none running loading;
+    opacity: 0.5;
+    margin: 10px
+}
+
 #user-infos {
     display: none;
 }
@@ -574,7 +584,7 @@ button {
     #username,
     #discriminator,
     #user-loader,
-    #user-loader-image {
+    .loading-image {
         display: none;
     }
 

@@ -218,7 +218,6 @@
     .popup {
         min-width: 350px;
         max-width: 375px;
-        max-height: 500px;
     }
 
     .popup .close-info,

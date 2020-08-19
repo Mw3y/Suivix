@@ -532,7 +532,6 @@ button {
     .container .attendance-card {
         min-width: 300px;
         max-width: 350px;
-        max-height: 500px;
     }
 
     .container .attendance-card .content .header {

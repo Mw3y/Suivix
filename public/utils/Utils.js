@@ -50,40 +50,12 @@ function getSelectedChannels() {
         shake();
         return;
     };
-    var request = new XMLHttpRequest()
-    request.open('GET', getUrl(`api/get/channels`, window), true)
-    request.onload = function () {
-        const response = JSON.parse(this.response);
-        if (this.status === 404) {
-            redirect("SERVERS_SELECTION", undefined);
-            return;
-        }
-        let channels = [];
-        for (var i = 0; i < response.length; i++) {
-            channels[i] = response[i];
-        }
-        if (channelsList.length === 1) {
-            const channel = channelsList[0];
-            let channelName = channel.substring(channel.indexOf(')') + 2);
-            let channelID = channels.find(c => c.name === channelName).id;
-            getSelectedRoles(channelID);
-        } else {
-            let choosenChannels = [];
-            for (let i = 0; i < channelsList.length; i++) {
-                let channelName = channelsList[i].substring(channelsList[i].indexOf(')') + 2)
-                choosenChannels.push(channels.find(c => c.name === channelName).id);
-            }
-            getSelectedRoles(choosenChannels.join('-'));
-        }
-
-    }
-    request.send();
+    getSelectedRoles(channelsList);
 }
 
 function getSelectedRoles(selectedChannels) {
     const rolesList = $("#select-2").val();
-    const timezone = $("#select-3").val();
-    if (timezone.length === 0 || rolesList.length === 0) {
+    if (rolesList.length === 0) {
         shake();
         return;
     }
@@ -92,31 +64,20 @@ function getSelectedRoles(selectedChannels) {
     setInterval(() => {
         $("#loading").hide();
     }, 1000);
-    var request = new XMLHttpRequest()
-    request.open('GET', getUrl(`api/get/roles`, window), true)
-    request.onload = function () {
-        const response = JSON.parse(this.response);
-        let roles = [];
-        for (var i = 0; i < response.length; i++) {
-            roles[i] = response[i];
-        }
-        if (rolesList.length === 1) {
-            getAttendanceStatement(`channels=${selectedChannels}&roles=${roles.find(r => r.name === rolesList[0]).id}&timezone=${timezone}`);
-        } else {
-            let choosenRoles = [];
-            for (let i = 0; i < rolesList.length; i++) {
-                choosenRoles.push(roles.find(r => r.name === rolesList[i]).id);
-            }
-            getAttendanceStatement(`channels=${selectedChannels}&roles=${choosenRoles.join('-')}&timezone=${timezone}`);
-        }
 
-    }
-    request.send();
+    getAttendanceStatement(selectedChannels, rolesList);
 }
 
-function getAttendanceStatement(params) {
+function getAttendanceStatement(channels, roles) {
+    const timezone = $("#select-3").val();
+    if (timezone.length === 0) {
+        shake();
+        return;
+    }
+    const params = "channels=" + channels.join("-") + "&roles=" + roles.join("-") + "&timezone=" + timezone;
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/attendance/done`, window) + "?" + params, true)
+    request.setRequestHeader('Content-Type', 'application/json');
     request.onload = function () {
         const response = JSON.parse(this.response);
         if (response.success) {
@@ -147,13 +108,16 @@ function initSelect2RoleList(lang) {
         if (this.status === 404) {
             return;
         }
-        let roles = [];
-        for (var i = 0; i < response.length; i++) {
-            roles[i] = response[i].name;
-        }
         const placeholder = (lang === "fr" ? "Rôles" : "Roles") + " 📚";
         document.getElementById("select-roles").innerHTML = "<select id='select-2'multiple><option> <select></option></select > ";
-        initSelect2($("#select-2"), placeholder, roles.sort(), 6)
+        initSelect2($("#select-2"), placeholder, [], 6)
+        response.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        })
+        for (var i = 0; i < response.length; i++) {
+            var newOption = new Option(response[i].name, response[i].id, false, false);
+            $('#select-2').append(newOption).trigger('change');
+        }
     }
     request.send();
 }
@@ -531,22 +495,26 @@ function initSelect2ChannelList(parents, lang) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/channels`, window), true)
     request.onload = function () {
-        const response = JSON.parse(this.response);
         if (this.status === 404) {
             redirect("SERVERS_SELECTION");
             return;
         }
-        const channelsJSON = response;
-        let channels = [];
+        const channelsJSON = JSON.parse(this.response);
         request.open('GET', getUrl(`api/get/categories`, window), true)
         request.onload = function () {
             const response = JSON.parse(this.response);
-            for (var i = 0; i < channelsJSON.length; i++) {
-                channels[i] = parents ? ` (${parseCategory(response[channelsJSON[i].id]).replace("(", "[").replace(")", "]")}) ` + channelsJSON[i].name : channelsJSON[i].name;
-            }
             const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
             document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
-            initSelect2($("#select-1"), placeholder, channels.sort(), 4)
+            initSelect2($("#select-1"), placeholder, [], 4)
+            channelsJSON.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+            })
+            for (var i = 0; i < channelsJSON.length; i++) {
+                const text = parents ? ` (${parseCategory(response[channelsJSON[i].id]).replace("(", "[").replace(")", "]")}) ` + channelsJSON[i].name : channelsJSON[i].name;
+                var newOption = new Option(text, channelsJSON[i].id, false, false);
+                $('#select-1').append(newOption).trigger('change');
+            }
+
         }
         request.send()
     }

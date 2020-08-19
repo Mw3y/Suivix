@@ -1,6 +1,6 @@
 {
     "name": "suivix",
-    "version": "4.0.0",
+    "version": "3.8.3",
     "description": "A Discord bot to take attendance",
     "main": "app.js",
     "scripts": {

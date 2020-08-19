@@ -187,7 +187,7 @@ class Request {
                     server: this.guild.name
                 }) + separator
             );
-            await this.clearChannel(language); //Clear channel from unfinished suivix queries
+            if(this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
         }
 
         return statement;

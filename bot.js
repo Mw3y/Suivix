@@ -65,7 +65,7 @@ class BotClient {
      * @param {*} guild - The guild wich the bot has left
      */
     async getLeaveMessage(guild) {
-        const user = new UserManager().getUserById(guild.owner.id);
+        const user = await new UserManager().getUserById(guild.owner.id);
         const text = Text.global.translations[user.language].messages;
         return new Discord.MessageEmbed().setTitle(text.title)
             .setDescription(text.leave.description.formatUnicorn({guildName: guild.name}))

@@ -21,8 +21,8 @@ const suivixCommand = async function (message, args, client, sequelize) {
         await generateAttendanceRequestMessage(message.channel, message.author, TextTranslation);
 
     if (msg) {
-        msg.react("🇫🇷");
-        msg.react("🇬🇧");
+        msg.react("🇫🇷").catch(err => console.log("Error while adding language reaction!".red + separator));
+        msg.react("🇬🇧").catch(err => console.log("Error while adding language reaction!".red + separator));
     }
 };
 

@@ -168,25 +168,27 @@ class Request {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
 
-        if(!resultMessage) {
+        if (!resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
-            if(this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
+            if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
             else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
-         }
+        }
 
-        if (statement.success) console.log(
-            "{username}#{discriminator}".formatUnicorn({
-                username: this.author.user.username,
-                discriminator: this.author.user.discriminator
-            }).yellow +
-            " has finished an attendance request.".blue +
-            " (id: '{id}', server: '{server}')".formatUnicorn({
-                id: this.id,
-                server: this.guild.name
-            }) +
-            separator
-        );
+        if (statement.success) {
+            console.log(
+                "{username}#{discriminator}".formatUnicorn({
+                    username: this.author.user.username,
+                    discriminator: this.author.user.discriminator
+                }).yellow +
+                " has finished an attendance request.".blue +
+                " (id: '{id}', server: '{server}')".formatUnicorn({
+                    id: this.id,
+                    server: this.guild.name
+                }) + separator
+            );
+            await this.clearChannel(language); //Clear channel from unfinished suivix queries
+        }
 
         return statement;
     }
@@ -309,6 +311,25 @@ class Request {
             }
             return string;
         }
+    }
+
+    /**
+     * Clear all suivix attendance request messages in the channel
+     */
+    async clearChannel(language) {
+        let messages = await this.channel.messages.fetch({
+            limit: 100
+        });
+        const guild = this.guild;
+        messages.forEach(function (message) {
+            if ((message.embeds.length > 0 && message.embeds[0].title != undefined)) {
+                if (message.embeds[0].title.startsWith("Attendance Request") && language === "en") {
+                    message.delete().catch(err => console.log("⚠   Error while deleting ".red + "ATTENDANCE_REQUEST" + " messages!".red + ` (server: '${guild.name}', language: 'en')` + separator));
+                } else if (message.embeds[0].title.startsWith("Demande de suivi") && language === "fr") {
+                    message.delete().catch(err => console.log("⚠   Error while deleting ".red + "ATTENDANCE_REQUEST" + " messages!".red + ` (server: '${guild.name}', language: 'fr')` + separator));
+                }
+            }
+        })
     }
 
     /**

@@ -14,12 +14,14 @@ class Request {
      * @param {Member} author - The attendance request author
      * @param {Date} date - The creation date of the attendance request
      * @param {Guild} guild - The attendance request guild
+     * @param {TextChannel} - Where the attendance has been started
      */
-    constructor(id, author, date, guild) {
+    constructor(id, author, date, guild, channel) {
         this.id = id;
         this.author = author;
         this.date = date;
         this.guild = guild;
+        this.channel = channel;
     }
 
     /**
@@ -159,8 +161,8 @@ class Request {
         const selectedColor = colors[Math.floor(Math.random() * colors.length)];
         const color = selectedColor ? selectedColor.color : 0; //Picking a random one
 
-        //Send result to the user in dm
-        const resultMessage = await this.author.send(new Discord.MessageEmbed().setTitle(TextTranslation.title + channelsString).setFooter(TextTranslation.credits) //send result
+        //Send result to the user
+        const resultMessage = await this[this.channel === undefined ? "author" : "channel"].send(new Discord.MessageEmbed().setTitle(TextTranslation.title + channelsString).setFooter(TextTranslation.credits) //send result
                 .setDescription(intro + presentSentence + absentSentence + absentsText + presentsText).setColor(color))
             .catch(function (err) {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
@@ -169,8 +171,9 @@ class Request {
         if(!resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
-            statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
-        }
+            if(this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
+            else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+         }
 
         if (statement.success) console.log(
             "{username}#{discriminator}".formatUnicorn({

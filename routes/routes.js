@@ -23,11 +23,6 @@ const attendance = require('./models/attendance/attendance'),
     newAttendanceRequest = require('./models/attendance/new'),
     deleteAttendanceRequest = require('./models/attendance/delete');
 
-//Paull Integration
-const paull = require('./models/poll/paull'),
-    newPaullRequest = require('./models/poll/new'),
-    deletePaullRequest = require('./models/poll/delete');
-
 //Api imports
 const getUser = require('./models/api/user'),
     getUserGuilds = require('./models/api/guilds'),
@@ -72,11 +67,6 @@ class RoutesList {
         routes.get(Routes.ATTENDANCE_PAGE_DONE, passport.authenticate('main'), done);
         routes.get(Routes.ATTENDANCE_NEWREQUEST, newAttendanceRequest);
         routes.get(Routes.ATTENDANCE_DELETE, passport.authenticate('main'), deleteAttendanceRequest);
-
-        //Paull Integration
-        routes.get(Routes.PAULL_PAGE, passport.authenticate('main', ), paull);
-        routes.get(Routes.PAULL_NEWREQUEST, passport.authenticate('main'), newPaullRequest);
-        routes.get(Routes.PAULL_DELETE, passport.authenticate('main'), deletePaullRequest);
 
         //Api
         routes.get(Routes.API_USER_URL, passport.authenticate('main', {

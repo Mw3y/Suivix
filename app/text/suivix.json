@@ -21,7 +21,7 @@
             },
             "request": {
                 "title": "Attendance Request",
-                "description": "Go to {protocol}://{host}/attendance/new?guild_id={guild_id} to take attendance.\n\nNotes :\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
+                "description": "Go to {protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id} to take attendance.\n\nNotes :\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
                 "unableToSendMessage": ":x: | Something went wrong while trying to send the message.\nPlease verify the bot permissions in the channel where you wanted to take attendance.",
                 "help": {
                     "content": "For more information or assistance, please visit https://discord.gg/xRNEzGM.",
@@ -33,7 +33,8 @@
                 "statement": {
                     "errors": {
                         "title": "Your attendance request has failed",
-                        "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord."
+                        "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
+                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel."
                     },
                     "success": {
                         "title": "Your request has been finalized",
@@ -63,7 +64,7 @@
             },
             "request": {
                 "title": "Demande de suivi",
-                "description": "Rendez-vous à l'adresse suivante {protocol}://{host}/attendance/new?guild_id={guild_id} pour effectuer votre suivi visuel.\n\nNotes :\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
+                "description": "Rendez-vous à l'adresse suivante {protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id} pour effectuer votre suivi visuel.\n\nNotes :\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
                 "unableToSendMessage": ":x: | Une erreur est survenue au moment d'envoyer le message.\nVeuillez vérifier les permissions du bot dans le salon où vous effectuez le suivi.",
                 "help": {
                     "content": "Pour toute information ou aide supplémentaire, rendez-vous sur https://discord.gg/xRNEzGM.",
@@ -75,7 +76,8 @@
                 "statement": {
                     "errors": {
                         "title": "Votre suivi n'a pas abouti",
-                        "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord."
+                        "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",

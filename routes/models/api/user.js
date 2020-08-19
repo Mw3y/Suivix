@@ -24,13 +24,10 @@ module.exports = async (req, res) => {
 
         const manager = new RequestManager();
         let attendance_request;
-        let poll_request;
         if(await manager.getRequest(req.session.passport.user.attendance_request)) attendance_request = req.session.passport.user.attendance_request;
-        if(await manager.getRequest(req.session.passport.user.poll_request)) poll_request = req.session.passport.user.poll_request;
         
         res.send(Object.assign(req.session.passport.user.identity, {
-            attendance_request: attendance_request,
-            poll_request: poll_request,
+            attendance_request: attendance_request
         }));
     }
 

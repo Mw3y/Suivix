@@ -658,21 +658,6 @@ function initChoice(language) {
             });
         }
 
-        if (response.poll_request && !response.poll_request.isExpired) {
-            if (language === "en") {
-                $("#create-poll").text("Continue the poll request in progress");
-            } else {
-                $("#create-poll").text("Continuer la requête de sondage en cours");
-            }
-            $("#poll-option").on("click", function () {
-                redirect("PAULL_PAGE", undefined)
-            });
-        } else {
-            $("#poll-option").on("click", function () {
-                initServerSelection(language, "poll")
-            });
-        }
-
     }
     request.send();
 
@@ -680,12 +665,6 @@ function initChoice(language) {
 
 function initServerSelection(language, type) {
     let redirectTo = "ATTENDANCE_NEWREQUEST";
-    if (type === "poll") {
-        redirectTo = "PAULL_NEWREQUEST";
-        $("#attendance-desc").hide();
-        $("#poll-desc").show();
-        $(".logo").attr("src", "/ressources/paull.png")
-    }
     $("#overlay").fadeOut(200);
 
     let request = new XMLHttpRequest();

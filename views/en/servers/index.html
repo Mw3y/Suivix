@@ -25,11 +25,6 @@
             document.getElementsByTagName('head')[0].appendChild(css);
         })();
     </script>
-    <script>
-        window.onerror = function () {
-            location.reload();
-        }
-    </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
     <script>
@@ -53,14 +48,6 @@
                 <div class="option" id="attendance-option">
                     <img class="emoji" src="/ressources/done.png">
                     <div class="optionTitle" id="take-attendance">Take Attendance</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
-                </div>
-                <div class="option" id="poll-option">
-                    <img class="emoji" src="/ressources/paull.png">
-                    <div class="optionTitle" id="create-poll">Create a Poll</div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
                         height="24">
                         <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -96,8 +83,6 @@
                     <p class="description" id="attendance-desc">Before anything, click on the server in which you want
                         to take attendance.
                         <strong>You must allow suivix to send you private messages before starting an attendance request.</strong></p>
-                    <p class="description" id="poll-desc" style="display: none;">Before anything, click on the server in
-                        which you want to create a new poll.</p>
                 </div>
                 <div class="servers-container">
                     <div class="servers">

@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
             res.redirect(Routes.LOGIN_PAGE);
         } else {
             if (req.query.guild_id) {
-                const request = await new RequestManager().createNewRequest("attendance", +new Date(), req.session.passport.user.identity, req.query.guild_id);
+                const request = await new RequestManager().createNewRequest("attendance", +new Date(), req.session.passport.user.identity, req.query.guild_id, req.query.channel_id);
                 req.session.passport.user.attendance_request = request;
                 res.redirect(Routes.ATTENDANCE_PAGE);
             } else {

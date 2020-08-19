@@ -12,7 +12,7 @@ const Discord = require('discord.js'),
  * @param args - Arguments typed by the user in addition to the command
  * @param client - The bot client 
  */
-const suivixCommand = async function(message, args, client, sequelize) {
+const suivixCommand = async function (message, args, client, sequelize) {
     const user = await new UserManager().getUserById(message.author.id, "en");
     const language = user.language === "fr" ? "fr" : "en";
     const TextTranslation = Text.suivix.translations[language];
@@ -30,8 +30,13 @@ const suivixCommand = async function(message, args, client, sequelize) {
  * Returns the message for the suivix command
  * @param {*} channel - The channel where the command was trigerred
  */
-const generateAttendanceRequestMessage = async function(channel, author, Text) {
-    return await channel.send(new Discord.MessageEmbed().setDescription(Text.request.description.formatUnicorn({ protocol: getProtocol(), host: Config.WEBSITE_HOST, guild_id: channel.guild.id }))
+const generateAttendanceRequestMessage = async function (channel, author, Text) {
+    return await channel.send(new Discord.MessageEmbed().setDescription(Text.request.description.formatUnicorn({
+            protocol: getProtocol(),
+            host: Config.WEBSITE_HOST,
+            guild_id: channel.guild.id,
+            channel_id: channel.id
+        }))
         .setImage("https://i.imgur.com/QbiPChv.png")
         .setTitle(Text.request.title)).catch((err) => {
         console.log("⚠   Error while sending message!".brightRed + separator);
@@ -43,9 +48,11 @@ const generateAttendanceRequestMessage = async function(channel, author, Text) {
  * Returns the help message for the suivix command
  * @param {*} channel - The channel where the command was trigerred
  */
-const generateAttendanceHelpMessage = async function(channel, author, Text) {
+const generateAttendanceHelpMessage = async function (channel, author, Text) {
     return await channel.send(Text.request.help.content, {
-        embed: new Discord.MessageEmbed().setDescription(Text.request.help.description.formatUnicorn({ host: Config.WEBSITE_HOST }))
+        embed: new Discord.MessageEmbed().setDescription(Text.request.help.description.formatUnicorn({
+                host: Config.WEBSITE_HOST
+            }))
             .setThumbnail("https://i.imgur.com/8qCFYLj.png")
             .setTitle(Text.request.help.title)
     }).catch((err) => {
@@ -54,7 +61,7 @@ const generateAttendanceHelpMessage = async function(channel, author, Text) {
     });
 }
 
-const getProtocol = function() {
+const getProtocol = function () {
     return Config.HTTPS_ENABLED ? "https" : "http";
 }
 

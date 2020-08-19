@@ -179,6 +179,15 @@
     vertical-align: middle;
 }
 
+.popup .options .option .optionTitle .optionDescription {
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 13px;
+    font-weight: 500px;
+    color: #b9bbbe;
+    vertical-align: middle;
+}
+
 .popup .options .option .optionArrow {
     -webkit-transform: rotate3d(0, 0, -1, 90deg);
     transform: rotate3d(0, 0, -1, 90deg);

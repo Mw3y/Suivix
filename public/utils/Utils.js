@@ -643,6 +643,10 @@ function initChoice(language) {
             redirect("API_SUPPORT_URL", undefined)
         });
 
+        $("#donate-option").on("click", function () {
+            window.open("https://utip.io/mw3y")
+        });
+        
         if (response.attendance_request && !response.attendance_request.isExpired) {
             if (language === "en") {
                 $("#take-attendance").text("Continue the attendance request in progress");

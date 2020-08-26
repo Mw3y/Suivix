@@ -773,6 +773,7 @@ function initHomePage(language) {
             animateValue(document.getElementById("guilds"), 0, response.guilds, 700);
             animateValue(document.getElementById("users"), 0, response.users, 700);
             animateValue(document.getElementById("students"), 0, response.students, 700);
+            document.getElementById("version").innerHTML = response.version;
         }
     }
     xmlHttp.send();

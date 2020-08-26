@@ -58,6 +58,10 @@ section {
     position: relative;
 }
 
+section a {
+    color: #2b67a6;
+}
+
 footer {
     min-height: 150px;
 }
@@ -472,6 +476,7 @@ textarea {
     transition: none;
     color: #fff;
     padding: 6px 12px;
+    width: 69px;
 }
 
 .smallAvatar {

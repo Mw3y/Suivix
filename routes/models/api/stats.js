@@ -8,9 +8,9 @@ module.exports = async (req, res) => {
         raw: true
     });
     const dblGuild = client.guilds.cache.get("264445053596991498");
-    res.send(`{
-        "guilds": "${client.guilds.cache.size}",
-        "users": "${usersQuery[0].users}",
-        "students": "${client.users.cache.size - (dblGuild ? dblGuild.members.cache.size : 0)}"
-    }`)
+    res.send({
+        guilds: client.guilds.cache.size,
+        users: usersQuery[0].users,
+        students: client.users.cache.size - (dblGuild ? dblGuild.members.cache.size : 0)
+    })
 };

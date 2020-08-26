@@ -56,7 +56,7 @@ var {
 
 body {
     height: 100vh;
-    background-image: url("../ressources/backgrounds/background-4.jpg");
+    background-image: url("../ressources/backgrounds/background-4-blur-min.jpg");
     background-size: cover;
     background-attachment: fixed;
     overflow: hidden
@@ -364,34 +364,6 @@ button {
     height: 100vh;
     overflow: hidden;
     left: 0;
-}
-
-.layer {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    left: 0;
-    background-repeat: no-repeat;
-    background-position: top center;
-}
-
-.layer1 {
-    background-image: url("../ressources/backgrounds/layers/1.png");
-    background-size: 105%;
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-}
-
-.layer2 {
-    background-image: url("../ressources/backgrounds/layers/2.png");
-    filter: blur(1.5px);
-    -webkit-filter: blur(1.5px);
-    background-size: 110%;
-}
-
-.layer3 {
-    background-image: url("../ressources/backgrounds/background-4.jpg");
-    background-size: cover;
 }
 
 #loading {

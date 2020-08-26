@@ -750,3 +750,50 @@ function initParallax() {
 function shake() {
     $("#card").effect("shake");
 }
+
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+function initHomePage(language) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", getUrl("api/get/stats", window), true);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+            const response = JSON.parse(this.responseText);
+            animateValue(document.getElementById("guilds"), 0, response.guilds, 700);
+            animateValue(document.getElementById("users"), 0, response.users, 700);
+            animateValue(document.getElementById("students"), 0, response.students, 700);
+        }
+    }
+    xmlHttp.send();
+    loadUser(language);
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+}
+
+function loadUser(language) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", getUrl("api/get/user", window), true);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+            const response = JSON.parse(this.responseText);
+            const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
+            $(".buttonUser")
+            .html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+            '</p><p class="buttonUserHover">' +
+            (language === "en" ? "Logout" : "Déconnexion") + '</p>')
+            .attr("href", "/auth/logout?redirectTo=/");
+            $(".buttonUse").html('<i class="fas fa-chevron-right buttonIcon"></i> ' + (language === "en" ? "Take attendance" : "Faire un suivi"))
+        }
+    }
+    xmlHttp.send();
+}

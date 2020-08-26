@@ -75,6 +75,7 @@ class RoutesList {
         routes.get(Routes.API_GUILDS_URL, passport.authenticate('main', {
             noredirect: true
         }), getUserGuilds);
+        
         routes.get(Routes.API_URL_FETCHER_URL, getUrl);
         routes.get(Routes.API_CHANNELS_URL, getChannels);
         routes.get(Routes.API_CATEGORIES_URL, getCategories);

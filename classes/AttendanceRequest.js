@@ -103,7 +103,8 @@ class Request {
             success: true,
             title: TextTranslation.website.statement.success.title,
             description: TextTranslation.website.statement.success.dm,
-            guild_id: this.guild.id
+            guild_id: this.guild.id,
+            channel_id: this.channel ? this.channel.id : undefined
         };
 
         let parsedRoles = this.transformStringListIntoArray(roles, "roles");

@@ -7,22 +7,21 @@ const routes = require('express').Router();
 
 //Global imports
 const home = require("./models/home"),
+    servers = require('./models/servers'),
     login = require("./models/login");
 
 //Errors
 const error404 = require('./models/error/404');
 
 //Authentification imports
-const authLogin = require("./models/auth/login"),
-    authLogout = require("./models/auth/logout"),
+const authLogout = require("./models/auth/logout"),
     callback = require("./models/auth/callback");
 
 //Attendance
-const welcome = require('./models/attendance/welcome'),
-    servers = require('./models/attendance/servers'),
-    done = require('./models/attendance/done'),
-    noRequest = require('./models/attendance/noRequest'),
-    newRequest = require('./models/attendance/newRequest');
+const attendance = require('./models/attendance/attendance'),
+    done = require('./models/api/attendance'),
+    newAttendanceRequest = require('./models/attendance/new'),
+    deleteAttendanceRequest = require('./models/attendance/delete');
 
 //Api imports
 const getUser = require('./models/api/user'),
@@ -50,6 +49,7 @@ class RoutesList {
         routes.get(Routes.HOME_PAGE + "en", (req, res) => {
             home(req, res, "en")
         });
+        routes.get(Routes.SERVERS_SELECTION, passport.authenticate('main'), servers);
 
         //Login
         routes.get(Routes.LOGIN_PAGE, login);
@@ -63,11 +63,10 @@ class RoutesList {
         routes.get(Routes.DISCORD_OAUTH_CALLBACK_URL, passport.authenticate('oauth'), callback);
 
         //Attendance
-        routes.get(Routes.ATTENDANCE_PAGE, passport.authenticate('main', ), welcome);
-        routes.get(Routes.ATTENDANCE_SERVERS, passport.authenticate('main'), servers);
+        routes.get(Routes.ATTENDANCE_PAGE, passport.authenticate('main'), attendance);
         routes.get(Routes.ATTENDANCE_PAGE_DONE, passport.authenticate('main'), done);
-        routes.get(Routes.ATTENDANCE_NOREQUEST, noRequest);
-        routes.get(Routes.ATTENDANCE_NEWREQUEST, newRequest);
+        routes.get(Routes.ATTENDANCE_NEWREQUEST, newAttendanceRequest);
+        routes.get(Routes.ATTENDANCE_DELETE, passport.authenticate('main'), deleteAttendanceRequest);
 
         //Api
         routes.get(Routes.API_USER_URL, passport.authenticate('main', {
@@ -76,6 +75,7 @@ class RoutesList {
         routes.get(Routes.API_GUILDS_URL, passport.authenticate('main', {
             noredirect: true
         }), getUserGuilds);
+        
         routes.get(Routes.API_URL_FETCHER_URL, getUrl);
         routes.get(Routes.API_CHANNELS_URL, getChannels);
         routes.get(Routes.API_CATEGORIES_URL, getCategories);

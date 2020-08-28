@@ -6,9 +6,9 @@
 var package = require('../../../package.json');
 
 module.exports = (req, res) => {
-    res.send(`{
-        "version": "${package.version}",
-        "en": "<strong>• New attendance page.<br><br>If you encounter a bug, or you think something is broken, please contact me on Discord:<br><br>MΛX#2231",
-        "fr": "<strong>• Nouvelle page de suivi.<br><br>Si vous rencontrez un bug, ou pensez que quelque chose ne marche pas bien, merci de me contacter sur Discord :<br><br>MΛX#2231"
-    }`);
+    res.send({
+        version: package.version,
+        en: "• New attendance page.<br><br>If you encounter a bug, or you think something is broken, please contact me on Discord:<br><br>MΛX#2231",
+        fr: "• Nouvelle page de suivi.<br><br>Si vous rencontrez un bug, ou pensez que quelque chose ne marche pas bien, merci de me contacter sur Discord :<br><br>MΛX#2231"
+    });
 };

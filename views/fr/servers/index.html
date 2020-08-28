@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Suivix - Sélection d'un server</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+    <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/css/attendance-main.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/utils/Utils.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var css = document.createElement('link');
+            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <script>
+        window.onerror = function () {
+            location.reload();
+        }
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-108500515-2');
+    </script>
+</head>
+
+<body>
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <div class="centered" id="user-loader-image"><div class="loading-user-image"></div></div>
+            <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
+            <div class="title centered" style="display: none;" id="welcome">Bonjour <var class="username"></var></div>
+            <div class="description">QUE VOULEZ-VOUS FAIRE ?</div>
+            <div class="options">
+                <div class="option" id="attendance-option">
+                    <img class="emoji" src="/ressources/done.png">
+                    <div class="optionTitle" id="take-attendance">Faire un Suivi</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+                <div class="option" id="donate-option">
+                    <img class="emoji" src="/icons/donate.png">
+                    <div class="optionTitle">Me Soutenir<div class="optionDescription">J'ai 15 ans et je suis un étudiant français. Suivix est mon premier<br> gros projet. Vous pouvez faire un don pour m'aider<br>à financer mes futures études.</div></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+            </div>
+            <div class="help">BESOIN D'AIDE ?</div>
+            <div class="options">
+                <div class="option" id="support-option">
+                    <img class="emoji" src="/ressources/support-icon.png">
+                    <div class="optionTitle">Rejoindre le serveur de support</div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                </div>
+            </div>
+            <a href="?language=en" class="language-option centered">Not French? Switch to the english version.</a>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="/" class="title">SUIVIX</a>
+        <a href="?language=fr" class="language margin">FR.</a>
+        <a href="?language=en" class="language margin-15">EN.</a>
+    </div>
+    <div class="container">
+        <div class="attendance-card" id="card">
+            <div class="content">
+                <div class="header">
+                    <img src="/images/suivix.png" class="logo">
+                    <h1 class="title" id="title">SÉLECTION D'UN SERVEUR</h1>
+                    <p class="description"></strong></p>
+                    <p class="description" id="attendance-desc">Avant toute chose, cliquez sur le serveur dans lequel
+                        vous voulez effectuer votre suivi.<strong> Vous devez impérativement autoriser suivix à vous envoyer des
+                            messages privés avant de lancer une demande de suivi.
+                        </strong></p>
+                </div>
+                <div class="servers-container">
+                    <div class="servers">
+                        <div class="server-card" id="support">
+                            <p>Suivix © Support<img src="/ressources/support-icon.png"></p>
+                        </div>
+                        <div class="server-card load">
+                            <div width="40" class="loading-image"></div>
+                            <p>Chargement</p>
+                        </div>
+                        <div class="server-card load">
+                            <div width="40" class="loading-image"></div>
+                            <p>Chargement</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="down">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer ">
+        <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
+    </div>
+    <div id="cookies"></div>
+</body>
+<script>
+    initChoice("fr");
+    askCookies("fr");
+    $("#title").css("font-size", "30px")
+</script>
+
+</html>

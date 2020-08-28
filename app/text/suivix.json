@@ -21,12 +21,26 @@
             },
             "request": {
                 "title": "Attendance Request",
-                "description": "Go to {protocol}://{host}/attendance?language=en to take attendance.\n\nNotes :\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
+                "description": "Go to {protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id} to take attendance.\n\nNotes :\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
                 "unableToSendMessage": ":x: | Something went wrong while trying to send the message.\nPlease verify the bot permissions in the channel where you wanted to take attendance.",
                 "help": {
                     "content": "For more information or assistance, please visit https://discord.gg/xRNEzGM.",
                     "title": "Request for assistance",
                     "description": "Suivix includes 1 command and a website:\n```• !suivix\n• {host} (Official Website)```\nUsages :\n-\n`!suivix <aide or help>`\n• Creates an online attendance request\n(Add option \"aide\" or \"help\" will display this page)\n\n:warning: You must not put `<` and `>` in the command synthax. **Options are optional.**\n-\nChangez de langue en utilisant les réactions sous ce message."
+                }
+            },
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Your attendance request has failed",
+                        "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
+                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel."
+                    },
+                    "success": {
+                        "title": "Your request has been finalized",
+                        "dm": "You have finished your attendance request. You will find the result in your Discord private messages.",
+                        "channel": "You have finished your attendance request. You will find the result in the \"#{channel}\" channel on your Discord server."
+                    }
                 }
             }
         },
@@ -51,12 +65,26 @@
             },
             "request": {
                 "title": "Demande de suivi",
-                "description": "Rendez-vous à l'adresse suivante {protocol}://{host}/attendance?language=fr pour effectuer votre suivi visuel.\n\nNotes :\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
+                "description": "Rendez-vous à l'adresse suivante {protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id} pour effectuer votre suivi visuel.\n\nNotes :\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
                 "unableToSendMessage": ":x: | Une erreur est survenue au moment d'envoyer le message.\nVeuillez vérifier les permissions du bot dans le salon où vous effectuez le suivi.",
                 "help": {
                     "content": "Pour toute information ou aide supplémentaire, rendez-vous sur https://discord.gg/xRNEzGM.",
                     "title": "Demande d'aide",
                     "description": "Suivix comporte deux commandes et un site internet :\n```• !suivix\n• !suivixcmd\n• {host} (Site Internet Officiel)```\nUtilisations :\n-\n`!suivix <aide ou help>`\n• Crée une demande de suivi visuel en ligne\n(Ajouter l'option \"aide\" ou \"help\" vous affichera cette page)\n-\n`!suivixcmd <numéro du salon> <numéro du rôle>`\n• Crée une demande de suivi directement sur Discord\n(Ces deux options vous permettent d'effectuer votre suivi sans passer par toutes les étapes)\n\n:warning: Vous ne devez pas mettre `<` et `>` dans la syntaxe de votre commande. **Les options sont facultatives.**\n-\nChange language by using reactions under this message."
+                }
+            },
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Votre suivi n'a pas abouti",
+                        "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
+                    },
+                    "success": {
+                        "title": "Votre demande de suivi a abouti",
+                        "dm": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans vos messages privés Discord.",
+                        "channel": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans le salon \"#{channel}\" de votre serveur Discord."
+                    }
                 }
             }
         }

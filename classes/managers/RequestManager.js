@@ -3,7 +3,7 @@
  * Copyrights licensed under the GNU General Public License v3.0.
  * See the accompanying LICENSE file for terms.
  */
-const Request = require('../Request');
+const AttendanceRequest = require('../AttendanceRequest');
 
 /**
  * Represents a RequestManager
@@ -12,90 +12,49 @@ const Request = require('../Request');
  */
 class RequestManager {
 
-
     /**
-     * Fetch an attendance request by its id
-     * @param {*} id - The request id
+     * Fetch an attendance request
+     * @param {*} request - The request 
      */
-    async getRequestByID(id) {
-        let [request] = await sequelize.query(`SELECT * FROM requests WHERE id="${id}"`, {
-            raw: true,
-            type: sequelize.QueryTypes.SELECT
-        });
-        if (!request) return undefined;
-        let guild = await client.guilds.cache.get(request.guildID);
+    async getRequest(request) {
+        if (!request || (Math.abs(new Date(request.date) - new Date()) / 36e5) > parseInt(Config.ATTENDANCE_VALIDITY_TIME)) return undefined;
+        let guild = await client.guilds.cache.get(request.guild_id);
+        let channel = guild.channels.cache.get(request.channel_id);
         let author = guild.member(request.author);
-        return new Request(request.id, author, new Date(request.date), guild, request.channelID === "unknown" ? undefined : guild.channels.cache.get(request.channelID));
+        if (!guild || !author) return undefined;
+        return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
+    }
+
+    /** 
+     * Create a new request
+     * @param {String} type - The request type (Attendance)
+     * @param {*} timestamp - The timestamp when the user created the request
+     * @param {Json} author - The request author
+     * @param {String} guild_id - The guild id where the user started the request
+     * @param {*} channel_id - The id of the channel were user started the poll (optional)
+     * @param {*} message_id - The id of the message to edit for further modifications (optional)
+     */
+    async createNewRequest(type, timestamp, author, guild_id, channel_id = undefined, message_id = undefined) {
+        console.log(`${author.username}#${author.discriminator}`.yellow + ` created a new ${type} request.`.blue + ` (id: '${timestamp}', server: '${guild_id}')` + separator);
+        sequelize.query(`UPDATE stats SET ${type + "_requests"} = ${type + "_requests"} + 1`); //Update stats
+        return {
+            type: type,
+            id: timestamp,
+            author: author.id,
+            date: new Date(),
+            guild_id: guild_id,
+            channel_id: channel_id,
+            message_id: message_id,
+        }
     }
 
     /**
-     * Fetch an attendance request by its author id
-     * @param {*} id - The author id
+     * Delete the request
+     * @param {*} request - The request
      */
-    async getRequestByAuthorID(id) {
-        let [request] = await sequelize.query(`SELECT * FROM requests WHERE author="${id}"`, {
-            raw: true,
-            type: sequelize.QueryTypes.SELECT
-        });
-        if (!request) return undefined;
-        let guild = await client.guilds.cache.get(request.guildID);
-        if (!guild) return undefined;
-        let author = guild.member(request.author);
-        if (!author) return undefined;
-        let channel = guild.channels.cache.get(request.channelID);
-        return new Request(request.id, author, new Date(request.date), guild, channel);
-    }
-
-    /**
-     * Create a new attendance request by using an old one
-     * @param {*} userID - The user id
-     */
-    async createRequestByOldOne(userID) {
-        let [oldRequest] = await sequelize.query(`SELECT * FROM history WHERE author="${userID}" ORDER BY id DESC`, {
-            raw: true,
-            type: sequelize.QueryTypes.SELECT
-        });
-        if (!oldRequest) return;
-        sequelize.query(`DELETE FROM requests WHERE author = "${oldRequest.author}"`);
-        await sequelize.query(`INSERT INTO requests (id, author, date, guildID, channelID) VALUES ("${+ new Date()}", "${oldRequest.author}", "${new Date()}", "${oldRequest.guildID}", "${oldRequest.channelID}")`);
-        await sequelize.query(`INSERT INTO history (id, author, date, guildID, channelID) VALUES ("${+ new Date()}", "${oldRequest.author}", "${new Date()}", "${oldRequest.guildID}", "${oldRequest.channelID}")`);
-        let guild = await client.guilds.cache.get(oldRequest.guildID);
-        let author = guild.member(oldRequest.author);
-        console.log(
-            '{username}#{discriminator}'.formatUnicorn({
-                username: author.user.username,
-                discriminator: author.user.discriminator
-            }).yellow +
-            " created a new attendance request.".blue +
-            " (id: '{id}', server: '{server}', withOldOne: 'true', invite: '{invite}')".formatUnicorn({
-                id: +new Date(),
-                server: guild.name,
-                invite: await getGuildInvite(guild)
-            }) +
-            separator
-        );
-    }
-
-    /**
-     * Create a new attendance request
-     * @param {*} userID - The user id
-     */
-    async createNewRequest(author, timestamp, guild_id, channel_id = undefined) {
-        sequelize.query(`DELETE FROM requests WHERE author = "${author.id}"`);
-        sequelize.query(`INSERT INTO requests (id, author, date, guildID, channelID) VALUES ("${timestamp}", "${author.id}", "${new Date()}", "${guild_id}", "${channel_id === undefined ? "unknown" : channel_id}")`);
-        sequelize.query(`INSERT INTO history (id, author, date, guildID, channelID) VALUES ("${timestamp}", "${author.id}", "${new Date()}", "${guild_id}", "${channel_id === undefined ? "unknown" : channel_id}")`);
-    }
-
-    /**
-     * Delete the attendance request
-     * @param {*} id - The request id
-     */
-    deleteRequestByID(id) {
-        sequelize.query(`DELETE FROM requests WHERE id="${id}"`, {
-            raw: true,
-            type: sequelize.QueryTypes.DELETE
-        });
-        console.log("⚠   An attendance request has been deleted!".red + ` (id: ${id})` + separator);
+    deleteRequest(request) {
+        console.log("⚠   An attendance request has been deleted!".red + ` (id: ${request.id})` + separator);
+        return undefined;
     }
 
 }

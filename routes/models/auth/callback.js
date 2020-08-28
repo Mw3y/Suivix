@@ -5,7 +5,7 @@
  */
 const RequestManager = require("../../../classes/managers/RequestManager");
 
-module.exports = async(req, res) => {
+module.exports = async (req, res) => {
     try {
         let user = req.session.passport.user.identity = await oauth.getUser(req.session.passport.user.ticket.access_token);
         user.lastFetched = req.session.passport.user.identity.lastFetched = new Date();
@@ -14,13 +14,19 @@ module.exports = async(req, res) => {
             discriminator: user.discriminator
         }).yellow + " logged in on ".blue + new Date().toString().yellow + ".".blue + separator);
 
-        const request = await (new RequestManager()).getRequestByAuthorID(user.id);
-        if ((!request || request.isExpired()) && req.query.redirect !== "false") {
-            res.redirect(Routes.ATTENDANCE_NOREQUEST);
-            if (request && request.isExpired()) console.log("⚠   An user tried to use an old attendance request".red + ` (user: '${user.username}#${user.discriminator}')`.yellow + separator);
+        if (req.session.pending_request) {
+            res.redirect(Routes.ATTENDANCE_NEWREQUEST + "/?guild_id=" + req.session.pending_request.guild_id + "&channel_id=" + req.session.pending_request.channel_id);
+            req.session.pending_request = undefined;
+            return;
+        }
+
+        const request = await new RequestManager().getRequest(req.session.passport.user.attendance_request);
+        if (!request && req.query.redirect !== "false") {
+            res.redirect(Routes.SERVERS_SELECTION);
+            if (request) console.log("⚠   An user tried to use an old attendance request".red + ` (user: '${user.username}#${user.discriminator}')`.yellow + separator);
             if (!request) console.log("⚠   An user tried to use a request which does not exist".red + ` (user: '${user.username}#${user.discriminator}')`.yellow + separator);
         } else if (req.query.redirect === "false") {
-            res.redirect(Routes.ATTENDANCE_SERVERS);
+            res.redirect(Routes.SERVERS_SELECTION);
         } else {
             res.redirect(Routes.ATTENDANCE_PAGE);
         }

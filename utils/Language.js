@@ -3,7 +3,7 @@
  * Copyrights licensed under the GNU General Public License v3.0.
  * See the accompanying LICENSE file for terms.
  */
-const Parser = require("./Parser");
+const UserManager = require("../classes/managers/UserManager");
 
 const supportedLanguages = ["en", "en_US", "fr-Fr", "fr"];
 const defaultLanguage = "fr-FR";
@@ -23,14 +23,18 @@ function detectUserLanguage(req, res) {
  * @param {*} language - The choosen language
  */
 function saveUserLanguage(res, language) {
-    Parser.createCookie(res, "language", language); //Create or update the cookie
+    res.cookie("language", language, {
+        secure: Config.HTTPS_ENABLED, //Secures the cookie if https enabled
+        httpOnly: true, //Another security setting
+        maxAge: 360 * 24 * 60 * 60 * 1000 //The cookie expires in 1 year
+    });
 }
 
 /**
  * Get the user language stored in the cookie language
  * @param {*} req - The http request
  */
-const getUserLanguage = function(req, res) {
+const getUserLanguage = function (req, res) {
     const cookie = req.cookies["language"]; //Fetch the language cookie
     return cookie === undefined ? detectUserLanguage(req, res) : cookie;
 }
@@ -43,27 +47,14 @@ const getUserLanguage = function(req, res) {
 async function handleLanguageChange(reaction, user) {
     if (reaction.emoji.name !== "🇫🇷" && reaction.emoji.name !== "🇬🇧") return;
     var react = reaction.emoji.name === "🇫🇷" ? "fr" : "en";
-    let [dbUser] = await sequelize.query(
-        `SELECT * FROM users WHERE id = ${user.id}`, {
-            raw: true,
-        }
-    );
-    if (!dbUser[0]) {
-        sequelize.query(
-            `INSERT INTO users (id, language) VALUES ("${user.id}", "${react}")`
-        );
-    } else {
-        if (dbUser[0].language === react) return;
-        sequelize.query(
-            `UPDATE users SET language = "${react}" WHERE id = "${user.id}"`
-        );
-    }
-    await sendChangedLanguageMessage(
-        reaction.message.channel,
-        react,
-        user
-    );
 
+    //Refresh user language
+    const manager = new UserManager();
+    let DatabaseUser = await manager.getUserById(user.id);
+    if (DatabaseUser.language !== react) return;
+    await manager.changeUserParam(user.id, "language", react)
+
+    await sendChangedLanguageMessage(reaction.message.channel, react, user);
 }
 
 /**
@@ -85,7 +76,6 @@ async function sendChangedLanguageMessage(channel, language, user) {
     msg.delete({
         timeout: 20000,
     });
-    console.log('{username}#{discriminator}'.formatUnicorn({ username: user.username, discriminator: user.discriminator }).yellow + " changed language option to ".blue + language.yellow + ".".blue + separator);
 }
 
 module.exports = {

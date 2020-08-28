@@ -6,30 +6,27 @@
     <title>Suivix - Attendance Request</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+    <meta name="description"
+        content="You are a professor or maybe even a business manager and you want to take attendance on Discord. No worries! Suivix will take care of it for you.">
     <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
 
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/css/attendance-main.css">
-    <link rel="stylesheet" href="/css/changelog.css">
+    <link rel="stylesheet" href="/css/popup.css">
     <link href="/css/select2.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="/js/jqueryui.js"></script>
     <script src="/utils/Utils.js"></script>
     <script type="text/javascript">
-        (function() {
+        (function () {
             var css = document.createElement('link');
             css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
             css.rel = 'stylesheet';
             css.type = 'text/css';
             document.getElementsByTagName('head')[0].appendChild(css);
         })();
-    </script>
-    <script>
-        window.onerror = function() {
-            location.reload();
-        }
     </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
@@ -45,12 +42,30 @@
 </head>
 
 <body>
-    <div id="overlay">
-        <div id="popup">
-            <div class="news centered"><img src="img/news.svg" class="img" alt="newspaper" height="110px" width="110px"></div>
-            <div class="centered colorHeaderPrimary title">Version <var id="version">Unknown</var></div>
-            <div class="centered colorHeaderSecondary changelog size16"><var id="changelogText">Unable to fetch changelog.</var></div>
+    <div class="overlay" style="display: none;" id="overlay">
+        <div class="popup">
+            <div class="centered"><img class="news" src="/img/news.svg"></div>
+            <div class="title centered margin-top">Version <var id="version">Unknown</var></div>
+            <div class="changelog centered"><var id="changelogText">Unable to fetch changelog.</var></div>
             <div id="close"><i class="fas fa-times-circle"></i></div>
+            <p class="close-info centered">Close this popup by clicking on the "x" icon in the top right corner.</p>
+        </div>
+    </div>
+    <div class="overlay" style="display: none;" id="statement">
+        <div class="popup">
+            <div class="centered"><img class="warning" src="/icons/error-warning.svg"></div>
+            <div class="title centered margin-top" id="statement-title"></div>
+            <div class="changelog centered"><var id="statement-description"></var></div>
+            <button class="popup-button yellow centered" onclick="closePopup('statement');" id="warning-button"
+                style="display: none;">I Understand</button>
+
+            <span style="display: none;" class="centered" id="success-button">
+                <button class="popup-button blue centered margin-right-10"
+                    onclick="redirect('SERVERS_SELECTION', undefined);">Go
+                    Back to Server Selection</button>
+                <button class="popup-button blue centered margin-left-10" id="newRequest">Take
+                    Attendance Again</button>
+            </span>
         </div>
     </div>
     <div class="navbar">
@@ -59,16 +74,19 @@
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar" id="avatar" src=""></p>
+            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
+                id="avatar"></p>
+        <a href="?language=fr" class="language margin">FR.</a>
+        <a href="javascript:void(0)" class="language margin-15">EN.</a>
     </div>
     <div class="container">
-        <var id="requestID" style="display:none"></var>
         <div class="attendance-card" id="card">
             <div class="content">
                 <div class="header">
-                    <img src="/images/list.png" class="logo">
+                    <img src="/images/suivix.png" class="logo">
                     <h1 class="title">TAKE ATTENDANCE</h1>
-                    <p class="description">Your attendance result is defined by the channels and roles you have selected. Suivix allows you to use multiple channels and roles to match any situation.</p>
+                    <p class="description">Suivix allows you to use multiple channels and roles to match most of the
+                        situations.</p>
                 </div>
                 <div class="infos ">
                     <img src="/icons/clock.svg" class="emoji"></img>
@@ -81,10 +99,19 @@
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select "></div>
                 </div>
+                <div class="infos margin-top-5">
+                    <p class="select">Select your timezone:</p>
+                </div>
+                <div class="select-custom" id="select-timezone">
+                    <div style="width: 100%; " class="loading-select "></div>
+                </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection() " title="Clear my selection "><i class="fas fa-redo-alt "></i></button>
-                    <button class="btn black-btn " onclick="deleteRequest() " title="Delete this attendance request "><i class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance(document.getElementById('requestID').innerHTML);" title="Take Attendance "><i class="fas fa-check "></i></button>
+                    <button class="btn white-btn m-right " onclick="clearSelection() " title="Clear my selection "><i
+                            class="fas fa-redo-alt "></i></button>
+                    <button class="btn black-btn " onclick="deleteRequest()" title="Delete this attendance request "><i
+                            class="fas fa-times "></i></button>
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" title="Take Attendance "><i
+                            class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>
             </div>
@@ -97,7 +124,6 @@
 </body>
 <script>
     initAttendance("en");
-    saveTimezoneCookie();
 </script>
 
 </html>

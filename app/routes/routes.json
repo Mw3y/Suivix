@@ -1,10 +1,10 @@
 {
     "HOME_PAGE": "/",
+    "SERVERS_SELECTION": "/servers",
     "ATTENDANCE_PAGE": "/attendance",
-    "ATTENDANCE_SERVERS": "/attendance/servers",
-    "ATTENDANCE_PAGE_DONE": "/attendance/done",
-    "ATTENDANCE_NOREQUEST": "/attendance/norequest",
+    "ATTENDANCE_PAGE_DONE": "/api/get/attendance/done",
     "ATTENDANCE_NEWREQUEST": "/attendance/new",
+    "ATTENDANCE_DELETE": "/attendance/delete",
     "LOGIN_PAGE": "/login",
     "LOGIN_REDIRECT": "/auth/login",
     "LOGOUT_REDIRECT": "/auth/logout",

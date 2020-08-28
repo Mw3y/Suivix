@@ -89,12 +89,16 @@ function getAttendanceStatement(channels, roles) {
             $(".warning").attr("src", "/icons/party.svg")
             $("#newRequest").attr("onclick", "redirect('ATTENDANCE_NEWREQUEST', 'guild_id=" + response.guild_id + (response.channel_id ? "&channel_id=" + response.channel_id : "") + "');")
             $("#newRequest").css("display", "flex");
+            $("#support-option").hide();
+            $("#support-option1").hide();
             $("#statement").show();
         } else {
             $("#loading").hide();
             $("#statement-title").text(response.title);
             $("#statement-description").text(response.description);
             $("#warning-button").show();
+            $("#support-option").show();
+            $("#support-option1").show();
             $("#statement").show();
         }
     }

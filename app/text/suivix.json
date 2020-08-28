@@ -38,8 +38,8 @@
                     },
                     "success": {
                         "title": "Your request has been finalized",
-                        "dm": "You have finished your attendance request. You will find the result in your Discord private messages.",
-                        "channel": "You have finished your attendance request. You will find the result in the \"#{channel}\" channel on your Discord server."
+                        "dm": "You have finished your attendance request. The result has been sent in your Discord private messages.",
+                        "channel": "You have finished your attendance request. The result has been sent in the \"#{channel}\" channel on your Discord server."
                     }
                 }
             }

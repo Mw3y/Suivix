@@ -38,7 +38,8 @@
                     },
                     "success": {
                         "title": "Your request has been finalized",
-                        "description": "You have finished your attendance request. You will find the result in your Discord private messages."
+                        "dm": "You have finished your attendance request. You will find the result in your Discord private messages.",
+                        "channel": "You have finished your attendance request. You will find the result in the \"#{channel}\" channel on your Discord server."
                     }
                 }
             }
@@ -81,7 +82,8 @@
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",
-                        "description": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans vos messages privés Discord."
+                        "dm": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans vos messages privés Discord.",
+                        "channel": "Vous avez terminé votre demande de suivi. Vous trouverez le résultat dans le salon \"#{channel}\" de votre serveur Discord."
                     }
                 }
             }

@@ -102,7 +102,7 @@ class Request {
         let statement = {
             success: true,
             title: TextTranslation.website.statement.success.title,
-            description: TextTranslation.website.statement.success.description,
+            description: TextTranslation.website.statement.success.dm,
             guild_id: this.guild.id
         };
 
@@ -167,6 +167,8 @@ class Request {
             .catch(function (err) {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
+
+        if(this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({channel: this.channel.name})
 
         if (!resultMessage) {
             statement.success = false;

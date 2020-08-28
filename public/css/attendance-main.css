@@ -553,6 +553,10 @@ button {
         font-weight: 500;
     }
 
+    .servers-container .servers .server-card p {
+        font-size: 10px;
+    }
+
     #username,
     #discriminator,
     #user-loader,

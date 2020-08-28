@@ -84,10 +84,11 @@ function getAttendanceStatement(channels, roles) {
             $("#loading").hide();
             $("#statement-title").text(response.title);
             $("#statement-description").text(response.description);
-            $("#success-button").css("display", "inline");
+            $("#redirect-button").css("display", "flex");
             $("#warning-button").hide();
             $(".warning").attr("src", "/icons/party.svg")
             $("#newRequest").attr("onclick", "redirect('ATTENDANCE_NEWREQUEST', 'guild_id=" + response.guild_id + "');")
+            $("#newRequest").css("display", "flex");
             $("#statement").show();
         } else {
             $("#loading").hide();

@@ -81,7 +81,7 @@
     text-justify: inter-word;
     max-width: 400px;
     color: #b9bbbe;
-    margin-top: 35px;
+    margin-top: 10px;
     font-size: 20px;
 }
 
@@ -101,6 +101,14 @@
     margin-top: 15%;
     transition: all 0.2s ease-in-out;
     padding: 2px 10px;
+}
+
+.statement-buttons {
+    margin-top: 35px;
+}
+
+.notRound {
+    border-radius: 0 !important;
 }
 
 .yellow {

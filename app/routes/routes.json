@@ -12,7 +12,6 @@
     "API_GUILDS_URL": "/api/get/user/guilds",
     "API_URL_FETCHER_URL": "/api/get/url",
     "API_CHANNELS_URL": "/api/get/channels",
-    "API_CATEGORIES_URL": "/api/get/categories",
     "API_ROLES_URL": "/api/get/roles",
     "API_STATS_URL": "/api/get/stats",
     "API_CHANGELOG_URL": "/api/get/changelog",

@@ -53,25 +53,16 @@ class Request {
     }
 
     /**
-     * Returns the entire list of voice channels in the guild that the user can see
+     * Returns the entire list of voice channels with their category in the guild that the user can see
      */
     getVoiceChannels() {
-        return this.guild.channels.cache.filter(channel => channel.type === "voice" && channel.permissionsFor(this.author).has('VIEW_CHANNEL'));
-    }
-
-    /**
-     * Returns the entire list of voice channels categories
-     */
-    getCategories(channels) {
-        let channelsCategories = new Map();
-        channels.forEach(function (c) {
-            if (c.parent) {
-                channelsCategories[c.id] = c.parent.name
-            } else {
-                channelsCategories[c.id] = "Unknown";
-            }
-        });
-        return channelsCategories
+        const voiceChannels = this.guild.channels.cache.filter(channel => channel.type === "voice" && channel.permissionsFor(this.author).has('VIEW_CHANNEL'));
+        const channels = {};
+        voiceChannels.sort(function (a, b) {
+            return a.name.localeCompare(b.name);
+        })
+        voiceChannels.forEach(channel => channels[channel.id] = {category: channel.parent ? channel.parent.name : undefined, name: channel.name})
+        return channels;
     }
 
     /**

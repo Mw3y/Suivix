@@ -28,7 +28,6 @@ const getUser = require('./models/api/user'),
     getUserGuilds = require('./models/api/guilds'),
     getUrl = require('./models/api/url'),
     getChannels = require('./models/api/channels'),
-    getCategories = require('./models/api/categories'),
     getRoles = require('./models/api/roles'),
     getStats = require('./models/api/stats'),
     getChangelog = require('./models/api/changelog'),
@@ -78,7 +77,6 @@ class RoutesList {
         
         routes.get(Routes.API_URL_FETCHER_URL, getUrl);
         routes.get(Routes.API_CHANNELS_URL, getChannels);
-        routes.get(Routes.API_CATEGORIES_URL, getCategories);
         routes.get(Routes.API_ROLES_URL, getRoles);
         routes.get(Routes.API_STATS_URL, getStats);
         routes.get(Routes.API_CHANGELOG_URL, getChangelog);

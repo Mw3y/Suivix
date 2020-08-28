@@ -505,23 +505,14 @@ function initSelect2ChannelList(parents, lang) {
             return;
         }
         const channelsJSON = JSON.parse(this.response);
-        request.open('GET', getUrl(`api/get/categories`, window), true)
-        request.onload = function () {
-            const response = JSON.parse(this.response);
-            const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
-            document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
-            initSelect2($("#select-1"), placeholder, [], 4)
-            channelsJSON.sort(function (a, b) {
-                return a.name.localeCompare(b.name);
-            })
-            for (var i = 0; i < channelsJSON.length; i++) {
-                const text = parents ? ` (${parseCategory(response[channelsJSON[i].id]).replace("(", "[").replace(")", "]")}) ` + channelsJSON[i].name : channelsJSON[i].name;
-                var newOption = new Option(text, channelsJSON[i].id, false, false);
-                $('#select-1').append(newOption).trigger('change');
-            }
-
+        const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
+        document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
+        initSelect2($("#select-1"), placeholder, [], 4)
+        for (let key in channelsJSON) {
+            const text = parents ? `${parseCategory(channelsJSON[key].category)} ` + channelsJSON[key].name : channelsJSON[key].name;
+            var newOption = new Option(text, key, false, false);
+            $('#select-1').append(newOption).trigger('change');
         }
-        request.send()
     }
     request.send();
 }
@@ -537,7 +528,7 @@ function deleteRequest(type = "attendance") {
 }
 
 const parseCategory = function (name) {
-    return name.length > 30 ? name.substring(0, 30) + "..." : name;
+    return name ? "(" + (name.length > 30 ? name.substring(0, 30) + "..." : name) + ")" : "";
 }
 
 
@@ -794,10 +785,10 @@ function loadUser(language) {
             const response = JSON.parse(this.responseText);
             const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
             $(".buttonUser")
-            .html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
-            '</p><p class="buttonUserHover">' +
-            (language === "en" ? "Logout" : "Déconnexion") + '</p>')
-            .attr("href", "/auth/logout?redirectTo=/");
+                .html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+                    '</p><p class="buttonUserHover">' +
+                    (language === "en" ? "Logout" : "Déconnexion") + '</p>')
+                .attr("href", "/auth/logout?redirectTo=/");
             $(".buttonUse").html('<i class="fas fa-chevron-right buttonIcon"></i> ' + (language === "en" ? "Take attendance" : "Faire un suivi"))
         }
     }

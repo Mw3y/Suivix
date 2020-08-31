@@ -51,7 +51,7 @@ async function handleLanguageChange(reaction, user) {
     //Refresh user language
     const manager = new UserManager();
     let DatabaseUser = await manager.getUserById(user.id);
-    if (DatabaseUser.language !== react) return;
+    if (DatabaseUser.language === react) return;
     await manager.changeUserParam(user.id, "language", react)
 
     await sendChangedLanguageMessage(reaction.message.channel, react, user);

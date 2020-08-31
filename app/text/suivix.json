@@ -19,6 +19,10 @@
                 "tooMuchCategories": "Too much categories.",
                 "unableToSendMessage": ":x: | Something went wrong while trying to send your attendance result.\nPlease verify the bot permissions in the channel where you wanted to take attendance."
             },
+            "warnings": {
+                "title": "Disclaimer",
+                "endOfSupport": "The command you want to use is no longer updated because it's obsolete.\n\u200b\nThis command does not have the features present on the web version of Suivix and contains bugs. Furthermore, you can't use it because it's not translated into English. Please use `!suivix` instead."
+            },
             "request": {
                 "title": "Attendance Request",
                 "description": "Go to {protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id} to take attendance.\n\nNotes :\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
@@ -62,6 +66,10 @@
                 "tooMuchPresents": "Trop de personnes sont présentes.```",
                 "tooMuchCategories": "Trop de catégories.",
                 "unableToSendMessage": ":x: | Une erreur est survenue au moment d'envoyer le résultat du suivi.\nVeuillez vérifier les permissions du bot dans le salon où vous effectuez le suivi."
+            },
+            "warnings": {
+                "title": "Avertissement",
+                "endOfSupport": "La commande que vous venez d'utiliser n'est plus mise à jour car elle est obsolète.\n\u200b\nCette commande n'a pas les fonctionnalités présentes sur la version web de Suivix et contient des bugs. Merci de favoriser l'utilisation de `!suivix`."
             },
             "request": {
                 "title": "Demande de suivi",

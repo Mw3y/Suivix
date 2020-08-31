@@ -4,6 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 const Discord = require("discord.js"),
+    UserManager = require('../managers/UserManager'),
     moment = require('moment');
 
 /**
@@ -15,6 +16,17 @@ const Discord = require("discord.js"),
 const suivixCommand = async function (message, args, client) {
     const guild = message.guild; // The guild
     const channel = message.channel; //The channel were the command has been trigerred
+
+    const user = await new UserManager().getUserById(message.author.id, "fr");
+    const language = user.language === "fr" ? "fr" : "en";
+    const TextTranslation = Text.suivix.translations[language];
+    message.channel.send(new Discord.MessageEmbed()
+        .setTitle(TextTranslation.warnings.title)
+        .setDescription(TextTranslation.warnings.endOfSupport)
+        .setThumbnail("https://i.imgur.com/Q1rdarX.png")
+        .setColor("#ffcc4d"))
+
+    if (language === "en") return;
 
     let guildChannels = await guild.channels.cache.filter(c => c.type === "voice");
     let member = guild.member(message.author);

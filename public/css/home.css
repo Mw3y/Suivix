@@ -109,7 +109,6 @@ textarea {
 
 .form {
     max-width: 50%;
-    ;
 }
 
 .container {
@@ -163,9 +162,8 @@ textarea {
 }
 
 .center {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+    display: block;
+    margin: 0 auto;
 }
 
 .illustration {

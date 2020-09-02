@@ -6,6 +6,10 @@
     margin-bottom: 14px;
 }
 
+.select2-category {
+    font-size: 12px;
+}
+
 .select2-container {
     box-sizing: border-box;
     display: inline-block;
@@ -122,9 +126,12 @@
 }
 
 .select2-results__option {
-    padding: 3px;
+    font-size: 14px;
+    padding: 7px 3px;
     user-select: none;
-    -webkit-user-select: none
+    -webkit-user-select: none;
+    border-bottom: 1px solid;
+    border-bottom-color: rgba(44, 47, 51, .3);
 }
 
 .select2-results__option[aria-selected] {
@@ -421,7 +428,7 @@
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     text-align: left;
-    background-color: #23272A;
+    background-color: none;
     border-radius: 4px;
     margin-right: 4px;
 }

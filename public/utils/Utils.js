@@ -31,7 +31,7 @@ const initAttendance = function (lang) {
         if (response.attendance_request) {
             initSelect2ChannelList(true, lang);
             initSelect2RoleList(lang);
-            initSelect2Timezone();
+            initSelect2Timezone(lang);
         } else {
             redirect("SERVERS_SELECTION");
         }
@@ -121,13 +121,30 @@ function initSelect2RoleList(lang) {
         })
         for (var i = 0; i < response.length; i++) {
             var newOption = new Option(response[i].name, response[i].id, false, false);
-            $('#select-2').append(newOption).trigger('change');
+            const option = $(newOption).appendTo('#select-2').trigger('change');
+            const hexaColor = response[i].color === 0 ? "fff" : response[i].color.toString(16).padStart(6, '0');
+            const colorArray = hex2RGB(hexaColor);
+            const color = hexaColor !== "fff" ? "rgba(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ",.1)" : "#222326";
+            $('head').append('<style type="text/css">.select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + ') {color: #' + hexaColor + '; border-radius: 4px; margin-bottom: 4px; text-align: left;} .select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + '):hover {background: ' + color + ';}</style>');
         }
     }
     request.send();
 }
 
-function initSelect2Timezone() {
+const RGB_HEX = /^#?(?:([\da-f]{3})[\da-f]?|([\da-f]{6})(?:[\da-f]{2})?)$/i;
+
+const hex2RGB = str => {
+    const [, short, long] = String(str).match(RGB_HEX) || [];
+
+    if (long) {
+        const value = Number.parseInt(long, 16);
+        return [value >> 16, value >> 8 & 0xFF, value & 0xFF];
+    } else if (short) {
+        return Array.from(short, s => Number.parseInt(s, 16)).map(n => (n << 4) | n);
+    }
+}
+
+function initSelect2Timezone(lang) {
     var aryIannaTimeZones = [
         'Europe/Andorra',
         'Asia/Dubai',
@@ -480,7 +497,8 @@ function initSelect2Timezone() {
     ];
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     document.getElementById("select-timezone").innerHTML = "<select id='select-3'multiple><option><select></option></select > ";
-    initSelect2($("#select-3"), "Timezone 🌎", aryIannaTimeZones, 1)
+    initSelect2($("#select-3"), lang === "en" ? "Timezone 🌎" : "Fuseau Horaire 🌎", aryIannaTimeZones, 1)
+    $('head').append('<style type="text/css">.select2-results__options[id*="select-3"] .select2-results__option:hover {background: ' + "#23272A" + ';}</style>');
     // Set selected 
     $('#select-3') //empty select
         .val(timezone) //select option of select2
@@ -509,10 +527,11 @@ function initSelect2ChannelList(parents, lang) {
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
         initSelect2($("#select-1"), placeholder, [], 4)
         for (let key in channelsJSON) {
-            const text = parents ? `${parseCategory(channelsJSON[key].category)} ` + channelsJSON[key].name : channelsJSON[key].name;
+            const text = parents ? parseCategory(channelsJSON[key].category) + " " + channelsJSON[key].name : channelsJSON[key].name;
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
         }
+        $('head').append('<style type="text/css">.select2-results__options[id*="select-1"] .select2-results__option:hover {background: ' + "#23272A" + ';}</style>');
     }
     request.send();
 }
@@ -531,7 +550,6 @@ const parseCategory = function (name) {
     return name ? "(" + (name.length > 30 ? name.substring(0, 30) + "..." : name) + ")" : "";
 }
 
-
 function redirect(route, params) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/url`, window), true)
@@ -543,18 +561,24 @@ function redirect(route, params) {
     request.send();
 }
 
+function formatState(state) {
+    if (!state.id) {
+        return state.text;
+    }
+    var $state = $(
+        '<span class="color-element color-' + state.element.value + '">' + state.text + '</span>'
+    );
+    return $state;
+};
+
 function initSelect2(select, placeholder, data, max) {
     select.select2({
-        minimumResultsForSearch: -1,
         placeholder: placeholder,
         width: "100%",
         data: data,
         maximumSelectionLength: max,
-        language: "fr"
-    });
-    select.on('select2:opening select2:closing', function (event) {
-        var $searchfield = $('#' + event.target.id).parent().find('.select2-search__field');
-        $searchfield.prop('disabled', true);
+        templateResult: formatState,
+        templateSelection: formatState
     });
 }
 

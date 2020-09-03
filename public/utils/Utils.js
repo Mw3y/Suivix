@@ -31,7 +31,7 @@ const initAttendance = function (lang) {
         if (response.attendance_request) {
             initSelect2ChannelList(true, lang);
             initSelect2RoleList(lang);
-            initSelect2Timezone();
+            initSelect2Timezone(lang);
         } else {
             redirect("SERVERS_SELECTION");
         }
@@ -144,7 +144,7 @@ const hex2RGB = str => {
     }
 }
 
-function initSelect2Timezone() {
+function initSelect2Timezone(lang) {
     var aryIannaTimeZones = [
         'Europe/Andorra',
         'Asia/Dubai',
@@ -497,7 +497,8 @@ function initSelect2Timezone() {
     ];
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     document.getElementById("select-timezone").innerHTML = "<select id='select-3'multiple><option><select></option></select > ";
-    initSelect2($("#select-3"), "Timezone 🌎", aryIannaTimeZones, 1)
+    initSelect2($("#select-3"), lang === "en" ? "Timezone 🌎" : "Fuseau Horaire 🌎", aryIannaTimeZones, 1)
+    $('head').append('<style type="text/css">.select2-results__options[id*="select-3"] .select2-results__option:hover {background: ' + "#23272A" + ';}</style>');
     // Set selected 
     $('#select-3') //empty select
         .val(timezone) //select option of select2
@@ -525,14 +526,12 @@ function initSelect2ChannelList(parents, lang) {
         const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
         initSelect2($("#select-1"), placeholder, [], 4)
-        let i = 0;
         for (let key in channelsJSON) {
             const text = parents ? parseCategory(channelsJSON[key].category) + " " + channelsJSON[key].name : channelsJSON[key].name;
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
-            $('head').append('<style type="text/css">.select2-results__options[id*="select-1"] .select2-results__option:nth-child(' + (i + 1) + '):hover {background: ' + "#23272A" + ';}</style>');
-            i++;
         }
+        $('head').append('<style type="text/css">.select2-results__options[id*="select-1"] .select2-results__option:hover {background: ' + "#23272A" + ';}</style>');
     }
     request.send();
 }
@@ -548,7 +547,7 @@ function deleteRequest(type = "attendance") {
 }
 
 const parseCategory = function (name) {
-    return name ? "<span class='select2-category'>(" + (name.length > 30 ? name.substring(0, 30) + "..." : name) + ")</span>" : "";
+    return name ? "(" + (name.length > 30 ? name.substring(0, 30) + "..." : name) + ")" : "";
 }
 
 function redirect(route, params) {

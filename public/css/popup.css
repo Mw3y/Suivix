@@ -80,9 +80,9 @@
     text-align: justify;
     text-justify: inter-word;
     max-width: 400px;
-    color: #b9bbbe;
+    color: #fff;
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .popup .description {
@@ -92,6 +92,11 @@
     line-height: 18px;
     color: #b9bbbe;
     margin-top: 32px;
+}
+
+.moreInfos {
+    font-size: 14px;
+    color: #b9bbbe;
 }
 
 .popup .popup-button {
@@ -142,12 +147,10 @@
 .popup .language-option {
     font-size: 14px;
     line-height: 18px;
-    color: #b9bbbe;
+    color: #fff;
     text-decoration: none;
-    position: fixed;
-    bottom: 10px;
-    width: 93%;
     text-align: center;
+    margin-top: 10px;
 }
 
 .popup .language-option:hover {

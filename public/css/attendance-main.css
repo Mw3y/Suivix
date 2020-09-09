@@ -456,10 +456,11 @@ button {
 }
 
 .down {
-    font-size: 25px;
+    font-size: 36px;
     color: #fff;
     text-align: center;
     margin-top: 10px;
+    padding: 5px;
     animation: float 3s ease-out infinite;
 }
 

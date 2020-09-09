@@ -394,6 +394,15 @@ button {
     }
 }
 
+.text-separator {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #b9bbbe;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
 .servers-container {
     height: 145px;
     position: relative;

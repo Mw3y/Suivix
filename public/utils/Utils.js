@@ -703,6 +703,7 @@ function initServerSelection(language, type) {
         const add = ["Add Suivix", "Ajouter Suivix"];
         let i = 0;
         let isOnSupport = false;
+        let separator = false;
         for (var k in response) {
             if (response[k].id === "705806416795009225") {
                 $("#support").click(function () {
@@ -712,6 +713,10 @@ function initServerSelection(language, type) {
                 continue;
             };
             if (!response[k].suivix && (response[k].permissions & 0x20) !== 32) continue;
+            if(!separator && !response[k].suivix) {
+                separator = true;
+                $(".servers").append('<div class="text-separator">' + (language === "en" ? 'INSTALL SUIVIX' : "INSTALLER SUIVIX") + '</div>')
+            }
             $(".servers").append('<div class="server-card" id="' + response[k].id + '" suivix="' + response[k].suivix + '">' +
                 (response[k].suivix ? "" : '<button' +
                     ' class="add" title="' + add[lang] + '"><i class="fas fa-plus"></i></button>') +

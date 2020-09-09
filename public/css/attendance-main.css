@@ -397,6 +397,7 @@ button {
 .servers-container {
     height: 145px;
     position: relative;
+    right: -6px;
 }
 
 .servers-container .servers {

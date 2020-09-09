@@ -818,3 +818,7 @@ function loadUser(language) {
     }
     xmlHttp.send();
 }
+
+function displaySupportPopup(language) {
+    $('#overlay').show();
+}

@@ -195,7 +195,7 @@ body {
     max-width: 400px;
     max-height: 900px;
     background-color: #23272A;
-    border-radius: 15px;
+    border-radius: 8px;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
 }
@@ -209,11 +209,13 @@ body {
 }
 
 .container .attendance-card .content .header .logo {
-    max-width: 175px;
+    max-width: 125px;
+    padding: 15px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
 }
 
 .container .attendance-card .content .header .title {
@@ -251,6 +253,14 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 15px;
+    padding: 10px;
+}
+
+.separator {
+    height: 4px;
+    border-radius: 150px;
+    background: #fff;
+    margin-bottom: 12px;
 }
 
 button {
@@ -496,6 +506,12 @@ button {
     }
 }
 
+@media (max-height: 700px) {
+    .footer {
+        display: none;
+    }
+}
+
 @media (max-aspect-ratio: 16/9) {
     .layer1 {
         display: none;
@@ -530,13 +546,13 @@ button {
 
     .container .attendance-card .content .header .title {
         color: #fff;
-        font-size: 20px;
+        font-size: 26px;
         text-align: center;
     }
 
     .container .attendance-card .content .header .description {
         color: #fff;
-        font-size: 12px;
+        font-size: 14px;
         text-align: center;
     }
 

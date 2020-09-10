@@ -291,8 +291,7 @@ button {
 }
 
 .blue-btn {
-    background: rgb(63, 94, 251);
-    background: linear-gradient(45deg, rgba(63, 94, 251, 1) 0%, rgba(114, 137, 218, 1) 100%);
+    background: #7289DA;
     background-size: 200%;
 }
 

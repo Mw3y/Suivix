@@ -40,41 +40,49 @@
 
 <body>
     <div class="overlay" id="overlay">
-        <div class="popup">
-            <div class="centered" id="user-loader-image"><div class="loading-user-image"></div></div>
-            <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
-            <div class="title centered" id="welcome" style="display: none;">Hello <var class="username"></var></div>
-            <div class="description">WHAT WOULD YOU LIKE TO DO?</div>
-            <div class="options">
-                <div class="option" id="attendance-option">
-                    <img class="emoji" src="/ressources/done.png">
-                    <div class="optionTitle" id="take-attendance">Take Attendance</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+        <div class="popup-center">
+            <div class="popup">
+                <div class="centered" id="user-loader-image">
+                    <div class="loading-user-image"></div>
                 </div>
-                <div class="option" id="donate-option">
-                    <img class="emoji" src="/icons/donate.png">
-                    <div class="optionTitle">Support Me<div class="optionDescription">I'm a 15-year-old French student and Suivix is my first big project.<br>You can donate to help me finance my future studies.</div></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
+                <div class="title centered" id="welcome" style="display: none;">Hello <var class="username"></var></div>
+                <div class="description">WHAT WOULD YOU LIKE TO DO?</div>
+                <div class="options">
+                    <div class="option" id="attendance-option">
+                        <img class="emoji" src="/ressources/done.png">
+                        <div class="optionTitle" id="take-attendance">Take Attendance</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                    <div class="option" id="donate-option">
+                        <img class="emoji" src="/icons/donate.png">
+                        <div class="optionTitle">Support Me<div class="optionDescription">I'm a 15-year-old French
+                                student and Suivix is my first big project.<br>You can donate to help me finance my
+                                future studies.</div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
                 </div>
+                <div class="help">NEED SOME HELP?</div>
+                <div class="options">
+                    <div class="option" id="support-option">
+                        <img class="emoji" src="/ressources/support-icon.png">
+                        <div class="optionTitle">Join Suivix Support server</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                </div>
+                <a href="?language=fr" class="language-option centered">Vous n'êtes pas Anglais? Optez pour la version
+                    Française.</a>
             </div>
-            <div class="help">NEED SOME HELP?</div>
-            <div class="options">
-                <div class="option" id="support-option">
-                    <img class="emoji" src="/ressources/support-icon.png">
-                    <div class="optionTitle">Join Suivix Support server</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
-                </div>
-            </div>
-            <a href="?language=fr" class="language-option centered">Vous n'êtes pas Anglais? Optez pour la version Française.</a>
         </div>
     </div>
     <div class="navbar">
@@ -90,7 +98,8 @@
                     <h1 class="title">Select a server</h1>
                     <div class="separator centered" style="width: 125px"></div>
                     <p class="description" id="attendance-desc">Before anything, click on the server in which you want
-                        to take attendance. If you see a "+" next to the server icon, it means Suivix is not installed on this server.</p>
+                        to take attendance. If you see a "+" next to the server icon, it means Suivix is not installed
+                        on this server.</p>
                 </div>
                 <div class="servers-container">
                     <div class="servers">

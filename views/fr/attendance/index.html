@@ -43,56 +43,61 @@
 
 <body>
     <div class="overlay" style="display: none;" id="overlay">
-        <div class="popup">
-            <div class="centered"><img class="news" src="/img/news.svg"></div>
-            <div class="title centered margin-top">Version <var id="version">Inconnue</var></div>
-            <div class="changelog centered"><var id="changelogText">Impossible de récupérer la liste des
-                    changements.</var></div>
-            <div id="close"><i class="fas fa-times-circle"></i></div>
-            <p class="close-info centered">Fermez ce popup en cliquant sur la croix en haut à droite.</p>
+        <div class="popup-center">
+            <div class="popup">
+                <div class="centered"><img class="news" src="/img/news.svg"></div>
+                <div class="title centered margin-top">Version <var id="version">Inconnue</var></div>
+                <div class="changelog centered"><var id="changelogText">Impossible de récupérer la liste des
+                        changements.</var></div>
+                <div id="close"><i class="fas fa-times-circle"></i></div>
+                <p class="close-info centered">Fermez ce popup en cliquant sur la croix en haut à droite.</p>
+            </div>
         </div>
     </div>
     <div class="overlay" style="display: none;" id="statement">
-        <div class="popup">
-            <div class="centered"><img class="warning" src="/icons/error-warning.svg"></div>
-            <div class="title centered margin-top" id="statement-title"></div>
-            <div class="changelog centered"><var id="statement-description"></var></div>
+        <div class="popup-center">
+            <div class="popup">
+                <div class="centered"><img class="warning" src="/icons/error-warning.svg"></div>
+                <div class="title centered margin-top" id="statement-title"></div>
+                <div class="changelog centered"><var id="statement-description"></var></div>
 
-            <div class="options statement-buttons">
-                <div class="option" id="warning-button" onclick="closePopup('statement');" style="display: none;">
-                    <img class="emoji" src="/icons/thumbsup.png">
-                    <div class="optionTitle">J'ai compris</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                <div class="options statement-buttons">
+                    <div class="option" id="warning-button" onclick="closePopup('statement');" style="display: none;">
+                        <img class="emoji" src="/icons/thumbsup.png">
+                        <div class="optionTitle">J'ai compris</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                    <div class="option" id="redirect-button" onclick="redirect('SERVERS_SELECTION');"
+                        style="display: none;">
+                        <img class="emoji notRound" src="/icons/servers.png">
+                        <div class="optionTitle">Sélectionner un autre serveur</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                    <div class="option" id="newRequest" style="display: none;">
+                        <img class="emoji notRound" src="/icons/redo.png">
+                        <div class="optionTitle">Refaire un suivi</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
                 </div>
-                <div class="option" id="redirect-button" onclick="redirect('SERVERS_SELECTION');" style="display: none;">
-                    <img class="emoji notRound" src="/icons/servers.png">
-                    <div class="optionTitle">Sélectionner un autre serveur</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
-                </div>
-                <div class="option" id="newRequest" style="display: none;">
-                    <img class="emoji notRound" src="/icons/redo.png">
-                    <div class="optionTitle">Refaire un suivi</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
-                </div>
-            </div>
-            <div class="help" id="support-option" style="display: none;">BESOIN D'AIDE ?</div>
-            <div class="options" id="support-option1" style="display: none;">
-                <div class="option" onClick="redirect('API_SUPPORT_URL')">
-                    <img class="emoji" src="/ressources/support-icon.png">
-                    <div class="optionTitle">Rejoindre le serveur de support</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                <div class="help" id="support-option" style="display: none;">BESOIN D'AIDE ?</div>
+                <div class="options" id="support-option1" style="display: none;">
+                    <div class="option" onClick="redirect('API_SUPPORT_URL')">
+                        <img class="emoji" src="/ressources/support-icon.png">
+                        <div class="optionTitle">Rejoindre le serveur de support</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
                 </div>
             </div>
         </div>

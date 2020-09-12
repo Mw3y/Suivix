@@ -45,41 +45,49 @@
 
 <body>
     <div class="overlay" id="overlay">
-        <div class="popup">
-            <div class="centered" id="user-loader-image"><div class="loading-user-image"></div></div>
-            <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
-            <div class="title centered" style="display: none;" id="welcome">Bonjour <var class="username"></var></div>
-            <div class="description">QUE VOULEZ-VOUS FAIRE ?</div>
-            <div class="options">
-                <div class="option" id="attendance-option">
-                    <img class="emoji" src="/ressources/done.png">
-                    <div class="optionTitle" id="take-attendance">Faire un Suivi</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+        <div class="popup-center">
+            <div class="popup">
+                <div class="centered" id="user-loader-image">
+                    <div class="loading-user-image"></div>
                 </div>
-                <div class="option" id="donate-option">
-                    <img class="emoji" src="/icons/donate.png">
-                    <div class="optionTitle">Me Soutenir<div class="optionDescription">J'ai 15 ans et je suis un étudiant français. Suivix est mon premier<br> gros projet. Vous pouvez faire un don pour m'aider<br>à financer mes futures études.</div></div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                <div style="width: 150px; display: block;" class="loading-text centered" id="user-loader"></div>
+                <div class="title centered" style="display: none;" id="welcome">Bonjour <var class="username"></var>
                 </div>
+                <div class="description">QUE VOULEZ-VOUS FAIRE ?</div>
+                <div class="options">
+                    <div class="option" id="attendance-option">
+                        <img class="emoji" src="/ressources/done.png">
+                        <div class="optionTitle" id="take-attendance">Faire un Suivi</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                    <div class="option" id="donate-option">
+                        <img class="emoji" src="/icons/donate.png">
+                        <div class="optionTitle">Me Soutenir<div class="optionDescription">J'ai 15 ans et je suis un
+                                étudiant français. Suivix est mon premier<br> gros projet. Vous pouvez faire un don pour
+                                m'aider<br>à financer mes futures études.</div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                </div>
+                <div class="help">BESOIN D'AIDE ?</div>
+                <div class="options">
+                    <div class="option" id="support-option">
+                        <img class="emoji" src="/ressources/support-icon.png">
+                        <div class="optionTitle">Rejoindre le serveur de support</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                            height="24">
+                            <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                    </div>
+                </div>
+                <a href="?language=en" class="language-option centered">Not French? Switch to the english version.</a>
             </div>
-            <div class="help">BESOIN D'AIDE ?</div>
-            <div class="options">
-                <div class="option" id="support-option">
-                    <img class="emoji" src="/ressources/support-icon.png">
-                    <div class="optionTitle">Rejoindre le serveur de support</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
-                        height="24">
-                        <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
-                </div>
-            </div>
-            <a href="?language=en" class="language-option centered">Not French? Switch to the english version.</a>
         </div>
     </div>
     <div class="navbar">
@@ -96,7 +104,8 @@
                     <div class="separator centered" style="width: 125px"></div>
                     <p class="description"></strong></p>
                     <p class="description" id="attendance-desc">Avant toute chose, cliquez sur le serveur dans lequel
-                        vous voulez effectuer votre suivi. Si un "+" est affiché, cela signifie que Suivix n'est pas installé sur ce serveur.</p>
+                        vous voulez effectuer votre suivi. Si un "+" est affiché, cela signifie que Suivix n'est pas
+                        installé sur ce serveur.</p>
                 </div>
                 <div class="servers-container">
                     <div class="servers">

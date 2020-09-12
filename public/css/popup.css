@@ -1,5 +1,6 @@
 .overlay {
-    position: fixed;
+    display: table;
+    position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
@@ -12,22 +13,42 @@
     background-position: center top;
 }
 
+.popup-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 .popup {
     background: #2b3033;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     padding: 16px;
-    min-width: 420px;
-    max-width: 600px;
-    min-height: 500px;
-    position: relative;
+    min-width: 300px;
+    max-width: 425px;
+    min-height: 550px;
     z-index: 130;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
+    margin: auto;
+
+    animation-name: bounceIn;
+    animation-duration: 400ms;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes bounceIn{
+  0%{
+    transform: scale(0.5) translate3d(0,0,0);
+  }
+  50%{
+    transform: scale(1.1);
+  }
+  80%{
+    transform: scale(0.89);
+  }
+  100%{
+    transform: scale(1) translate3d(0,0,0);
+  }
 }
 
 #close {
@@ -228,8 +249,8 @@
 
     .popup {
         min-width: 350px;
-        max-width: 375px;
-        min-height: 525px;
+        max-width: 100%;
+        min-height: 100%;
     }
 
     .popup .close-info,

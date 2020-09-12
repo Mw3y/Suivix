@@ -168,10 +168,14 @@
 .popup .language-option {
     font-size: 14px;
     line-height: 18px;
-    color: #fff;
+    color: #e6e6e6;
     text-decoration: none;
     text-align: center;
     margin-top: 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
 }
 
 .popup .language-option:hover {

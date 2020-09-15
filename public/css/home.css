@@ -501,7 +501,7 @@ textarea {
 }
 
 @media only screen and (max-width: 800px) {
-    #pc-content {
+    .pc-content {
         display: none;
     }
 
@@ -555,7 +555,7 @@ textarea {
 }
 
 @media only screen and (max-width: 1537px) {
-    #pc-menu,
+    .pc-menu,
     .nav__links,
     .cta {
         display: none;

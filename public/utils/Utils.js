@@ -733,7 +733,7 @@ function initServerSelection(language, type) {
             i++;
         }
         if (!isOnSupport) {
-            $("#support").html('<button class="add" title="Join Suivix Support Server"><i class="fas fa-arrow-right"></i></i></button><p>Suivix © Support<img src="/ressources/support-icon.png"></p>')
+            $("#support").html('<button class="add" title="Join Suivix Support Server"><i class="fas fa-arrow-right"></i></button><p>Suivix © Support<img src="/ressources/support-icon.png"></p>')
             $("#support").click(function () {
                 redirect(`API_SUPPORT_URL`, undefined);
             });

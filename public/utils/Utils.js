@@ -740,7 +740,7 @@ function initServerSelection(language, type) {
         }
         $(".load").css("display", "none");
         const height = i === 1 ? i * 48 + 48 : i * 48;
-        $(".servers-container").css("height", height > 145 ? 145 : height + "px")
+        $(".servers-container").css("height", height > 200 ? 200 : height + "px")
     }
     request.send();
 

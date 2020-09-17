@@ -191,9 +191,10 @@ body {
 
 .container .attendance-card {
     position: relative;
-    min-width: 400px;
+    min-width: 350px;
     max-width: 400px;
-    max-height: 900px;
+    min-height: 550px;
+    max-height: 1000px;
     background-color: #23272A;
     border-radius: 8px;
     overflow: hidden;
@@ -201,7 +202,7 @@ body {
 }
 
 .container .attendance-card .content {
-    padding: 12px 16px;
+    padding: 12px 24px;
 }
 
 .container .attendance-card .content .header {
@@ -218,16 +219,27 @@ body {
     border-radius: 150px;
 }
 
+.container .attendance-card .content .header .big-logo {
+    max-width: 150px;
+    padding: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
+}
+
 .container .attendance-card .content .header .title {
     color: #fff;
-    font-size: 35px;
+    font-size: 32px;
     text-align: center;
 }
 
 .container .attendance-card .content .header .description {
     color: #fff;
-    font-size: 15px;
-    text-align: center;
+    font-size: 16px;
+    text-align: justify;
+    text-align-last: center;
 }
 
 .container .attendance-card .content .infos .expiresIn {
@@ -470,6 +482,10 @@ button {
     text-align: center;
     margin-top: 10px;
     padding: 5px;
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
     animation: float 3s ease-out infinite;
 }
 
@@ -514,6 +530,76 @@ button {
     to {
         -webkit-transform: rotate(360deg);
     }
+}
+
+.centered {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.normal-button {
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition-property: background-color, color, box-shadow, mix-blend-mode;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
+    border: none;
+    line-break: strict;
+}
+
+.buttonLarge {
+    line-height: 18px;
+    border-radius: 28px;
+    font-size: 16px;
+    padding: 12px 32px;
+}
+
+.buttonSmall {
+    border-radius: 28px;
+    font-size: 16px;
+    padding: 6px 22px;
+    line-height: 22px;
+}
+
+.buttonIcon {
+    margin-right: 16px;
+}
+
+.buttonSmallIcon {
+    margin-right: 8px
+}
+
+.buttonIconImage {
+    max-height: 22px;
+    max-width: 22px;
+    margin-right: 8px;
+}
+
+.buttonLogin:hover {
+    background-color: #171a19;
+}
+
+.buttonLogin:hover .buttonLock1 {
+    display: none;
+}
+
+.buttonLogin:hover .buttonLock2 {
+    display: block;
+}
+
+.buttonLock1 {
+    display: block;
+}
+
+.buttonLock2 {
+    display: none;
+}
+
+.buttonSeparator {
+    margin-top: 10px;
 }
 
 @media (max-height: 700px) {

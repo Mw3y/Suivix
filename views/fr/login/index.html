@@ -6,46 +6,58 @@
   <title>Suivix - Connexion</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
   <meta name="description"
-        content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+  content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+  <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
 
   <!-- import the webpage's stylesheet -->
-  <link rel="stylesheet" href="/css/attendance.css">
+  <link rel="stylesheet" href="/css/attendance-main.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="/utils/Utils.js"></script>
-  	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-		gtag('config', 'UA-108500515-2');
-	</script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-108500515-2');
+  </script>
 </head>
 
 <body>
+  <div class="navbar">
+    <a href="/" class="title">SUIVIX</a>
+    <a href="?language=fr" class="language margin">FR.</a>
+    <a href="?language=en" class="language margin-15">EN.</a>
+</div>
   <div class="container">
-    <div class="card">
+    <div class="attendance-card" id="card">
       <div class="content">
-        <div class="header no-bottom">
-          <div class="imgBox"><img src="/ressources/error.png" class="img" alt="suivix logo"></div>
-          <div class="contentBox">
-            <div class="centered colorHeaderPrimary size28 title">Vous n'êtes pas connecté</div>
-            <div class="centered colorHeaderSecondary size18 description">Connectez-vous avant<br>de commencer un
-                                        suivi.</div>
-          </div>
+        <div class="header">
+          <img src="/icons/login.png" class="big-logo" style="border-radius: 0 !important;">
+          <h1 class="title">Vous n'êtes pas connecté</h1>
+          <div class="separator centered" style="width: 125px"></div>
+          <p class="description" id="attendance-desc">Vous devez vous connecter à votre compte Discord pour utiliser Suivix. Vous serez peut-être déconnecté si vous n'utilisez pas Suivix pendant trop longtemps.</p>
         </div>
-      </div>
-      <div class="footer margin-top">
-        <button class="button blue-btn centered large"
-        onClick='redirect("LOGIN_REDIRECT", undefined);'>
-          <div class="">Se Connecter</div>
-        </button>
+        <div class="centered" style="margin-top: 125px;">
+          <button class="normal-button buttonLarge black-btn buttonLogin buttonSeparator" onclick="redirect('LOGIN_REDIRECT')" title="Login with Discord"><img src="/icons/lock.png" class="buttonIconImage buttonLock1"><img src="/icons/unlock.png" class="buttonIconImage buttonLock2"> Se connecter avec Discord</button>
+        </div>
       </div>
     </div>
   </div>
+  <div class="footer ">
+    <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
+  </div>
+  <div id="cookies"></div>
+
+  <script>
+    askCookies("en");
+  </script>
+
 </body>
 
 </html>

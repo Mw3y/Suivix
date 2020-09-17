@@ -4,5 +4,5 @@
  * See the accompanying LICENSE file for terms.
  */
 module.exports = (req, res) => {
-    res.sendFile(Server.getViewsFile(req, res, Routes.LOGIN_PAGE, "/"));
+    res.sendFile(Server.getViewsFile(req, res, Routes.LOGIN_PAGE, "/", req.query.language ? req.query.language : undefined));
 };

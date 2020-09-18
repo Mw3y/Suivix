@@ -720,7 +720,7 @@ function initServerSelection(language, type) {
             $(".servers").append('<div class="server-card" id="' + response[k].id + '" suivix="' + response[k].suivix + '">' +
                 (response[k].suivix ? "" : '<button' +
                     ' class="add" title="' + add[lang] + '"><i class="fas fa-plus"></i></button>') +
-                '<p>' + response[k].name + '<img src="' +
+                '<p class="server-name">' + response[k].name + '<img class="server-icon" src="' +
                 (response[k].icon ? `https://cdn.discordapp.com/icons/${response[k].id}/${response[k].icon}.jpg` : "/ressources/unknown-server.png") +
                 '"></p>' + '</div>');
             $("#" + response[k].id).click(function () {
@@ -740,7 +740,7 @@ function initServerSelection(language, type) {
         }
         $(".load").css("display", "none");
         const height = i === 1 ? i * 48 + 48 : i * 48;
-        $(".servers-container").css("height", height > 195 ? 195 : height + "px")
+        $(".servers-container").css("height", height > 160 ? 160 : height + "px")
     }
     request.send();
 

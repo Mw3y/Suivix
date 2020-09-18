@@ -176,6 +176,7 @@
     bottom: 15px;
     left: 0;
     right: 0;
+    transition: 0.4s;
 }
 
 .popup .language-option:hover {
@@ -194,10 +195,15 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: 0.4s;
 }
 
 .popup .options .option:hover {
-    filter: brightness(112%);
+    background: #212424;
+}
+
+.popup .options .option:hover .optionArrow { 
+    color: #fff;
 }
 
 .popup .options .option .emoji {
@@ -229,6 +235,7 @@
     transform: rotate3d(0, 0, -1, 90deg);
     margin-left: auto;
     color: #b9bbbe;
+    transition: 0.4s;
 }
 
 .centered {

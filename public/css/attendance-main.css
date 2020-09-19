@@ -56,7 +56,7 @@ var {
 
 body {
     height: 100vh;
-    background-image: url(/ressources/backgrounds/background-4-blur-min.jpg);
+    background-image: url(/ressources/backgrounds/background-min-blur.jpg);
     background-size: cover;
     background-attachment: fixed;
     overflow: hidden

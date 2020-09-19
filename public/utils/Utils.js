@@ -719,7 +719,7 @@ function initServerSelection(language, type) {
             }
             $(".servers").append('<div class="server-card" id="' + response[k].id + '" suivix="' + response[k].suivix + '">' +
                 (response[k].suivix ? "" : '<button' +
-                    ' class="add" title="' + add[lang] + '"><i class="fas fa-plus"></i></button>') +
+                    ' class="add" title="' + add[lang] + '"><i class="fas fa-plus plusIcon"></i><i class="fas fa-angle-right goIcon"></i></button>') +
                 '<p class="server-name">' + response[k].name + '<img class="server-icon" src="' +
                 (response[k].icon ? `https://cdn.discordapp.com/icons/${response[k].id}/${response[k].icon}.jpg` : "/ressources/unknown-server.png") +
                 '"></p>' + '</div>');
@@ -733,13 +733,13 @@ function initServerSelection(language, type) {
             i++;
         }
         if (!isOnSupport) {
-            $("#support").html('<button class="add" title="Join Suivix Support Server"><i class="fas fa-arrow-right"></i></button><p>Suivix © Support<img src="/ressources/support-icon.png"></p>')
+            $("#support").html('<button class="add" title="Join Suivix Support Server"><i class="fas fa-arrow-right"></i></button><p class="server-name">Suivix © Support<img class="server-icon" src="/ressources/support-icon.png"></p>')
             $("#support").click(function () {
                 redirect(`API_SUPPORT_URL`, undefined);
             });
         }
         $(".load").css("display", "none");
-        const height = i === 1 ? i * 48 + 48 : i * 48;
+        const height = i === 1 ? i * 53 + 53 : i * 53;
         $(".servers-container").css("height", height > 160 ? 160 : height + "px")
     }
     request.send();

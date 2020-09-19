@@ -469,6 +469,23 @@ button {
     font-weight: 600;
 }
 
+.servers-container .servers .server-card:hover .add {
+    background-color: #7289DA;
+}
+
+.servers-container .servers .server-card:hover .plusIcon {
+    display: none;
+}
+
+.servers-container .servers .server-card .add .goIcon {
+    display: none;
+    font-size: 20px;
+}
+
+.servers-container .servers .server-card:hover .goIcon {
+    display: block;
+}
+
 .servers-container .servers .server-card img {
     display: inline-block;
     height: 100%;
@@ -514,6 +531,7 @@ button {
     max-height: 35px;
     max-width: 35px;
     float: right;
+    transition: 0.4s;
 }
 
 .servers-container .servers .server-card .add:hover {

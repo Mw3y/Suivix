@@ -121,7 +121,7 @@ body {
 
 .navbar {
     height: 25px;
-    padding: 10px 75px;
+    padding: 15px 10%;
     white-space: nowrap;
     background: #131615;
     z-index: 350;

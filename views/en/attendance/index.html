@@ -13,6 +13,8 @@
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/css/attendance-main.css">
     <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="/css/microtip.css">
+
     <link href="/css/select2.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -103,7 +105,7 @@
     </div>
     <div class="navbar">
         <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" title="Sign out"><i class="fas fa-sign-out-alt"></i></a>
+        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Disconnect" data-microtip-position="bottom" role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
@@ -140,11 +142,11 @@
                     <div style="width: 100%; " class="loading-select "></div>
                 </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection() " title="Clear my selection "><i
+                    <button class="btn white-btn m-right " onclick="clearSelection()" aria-label="Clear the selection" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-redo-alt "></i></button>
-                    <button class="btn black-btn " onclick="deleteRequest()" title="Delete this attendance request "><i
+                    <button class="btn black-btn " onclick="deleteRequest()" aria-label="Delete this attendance request" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance();" title="Take Attendance "><i
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="Take Attendance" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>

@@ -59,12 +59,6 @@ function getSelectedRoles(selectedChannels) {
         shake();
         return;
     }
-    $(".btn").hide();
-    $("#loading").show();
-    setInterval(() => {
-        $("#loading").hide();
-    }, 1000);
-
     getAttendanceStatement(selectedChannels, rolesList);
 }
 
@@ -74,6 +68,12 @@ function getAttendanceStatement(channels, roles) {
         shake();
         return;
     }
+    $(".btn").hide();
+    $("#loading").show();
+    setInterval(() => {
+        $("#loading").hide();
+    }, 1000);
+    
     const params = "channels=" + channels.join("-") + "&roles=" + roles.join("-") + "&timezone=" + timezone;
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/attendance/done`, window) + "?" + params, true)

@@ -12,7 +12,7 @@ module.exports = async(req, res) => {
     } else {
         if (!req.session.passport.user.lastFetchedGuilds) req.session.passport.user.lastFetchedGuilds = new Date(Date.now() - 2000 * 60);
         var diff = ((new Date().getTime() - new Date(req.session.passport.user.lastFetchedGuilds).getTime()) / 1000) / 60;
-        if (!req.session.passport.user.guilds || diff > 1) {
+        if (!req.session.passport.user.guilds || diff > 0.2) {
             const guilds = await oauth.getUserGuilds(req.session.passport.user.ticket.access_token);
             let array = [];
             for (var k in guilds) {

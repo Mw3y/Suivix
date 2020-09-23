@@ -14,33 +14,7 @@
     <link rel="stylesheet" href="/css/attendance-main.css">
     <link rel="stylesheet" href="/css/popup.css">
     <link rel="stylesheet" href="/css/microtip.css">
-
     <link href="/css/select2.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-    <script src="/js/jqueryui.js"></script>
-    <script src="/utils/Utils.js"></script>
-    <script>
-        (function () {
-            var css = document.createElement('link');
-            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
-            css.rel = 'stylesheet';
-            css.type = 'text/css';
-            document.getElementsByTagName('head')[0].appendChild(css);
-        })();
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-108500515-2');
-    </script>
 </head>
 
 <body>
@@ -106,7 +80,8 @@
     </div>
     <div class="navbar">
         <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom" role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
+        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom"
+            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
@@ -143,12 +118,13 @@
                     <div style="width: 100%; " class="loading-select "></div>
                 </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection() " aria-label="Tout désélectionner" data-microtip-position="top" role="tooltip"><i
-                            class="fas fa-redo-alt "></i></button>
+                    <button class="btn white-btn m-right " onclick="clearSelection() " aria-label="Tout désélectionner"
+                        data-microtip-position="top" role="tooltip"><i class="fas fa-redo-alt "></i></button>
                     <button class="btn black-btn " onclick="deleteRequest()"
-                    aria-label="Supprimer cette requête de suivi" data-microtip-position="top" role="tooltip"><i class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="Effectuer le suivi" data-microtip-position="top" role="tooltip"><i
-                            class="fas fa-check "></i></button>
+                        aria-label="Supprimer cette requête de suivi" data-microtip-position="top" role="tooltip"><i
+                            class="fas fa-times "></i></button>
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="Effectuer le suivi"
+                        data-microtip-position="top" role="tooltip"><i class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>
             </div>
@@ -158,6 +134,32 @@
     <div class="footer ">
         <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    <script src="/js/jqueryui.js"></script>
+    <script src="/utils/Utils.js"></script>
+    <script>
+        (function () {
+            var css = document.createElement('link');
+            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-108500515-2');
+    </script>
 
     <script>
         initAttendance("fr");

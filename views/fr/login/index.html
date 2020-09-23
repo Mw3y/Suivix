@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -7,11 +7,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
-  content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
+    content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
   <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
-
   <!-- import the webpage's stylesheet -->
   <link rel="stylesheet" href="/css/attendance-main.css">
+</head>
+
+<body>
+  <div class="navbar">
+    <a href="/" class="title">SUIVIX</a>
+    <a href="?language=fr" class="language margin">FR.</a>
+    <a href="?language=en" class="language margin-15">EN.</a>
+  </div>
+  <div class="container">
+    <div class="attendance-card" id="card">
+      <div class="content">
+        <div class="header">
+          <img src="/icons/login.png" class="big-logo" style="border-radius: 0 !important;">
+          <h1 class="title">Vous n'êtes pas connecté</h1>
+          <div class="separator centered" style="width: 125px"></div>
+          <p class="description" id="attendance-desc">Vous devez vous connecter à votre compte Discord pour utiliser
+            Suivix. Vous serez peut-être déconnecté si vous n'utilisez pas Suivix pendant trop longtemps.</p>
+        </div>
+        <div class="centered" style="margin-top: 125px;">
+          <button class="normal-button buttonLarge black-btn buttonLogin buttonSeparator"
+            onclick="redirect('LOGIN_REDIRECT')" title="Se connecter avec Discord"><img src="/icons/lock.png"
+              class="buttonIconImage buttonLock1"><img src="/icons/unlock.png" class="buttonIconImage buttonLock2"> Se
+            connecter avec Discord</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer ">
+    <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
+  </div>
+  <div id="cookies"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="/utils/Utils.js"></script>
@@ -26,33 +57,6 @@
     gtag('js', new Date());
     gtag('config', 'UA-108500515-2');
   </script>
-</head>
-
-<body>
-  <div class="navbar">
-    <a href="/" class="title">SUIVIX</a>
-    <a href="?language=fr" class="language margin">FR.</a>
-    <a href="?language=en" class="language margin-15">EN.</a>
-</div>
-  <div class="container">
-    <div class="attendance-card" id="card">
-      <div class="content">
-        <div class="header">
-          <img src="/icons/login.png" class="big-logo" style="border-radius: 0 !important;">
-          <h1 class="title">Vous n'êtes pas connecté</h1>
-          <div class="separator centered" style="width: 125px"></div>
-          <p class="description" id="attendance-desc">Vous devez vous connecter à votre compte Discord pour utiliser Suivix. Vous serez peut-être déconnecté si vous n'utilisez pas Suivix pendant trop longtemps.</p>
-        </div>
-        <div class="centered" style="margin-top: 125px;">
-          <button class="normal-button buttonLarge black-btn buttonLogin buttonSeparator" onclick="redirect('LOGIN_REDIRECT')" title="Se connecter avec Discord"><img src="/icons/lock.png" class="buttonIconImage buttonLock1"><img src="/icons/unlock.png" class="buttonIconImage buttonLock2"> Se connecter avec Discord</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="footer ">
-    <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
-  </div>
-  <div id="cookies"></div>
 
   <script>
     askCookies("fr");

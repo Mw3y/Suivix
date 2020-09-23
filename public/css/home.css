@@ -1,31 +1,36 @@
 @font-face {
     font-family: Whitney;
     font-weight: 300;
-    src: url(../fonts/300.woff) format("woff")
+    src: url(../fonts/300.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 400;
-    src: url(../fonts/400.woff) format("woff")
+    src: url(../fonts/400.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 500;
-    src: url(../fonts/500.woff) format("woff")
+    src: url(../fonts/500.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 600;
-    src: url(../fonts/600.woff) format("woff")
+    src: url(../fonts/600.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 700;
-    src: url(../fonts/700.woff) format("woff")
+    src: url(../fonts/700.woff) format("woff");
+    font-display: swap;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap');
@@ -239,7 +244,7 @@ textarea {
 .nav__links a,
 .overlay__content a {
     font-weight: 500;
-    color: #edf0f1;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -555,6 +560,7 @@ textarea {
 }
 
 @media only screen and (max-width: 1537px) {
+
     .pc-menu,
     .nav__links,
     .cta {

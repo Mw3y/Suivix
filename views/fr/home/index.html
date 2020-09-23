@@ -5,47 +5,17 @@
   <title>Suivix - Le bot Discord pour faire l'appel</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="google-site-verification" content="pD8Y8KjKegiGB6zmfBozXsxDdjvcVeC1ONd7pa9qag8" />
+  <meta name="google-site-verification" content="pD8Y8KjKegiGB6zmfBozXsxDdjvcVeC1ONd7pa9qag8"/>
   <meta name="description"
     content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur Discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
-  <meta property='og:image' content='https://suivix.xyz/images/4894fc80-a7ee-11ea-8b0e-8c790ed1c329.png' />
-  <meta property="og:site_name" content="suivix.xyz" />
+  <meta property='og:image' content='https://suivix.xyz/images/4894fc80-a7ee-11ea-8b0e-8c790ed1c329.png'/>
+  <meta property="og:site_name" content="suivix.xyz"/>
 
-  <link href="/images/icon.ico" rel="shortcut icon" />
+  <link href="/images/icon.ico" rel="shortcut icon"/>
   <link rel="stylesheet" href="/css/home.css">
-
-  <script>
-    (function () {
-      var css = document.createElement('link');
-      css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
-      css.rel = 'stylesheet';
-      css.type = 'text/css';
-      document.getElementsByTagName('head')[0].appendChild(css);
-    })();
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
-    integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
-    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
     integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w=="
-    crossorigin="anonymous" />
-
-  <script src="/utils/Utils.js"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-108500515-2');
-  </script>
+    crossorigin="anonymous"/>
 </head>
 
 <body>
@@ -99,8 +69,8 @@
       <a href="/invite" class="button buttonWhite buttonLarge" style="margin-top: 24px"><i
           class="fab fa-discord buttonIcon"></i>
         Ajouter Suivix</a>
-      <a href="/servers" class="button buttonGrey buttonLarge buttonUse"><i
-          class="fas fa-chevron-right buttonIcon"></i> Commencer à utiliser Suivix</a>
+      <a href="/servers" class="button buttonGrey buttonLarge buttonUse"><i class="fas fa-chevron-right buttonIcon"></i>
+        Commencer à utiliser Suivix</a>
     </div>
     <div class="waves">
       <svg width="100%" height="175px" fill="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +171,7 @@
         </div>
       </div>
       <div class="div-2">
-        <img src="/images/illustration.png" class="illustration pc-content">
+        <img src="/images/illustration-min.png" class="illustration pc-content">
       </div>
     </div>
   </section>
@@ -330,31 +300,62 @@
   </footer>
 
   <script>
-    AOS.init();
+    (function () {
+      var css = document.createElement('link');
+      css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+      css.rel = 'stylesheet';
+      css.type = 'text/css';
+      document.getElementsByTagName('head')[0].appendChild(css);
+    })();
+  </script>
   
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+    integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+    crossorigin="anonymous"></script>
+
+  <script src="/utils/Utils.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-108500515-2');
+  </script>
+
+  <script>
+    AOS.init();
+
     const doc = document;
     const menuOpen = doc.querySelector(".menu");
     const menuClose = doc.querySelector(".close");
     const overlay = doc.querySelector(".overlay");
-  
+
     menuOpen.addEventListener("click", () => {
       overlay.classList.add("overlay--active");
     });
-  
+
     menuClose.addEventListener("click", () => {
       overlay.classList.remove("overlay--active");
     });
-  
+
     var $root = $('html, body');
-  
+
     $('a[href^="#"]').click(function () {
       $root.animate({
         scrollTop: $($.attr(this, 'href')).offset().top
       }, 500);
-  
+
       return false;
     });
-  
+
     initHomePage("fr");
   </script>
 </body>

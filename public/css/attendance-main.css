@@ -4,35 +4,41 @@
     font-family: Whitney;
     font-weight: 300;
     src: url(../fonts/300.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 400;
     src: url(../fonts/400.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 500;
     src: url(../fonts/500.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 600;
     src: url(../fonts/600.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: Whitney;
     font-weight: 700;
     src: url(../fonts/700.woff) format("woff");
+    font-display: swap;
 }
 
 @font-face {
     font-family: "color-emoji";
     src: local("Apple Color Emoji"), local("Segoe UI Emoji"), local("Segoe UI Symbol"), local("Noto Color Emoji");
+    font-display: swap;
 }
 
 .systemui-emoji {

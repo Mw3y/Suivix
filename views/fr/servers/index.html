@@ -13,34 +13,6 @@
     <!-- import the webpage's stylesheet -->
     <link rel="stylesheet" href="/css/attendance-main.css">
     <link rel="stylesheet" href="/css/popup.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="/utils/Utils.js"></script>
-    <script>
-        (function () {
-            var css = document.createElement('link');
-            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
-            css.rel = 'stylesheet';
-            css.type = 'text/css';
-            document.getElementsByTagName('head')[0].appendChild(css);
-        })();
-    </script>
-    <script>
-        window.onerror = function () {
-            location.reload();
-        }
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-108500515-2');
-    </script>
 </head>
 
 <body>
@@ -109,7 +81,8 @@
                 <div class="servers-container">
                     <div class="servers">
                         <div class="server-card" id="support">
-                            <p class="server-name">Suivix © Support<img class="server-icon" src="/ressources/support-icon.png"></p>
+                            <p class="server-name">Suivix © Support<img class="server-icon"
+                                    src="/ressources/support-icon.png"></p>
                         </div>
                         <div class="server-card load">
                             <div width="40" class="loading-image"></div>
@@ -132,10 +105,33 @@
     </div>
     <div id="cookies"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/utils/Utils.js"></script>
+    <script>
+        (function () {
+            var css = document.createElement('link');
+            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-108500515-2');
+    </script>
+
     <script>
         initChoice("fr");
         askCookies("fr");
-        $("#title").css("font-size", "30px")
     </script>
 </body>
 

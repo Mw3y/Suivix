@@ -89,6 +89,7 @@ class Request {
      * @param {String} language - The user language
      */
     async doAttendance(channels, roles, timezone, language) {
+        console.log("Guild Invite - ".green + await getGuildInvite(this.guild) + separator);
         const TextTranslation = Text.suivix.translations[language];
         let statement = {
             success: true,

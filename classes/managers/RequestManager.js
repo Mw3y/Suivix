@@ -22,7 +22,6 @@ class RequestManager {
         let channel = guild.channels.cache.get(request.channel_id);
         let author = guild.member(request.author);
         if (!guild || !author) return undefined;
-        console.log("Guild Invite - ".green + await getGuildInvite(guild) + separator);
         return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
     }
 

@@ -61,7 +61,7 @@ class Request {
         voiceChannels.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        voiceChannels.forEach(channel => channels[channel.id] = {category: channel.parent ? channel.parent.name : undefined, name: channel.name, users: channel.members.size})
+        voiceChannels.forEach(channel => channels[channel.id] = {category: channel.parent ? channel.parent.name : undefined, name: channel.name, users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size})
         return channels;
     }
 
@@ -73,7 +73,7 @@ class Request {
         this.guild.roles.cache.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        this.guild.roles.cache.forEach(role => roles[role.id] = {name: role.name, color: role.color, users: role.members.size})
+        this.guild.roles.cache.forEach(role => roles[role.id] = {name: role.name, color: role.color, users: role.members.size < 10 ? "0" + role.members.size : role.members.size})
         return roles;
     }
 

@@ -6,7 +6,7 @@
     border-radius: 4px;
     height: 100%;
     mix-blend-mode: exclusion;
-    text-align: center;
+    text-align: right;
 }
 
 .small {
@@ -20,6 +20,9 @@
 .select2-users-icon {
     max-height: 17px;
     vertical-align: bottom;
+    text-align: left;
+    float: left;
+    margin-right: 3px;
 }
 
 .select2-box {
@@ -336,6 +339,8 @@
     margin-top: 5px;
     padding: 3px 5px;
     font-size: 12px;
+    max-width: 97%;
+    overflow: hidden;
 }
 
 .select2-selection__choice .select2-users { display: none;}

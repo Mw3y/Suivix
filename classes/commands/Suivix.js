@@ -37,7 +37,8 @@ const generateAttendanceRequestMessage = async function (channel, author, Text) 
             guild_id: channel.guild.id,
             channel_id: channel.id
         }))
-        .setImage("https://i.imgur.com/QbiPChv.png")
+        .setColor("628bf7")
+        .setImage("https://suivix.xyz/ressources/header.png")
         .setTitle(Text.request.title)).catch((err) => {
         console.log("⚠   Error while sending message!".brightRed + separator);
         author.send(Text.request.unableToSendMessage)

@@ -558,7 +558,7 @@ button {
     border: 5px solid transparent;
     border-radius: 9px;
     background-clip: content-box;
-    max-height: 15px
+    max-height: 15px;
 }
 
 @-webkit-keyframes spin {
@@ -719,5 +719,12 @@ button {
 
     .navbar .margin {
         margin-right: 5px;
+    }
+
+}
+
+@media only screen and (max-width: 800px) {
+    .select2-users {
+        display: none;
     }
 }

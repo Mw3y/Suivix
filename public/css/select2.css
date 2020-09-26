@@ -1,3 +1,27 @@
+.select2-users {
+    float: right;
+    color: #888;
+    background: #2326298a;
+    padding: 1px 6px;
+    border-radius: 4px;
+    height: 100%;
+    mix-blend-mode: exclusion;
+    text-align: center;
+}
+
+.small {
+    min-width: 30px;
+}
+
+.big {
+    min-width: 35px;
+}
+
+.select2-users-icon {
+    max-height: 17px;
+    vertical-align: bottom;
+}
+
 .select2-box {
     width: 100%;
     margin-left: auto;
@@ -132,6 +156,7 @@
     -webkit-user-select: none;
     border-bottom: 1px solid;
     border-bottom-color: rgba(44, 47, 51, .3);
+    margin-right: 4px;
 }
 
 .select2-results__option[aria-selected] {
@@ -313,6 +338,8 @@
     font-size: 12px;
 }
 
+.select2-selection__choice .select2-users { display: none;}
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     color: #fff;
     cursor: pointer;
@@ -430,7 +457,6 @@
     text-align: left;
     background-color: none;
     border-radius: 4px;
-    margin-right: 4px;
 }
 
 .select2-container--default .select2-results__group {

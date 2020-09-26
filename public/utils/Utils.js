@@ -115,17 +115,16 @@ function initSelect2RoleList(lang) {
         }
         const placeholder = (lang === "fr" ? "Rôles" : "Roles") + " 📚";
         document.getElementById("select-roles").innerHTML = "<select id='select-2'multiple><option> <select></option></select > ";
-        initSelect2($("#select-2"), placeholder, [], 6)
-        response.sort(function (a, b) {
-            return a.name.localeCompare(b.name);
-        })
-        for (var i = 0; i < response.length; i++) {
-            var newOption = new Option(response[i].name, response[i].id, false, false);
-            const option = $(newOption).appendTo('#select-2').trigger('change');
-            const hexaColor = response[i].color === 0 ? "fff" : response[i].color.toString(16).padStart(6, '0');
+        initSelect2($("#select-2"), placeholder, [], 8)
+        let i = 0;
+        for (let key in response) {
+            var newOption = new Option(reductText(response[key].name, 32) + "<span class='select2-users big'><img class='select2-users-icon' src='/icons/users.png'><var class='select2-users-text'> " + response[key].users + "</var></span>", key, false, false);
+            $(newOption).appendTo('#select-2').trigger('change');
+            const hexaColor = response[key].color === 0 ? "fff" : response[key].color.toString(16).padStart(6, '0');
             const colorArray = hex2RGB(hexaColor);
             const color = hexaColor !== "fff" ? "rgba(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ",.1)" : "#222326";
             $('head').append('<style type="text/css">.select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + ') {color: #' + hexaColor + '; border-radius: 4px; margin-bottom: 4px; text-align: left;} .select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + '):hover {background: ' + color + ';}</style>');
+        i++;
         }
     }
     request.send();
@@ -525,9 +524,9 @@ function initSelect2ChannelList(parents, lang) {
         const channelsJSON = JSON.parse(this.response);
         const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
-        initSelect2($("#select-1"), placeholder, [], 4)
+        initSelect2($("#select-1"), placeholder, [], 8)
         for (let key in channelsJSON) {
-            const text = parents ? parseCategory(channelsJSON[key].category) + " " + channelsJSON[key].name : channelsJSON[key].name;
+            const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>";
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
         }
@@ -546,8 +545,8 @@ function deleteRequest(type = "attendance") {
     else redirect("PAULL_DELETE", undefined);
 }
 
-const parseCategory = function (name) {
-    return name ? "(" + (name.length > 30 ? name.substring(0, 30) + "..." : name) + ")" : "";
+const reductText = function (name, maxLength, separator = false) {
+    return name ? (separator ? "(" : "") + (name.length > maxLength ? name.substring(0, maxLength) + "..." : name) + (separator ? ")" : "") : "";
 }
 
 function redirect(route, params) {
@@ -580,7 +579,25 @@ function initSelect2(select, placeholder, data, max) {
         templateResult: formatState,
         templateSelection: formatState
     });
+
+    disableBackspace(select);
 }
+
+
+function disableBackspace($select2Obj){
+	$select2Obj
+		.parent()
+		.find('.select2-selection')
+		.on('keydown', '.select2-search--inline', function(evt){
+			var backspaceKey = 8;
+			if(evt.which == backspaceKey){
+				var currentSelection = $select2Obj.select2('data').map(function(s){return s.id});
+				$select2Obj.val(currentSelection).trigger("change");
+                $select2Obj.select2("close");
+
+            }
+		})
+};
 
 function $_GET(param) {
     var vars = {};

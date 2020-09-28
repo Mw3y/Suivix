@@ -65,7 +65,7 @@ html, body{
 }
 
 .bg-purple{
-    background: url(img/bg_purple.png);
+    background: url(../img/bg_purple.png);
     background-repeat: repeat-x;
     background-size: cover;
     background-position: left top;
@@ -89,8 +89,6 @@ html, body{
     float: right;
     margin-right: 15px;
     text-transform: uppercase;
-    
-    
 }
 
 ul {
@@ -232,7 +230,7 @@ li a:hover {
 }
 
 .stars{
-    background: url(img/overlay_stars.svg);
+    background: url(../img/overlay_stars.svg);
     background-repeat: repeat;
     background-size: contain;
     background-position: left top;

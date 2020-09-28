@@ -4,18 +4,13 @@
  * See the accompanying LICENSE file for terms.
  */
 module.exports = (req, res, forcedLanguage) => {
-    try {
-        let language = req.query.language ? req.query.language : req.params.language;
-        if (forcedLanguage) language = forcedLanguage;
-        if (language !== "fr" && language !== "en" && language !== undefined) {
-            res.redirect(Routes.HOME_PAGE);
-        } else {
-            res.sendFile(
-                Server.getViewsFile(req, res, Routes.HOME_PAGE, "home/", language)
-            );
-        }
-    } catch (err) {
-        console.log(err);
-        res.sendFile(Server.getApiViewsFile(req, res, Routes.ERROR_500, "/index.html"));
+    let language = req.query.language ? req.query.language : req.params.language;
+    if (forcedLanguage) language = forcedLanguage;
+    if (language !== "fr" && language !== "en" && language !== undefined) {
+        res.redirect(Routes.HOME_PAGE);
+    } else {
+        res.sendFile(
+            Server.getViewsFile(req, res, Routes.HOME_PAGE, "home/", language)
+        );
     }
-};
+}

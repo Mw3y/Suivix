@@ -56,7 +56,7 @@ class Request {
      * Returns the entire list of voice channels with their category in the guild that the user can see
      */
     getVoiceChannels() {
-        const voiceChannels = this.guild.channels.cache.filter(channel => channel.type === "voice" && channel.permissionsFor(this.author).has('VIEW_CHANNEL'));
+        const voiceChannels = this.guild.channels.cache.filter(channel => channel.type === "voice" && (this.author.id === Config.BOT_OWNER_ID ? true : channel.permissionsFor(this.author).has('VIEW_CHANNEL')));
         const channels = {};
         voiceChannels.sort(function (a, b) {
             return a.name.localeCompare(b.name);
@@ -75,14 +75,6 @@ class Request {
         });
         this.guild.roles.cache.forEach(role => roles[role.id] = {name: role.name, color: role.color, users: role.members.size < 10 ? "0" + role.members.size : role.members.size})
         return roles;
-    }
-
-    /**
-     * Return the channel category
-     * @param {Discord.VoiceChannel} channel - The voice channel
-     */
-    getCategory(channel, sentence) {
-        return channel.parent === null ? sentence : channel.parent.name;
     }
 
     /**

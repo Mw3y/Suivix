@@ -96,7 +96,8 @@ function getAttendanceStatement(channels, roles) {
             $("#loading").hide();
             $("#statement-title").text(response.title);
             $("#statement-description").text(response.description);
-            $("#warning-button").show();
+            if(response.download) $("#download-button").show();
+            else $("#warning-button").show();
             $("#support-option").show();
             $("#support-option1").show();
             $("#statement").show();

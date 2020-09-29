@@ -92,6 +92,7 @@ class Request {
             success: true,
             title: TextTranslation.website.statement.success.title,
             description: TextTranslation.website.statement.success.dm,
+            download: false,
             guild_id: this.guild.id,
             channel_id: this.channel ? this.channel.id : undefined
         };
@@ -160,11 +161,16 @@ class Request {
 
         if(this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({channel: this.channel.name})
 
-        if (!resultMessage) {
+        if (resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
-            if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
-            else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+            if(true){
+                statement.download = true;
+                statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
+            } else {
+                if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
+                else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+            }
         }
 
         if (statement.success) {
@@ -209,7 +215,8 @@ class Request {
             for (let i in usersName) { //Create the list
                 let user = users.find(u => (u.displayName + "#" + u.user.discriminator) === usersName[i]);
                 let member = guild.member(user);
-                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
+                let realUsername = users.length > 175 ? "" : ` (@${user.user.username})`;
+                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + realUsername) + "\n";
             }
             text += "```";
         }

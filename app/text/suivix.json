@@ -38,7 +38,8 @@
                     "errors": {
                         "title": "Your attendance request has failed",
                         "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
-                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel."
+                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel.",
+                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we cannot send the attendance result to you with Discord."
                     },
                     "success": {
                         "title": "Your request has been finalized",
@@ -86,7 +87,8 @@
                     "errors": {
                         "title": "Votre suivi n'a pas abouti",
                         "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
-                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon.",
+                        "attendanceIsTooBig": "Il semble que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous ne pouvons pas vous envoyer le résultat du suivi par Discord."
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",

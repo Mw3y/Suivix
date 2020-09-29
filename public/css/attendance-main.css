@@ -81,9 +81,8 @@ body {
 .loading-select {
     height: 30px;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgb(7, 8, 7) 0%, rgb(7, 8, 7) 40%, rgb(16, 17, 17) 50%, rgb(19, 22, 21) 60%, rgb(19, 22, 21) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(19, 22, 21) 0%, rgb(19, 22, 21) 40%, rgb(26, 28, 28) 50%, rgb(19, 22, 21) 60%, rgb(19, 22, 21) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
-    opacity: 0.5;
 }
 
 .loading-image {
@@ -203,8 +202,6 @@ body {
     max-height: 1000px;
     background-color: #23272A;
     border-radius: 8px;
-    overflow: hidden;
-    -webkit-font-smoothing: antialiased;
 }
 
 .container .attendance-card .content {

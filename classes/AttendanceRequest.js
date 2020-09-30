@@ -117,6 +117,7 @@ class Request {
         let categoriesList = this.getCategoriesList(parsedChannels, TextTranslation.unknown);
         let categoriesString = this.parseListIntoString(categoriesList, TextTranslation.connector);
         let categories = categoriesString.length > 55 ? TextTranslation.errors.tooMuchCategories : categoriesString;
+        let date = this.generateDate(timezone, language);
 
         let absentsText = "";
         let presentsText = "";
@@ -137,7 +138,7 @@ class Request {
         const intro = TextTranslation.intro.formatUnicorn({
             username: (this.author.displayName === this.author.user.username ? this.author.user.username : this.author.nickname + ` (@${this.author.user.username})`),
             category: categories,
-            date: this.generateDate(timezone, language),
+            date: date,
             role: rolesString
         });
         const presentSentence = TextTranslation.infos.presentsTotal.formatUnicorn({
@@ -150,7 +151,8 @@ class Request {
         });
 
         //Check if the message is too long to be send on Discord
-        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) { //First Check
+        const tooMuchStudents = (intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048;
+        if (tooMuchStudents) { //First Check
             if (channelStudents.length !== students.length) {
                 absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
             } else if (presentUsers.length > 0) {
@@ -176,14 +178,17 @@ class Request {
         if (!resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
-            if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
-                statement.download = true;
-                statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
-                this.generateCsvFileForDownload(this.id, students, presents);
-            } else {
-                if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
-                else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
-            }
+            if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
+            else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+
+        }
+
+        if (tooMuchStudents) {
+            statement.success = false;
+            statement.title = TextTranslation.website.statement.errors.incomplete;
+            statement.download = true;
+            statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
+            this.generateCsvFileForDownload(TextTranslation, this.id, students, presents, rolesString, channelsString, categories, date);
         }
 
         if (statement.success) {
@@ -210,20 +215,23 @@ class Request {
      * @param {*} students - The student list
      * @param {*} presents - The present students
      */
-    generateCsvFileForDownload(id, students, presents) {
+    generateCsvFileForDownload(TextTranslation, id, students, presents, rolesString, channelsString, categories, date) {
         const data = [];
         students.sort((a, b) => {
             return a.displayName.localeCompare(b.displayName)
         })
+
         students.forEach(student => data.push({
-            "User": student.user.username + "#" + student.user.discriminator,
-            "Nickname": student.displayName,
-            "Absent/Present": presents.find(user => user.id === student.user.id) ? "Present" : "Absent",
-            "Date": new Date().toString()
+            [TextTranslation.csv.user]: student.user.username + "#" + student.user.discriminator,
+            [TextTranslation.csv.nickname]: student.displayName,
+            [TextTranslation.csv.absent + "/" + TextTranslation.csv.present]: presents.find(user => user.id === student.user.id) ? TextTranslation.csv.present : TextTranslation.csv.absent,
         }))
 
-        fs.mkdirSync(Server.getProjectDirectory() + "files\\results\\", {recursive: true})
-        fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(data, true));
+        fs.mkdirSync(Server.getProjectDirectory() + "files\\results\\", {
+            recursive: true
+        })
+        fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(TextTranslation, students.length, presents.length, rolesString, channelsString, categories, date, data, true));
+        console.log("An csv file has been generated.".blue + separator);
     }
 
     /**
@@ -231,25 +239,19 @@ class Request {
      * @param {*} JSONData - The json array
      * @param {*} ShowLabel - Show or not the columns name
      */
-    JSONToCSVConvertor(JSONData, ShowLabel) {
+    JSONToCSVConvertor(TextTranslation, studentsNb, presentsNb, rolesString, channelsString, categoriesString, date, JSONData, ShowLabel) {
         //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
         var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-
         var CSV = 'sep=;' + '\r\n\n';
-
         //This condition will generate the Label/Header
         if (ShowLabel) {
             var row = "";
-
             //This loop will extract the label from 1st index of on array
             for (var index in arrData[0]) {
-
                 //Now convert each value to string and comma-seprated
                 row += index + ';';
             }
-
             row = row.slice(0, -1);
-
             //append Label row with line break
             CSV += row + '\r\n';
         }
@@ -257,25 +259,26 @@ class Request {
         //1st loop is to extract each row
         for (var i = 0; i < arrData.length; i++) {
             var row = "";
-
             //2nd loop will extract each column and convert it in string comma-seprated
             for (var index in arrData[i]) {
                 row += '"' + arrData[i][index] + '";';
             }
-
             row.slice(0, row.length - 1);
-
             //add a line break after each row
             CSV += row + '\r\n';
         }
 
-        if (CSV == '') {
-            alert("Invalid data");
-            return;
-        }
+        //Attendance infos
+        CSV += "\r\n";
+        CSV += [TextTranslation.csv.date] + ":;" + date.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.askedBy] + ":;" + this.author.displayName + "\r\n";
+        CSV += [TextTranslation.csv.total] + ":;" + presentsNb + "/" + studentsNb + "\r\n";
+        CSV += [TextTranslation.csv.roles] + ":;" + rolesString.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.categories] + ":;" + categoriesString.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.channels] + ":;" + channelsString + "\r\n";
 
         //Initialize file format you want csv or xls
-        return '' + CSV;
+        return CSV;
     }
 
     /**

@@ -73,7 +73,7 @@ function getAttendanceStatement(channels, roles) {
     setInterval(() => {
         $("#loading").hide();
     }, 1000);
-    
+
     const params = "channels=" + channels.join("-") + "&roles=" + roles.join("-") + "&timezone=" + timezone;
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/attendance/done`, window) + "?" + params, true)
@@ -96,8 +96,12 @@ function getAttendanceStatement(channels, roles) {
             $("#loading").hide();
             $("#statement-title").text(response.title);
             $("#statement-description").text(response.description);
-            if(response.download) $("#download-button").show();
-            else $("#warning-button").show();
+            if (response.download) {
+                $("#redirect-button").css("display", "flex");
+                $("#download-button").show();
+            } else {
+                $("#warning-button").show();
+            }
             $("#support-option").show();
             $("#support-option1").show();
             $("#statement").show();
@@ -125,7 +129,7 @@ function initSelect2RoleList(lang) {
             const colorArray = hex2RGB(hexaColor);
             const color = hexaColor !== "fff" ? "rgba(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ",.1)" : "#222326";
             $('head').append('<style type="text/css">.select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + ') {color: #' + hexaColor + '; border-radius: 4px; margin-bottom: 4px; text-align: left;} .select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + '):hover {background: ' + color + ';}</style>');
-        i++;
+            i++;
         }
     }
     request.send();
@@ -585,19 +589,21 @@ function initSelect2(select, placeholder, data, max) {
 }
 
 
-function disableBackspace($select2Obj){
-	$select2Obj
-		.parent()
-		.find('.select2-selection')
-		.on('keydown', '.select2-search--inline', function(evt){
-			var backspaceKey = 8;
-			if(evt.which == backspaceKey){
-				var currentSelection = $select2Obj.select2('data').map(function(s){return s.id});
-				$select2Obj.val(currentSelection).trigger("change");
+function disableBackspace($select2Obj) {
+    $select2Obj
+        .parent()
+        .find('.select2-selection')
+        .on('keydown', '.select2-search--inline', function (evt) {
+            var backspaceKey = 8;
+            if (evt.which == backspaceKey) {
+                var currentSelection = $select2Obj.select2('data').map(function (s) {
+                    return s.id
+                });
+                $select2Obj.val(currentSelection).trigger("change");
                 $select2Obj.select2("close");
 
             }
-		})
+        })
 };
 
 function $_GET(param) {

@@ -19,6 +19,7 @@ const authLogout = require("./models/auth/logout"),
 
 //Attendance
 const attendance = require('./models/attendance/attendance'),
+    result = require('./models/api/result'),
     done = require('./models/api/attendance'),
     newAttendanceRequest = require('./models/attendance/new'),
     deleteAttendanceRequest = require('./models/attendance/delete');
@@ -64,6 +65,7 @@ class RoutesList {
         //Attendance
         routes.get(Routes.ATTENDANCE_PAGE, passport.authenticate('main'), attendance);
         routes.get(Routes.ATTENDANCE_PAGE_DONE, passport.authenticate('main'), done);
+        routes.get(Routes.ATTENDANCE_RESULT, passport.authenticate('main'), result);
         routes.get(Routes.ATTENDANCE_NEWREQUEST, newAttendanceRequest);
         routes.get(Routes.ATTENDANCE_DELETE, passport.authenticate('main'), deleteAttendanceRequest);
 

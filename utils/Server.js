@@ -64,9 +64,14 @@ const getApiViewsFile = function (req, res, path, params) {
   );
 };
 
+const getCsvAttendanceResult = function (id) {
+    return __dirname.replace("utils", "") + "files\\results\\" + "test" + ".csv";
+}
+
 module.exports = {
   initHttpServer,
   initHttpsServer,
   getViewsFile,
   getApiViewsFile,
+  getCsvAttendanceResult
 };

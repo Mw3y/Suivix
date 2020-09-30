@@ -198,6 +198,10 @@
     transition: 0.4s;
 }
 
+.popup .options button {
+    width: 100%;
+}
+
 .popup .options .option:hover {
     background: #212424;
 }

@@ -19,7 +19,7 @@ const authLogout = require("./models/auth/logout"),
 
 //Attendance
 const attendance = require('./models/attendance/attendance'),
-    result = require('./models/api/result'),
+    result = require('./models/attendance/result'),
     done = require('./models/api/attendance'),
     newAttendanceRequest = require('./models/attendance/new'),
     deleteAttendanceRequest = require('./models/attendance/delete');

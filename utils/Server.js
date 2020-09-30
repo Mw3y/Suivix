@@ -65,7 +65,11 @@ const getApiViewsFile = function (req, res, path, params) {
 };
 
 const getCsvAttendanceResult = function (id) {
-    return __dirname.replace("utils", "") + "files\\results\\" + "test" + ".csv";
+    return __dirname.replace("utils", "") + "files\\results\\" + id + ".csv";
+}
+
+const getProjectDirectory = function () {
+  return __dirname.replace("utils", "");
 }
 
 module.exports = {
@@ -73,5 +77,6 @@ module.exports = {
   initHttpsServer,
   getViewsFile,
   getApiViewsFile,
-  getCsvAttendanceResult
+  getCsvAttendanceResult,
+  getProjectDirectory
 };

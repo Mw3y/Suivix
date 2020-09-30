@@ -4,6 +4,8 @@
  * See the accompanying LICENSE file for terms.
  */
 const Discord = require('discord.js'),
+    Server = require('../utils/Server'),
+    fs = require("fs"),
     moment = require('moment');
 
 class Request {
@@ -61,7 +63,11 @@ class Request {
         voiceChannels.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        voiceChannels.forEach(channel => channels[channel.id] = {category: channel.parent ? channel.parent.name : undefined, name: channel.name, users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size})
+        voiceChannels.forEach(channel => channels[channel.id] = {
+            category: channel.parent ? channel.parent.name : undefined,
+            name: channel.name,
+            users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size
+        })
         return channels;
     }
 
@@ -73,7 +79,11 @@ class Request {
         this.guild.roles.cache.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        this.guild.roles.cache.forEach(role => roles[role.id] = {name: role.name, color: role.color, users: role.members.size < 10 ? "0" + role.members.size : role.members.size})
+        this.guild.roles.cache.forEach(role => roles[role.id] = {
+            name: role.name,
+            color: role.color,
+            users: role.members.size < 10 ? "0" + role.members.size : role.members.size
+        })
         return roles;
     }
 
@@ -140,7 +150,7 @@ class Request {
         });
 
         //Check if the message is too long to be send on Discord
-        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
+        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) { //First Check
             if (channelStudents.length !== students.length) {
                 absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
             } else if (presentUsers.length > 0) {
@@ -159,14 +169,17 @@ class Request {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
 
-        if(this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({channel: this.channel.name})
+        if (this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({
+            channel: this.channel.name
+        })
 
-        if (resultMessage) {
+        if (!resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
-            if(true){
+            if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
                 statement.download = true;
                 statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
+                this.generateCsvFileForDownload(this.id, students, presents);
             } else {
                 if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
                 else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
@@ -185,10 +198,84 @@ class Request {
                     server: this.guild.name
                 }) + separator
             );
-            if(this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
+            if (this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
         }
 
         return statement;
+    }
+
+    /**
+     * Generate a file containing the attendanc result
+     * @param {*} id - The attendance id
+     * @param {*} students - The student list
+     * @param {*} presents - The present students
+     */
+    generateCsvFileForDownload(id, students, presents) {
+        const data = [];
+        students.sort((a, b) => {
+            return a.displayName.localeCompare(b.displayName)
+        })
+        students.forEach(student => data.push({
+            "User": student.user.username + "#" + student.user.discriminator,
+            "Nickname": student.displayName,
+            "Absent/Present": presents.find(user => user.id === student.user.id) ? "Present" : "Absent",
+            "Date": new Date().toString()
+        }))
+
+        fs.mkdirSync(Server.getProjectDirectory() + "files\\results\\", {recursive: true})
+        fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(data, true));
+    }
+
+    /**
+     * Convert json to csv format
+     * @param {*} JSONData - The json array
+     * @param {*} ShowLabel - Show or not the columns name
+     */
+    JSONToCSVConvertor(JSONData, ShowLabel) {
+        //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+        var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+
+        var CSV = 'sep=;' + '\r\n\n';
+
+        //This condition will generate the Label/Header
+        if (ShowLabel) {
+            var row = "";
+
+            //This loop will extract the label from 1st index of on array
+            for (var index in arrData[0]) {
+
+                //Now convert each value to string and comma-seprated
+                row += index + ';';
+            }
+
+            row = row.slice(0, -1);
+
+            //append Label row with line break
+            CSV += row + '\r\n';
+        }
+
+        //1st loop is to extract each row
+        for (var i = 0; i < arrData.length; i++) {
+            var row = "";
+
+            //2nd loop will extract each column and convert it in string comma-seprated
+            for (var index in arrData[i]) {
+                row += '"' + arrData[i][index] + '";';
+            }
+
+            row.slice(0, row.length - 1);
+
+            //add a line break after each row
+            CSV += row + '\r\n';
+        }
+
+        if (CSV == '') {
+            alert("Invalid data");
+            return;
+        }
+
+        //Initialize file format you want csv or xls
+        return '' + CSV;
     }
 
     /**

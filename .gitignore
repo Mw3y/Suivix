@@ -5,3 +5,4 @@ node_modules/
 package-lock.json
 domain.txt
 app/config/config.json
+/files/*

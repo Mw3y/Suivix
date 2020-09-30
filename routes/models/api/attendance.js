@@ -19,8 +19,9 @@ module.exports = async (req, res) => {
 
         //Execute attendance request
         const statement = await request.doAttendance(req.query.channels, req.query.roles, req.query.timezone, req.cookies["language"]);
-        if(statement.download) req.session.passport.user.attendance_request.download_id = req.session.passport.user.attendance_request.id;
-        if (statement.success) req.session.passport.user.attendance_request = manager.deleteRequest(req.session.passport.user.attendance_request);
+        let id = req.session.passport.user.attendance_request.id;
+        if (statement.success || statement.download) req.session.passport.user.attendance_request = manager.deleteRequest(req.session.passport.user.attendance_request);
+        if(statement.download) req.session.passport.user.attendance_download_id = id;
         res.status(200).send(statement);
     }
 }

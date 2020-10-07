@@ -38,6 +38,16 @@
                 <div class="changelog centered"><var id="statement-description"></var></div>
 
                 <div class="options statement-buttons">
+                    <form method="GET" action="/attendance/result">
+                        <button type="submit" class="option" id="download-button" style="display: none;">
+                            <img class="emoji" src="/icons/chart.png">
+                            <div class="optionTitle">Télécharger le suivi</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
+                                height="24">
+                                <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
+                        </button>
+                    </form>
                     <div class="option" id="warning-button" onclick="closePopup('statement');" style="display: none;">
                         <img class="emoji" src="/icons/thumbsup.png">
                         <div class="optionTitle">J'ai compris</div>
@@ -106,10 +116,14 @@
                     <p class="select ">Sélectionnez vos salons et vos rôles ci-dessous :</p>
                 </div>
                 <div class="select-custom" id="select-channels">
-                    <div style="width: 100%; " class="loading-select "></div>
+                    <div style="width: 100%; " class="loading-select"
+                        aria-label="🔄 Veuillez patienter pendant que la liste des salons vocaux charge."
+                        data-microtip-position="top" role="tooltip"></div>
                 </div>
                 <div class="select-custom" id="select-roles">
-                    <div style="width: 100%; " class="loading-select "></div>
+                    <div style="width: 100%; " class="loading-select"
+                        aria-label="🔄 Veuillez patienter pendant que la liste des rôles charge."
+                        data-microtip-position="top" role="tooltip"></div>
                 </div>
                 <div class="infos margin-top-5">
                     <p class="select">Sélectionnez votre fuseau horaire :</p>
@@ -118,12 +132,13 @@
                     <div style="width: 100%; " class="loading-select "></div>
                 </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection() " aria-label="Tout désélectionner"
-                        data-microtip-position="top" role="tooltip"><i class="fas fa-redo-alt "></i></button>
+                    <button class="btn white-btn m-right " onclick="clearSelection() "
+                        aria-label="🔄 Tout désélectionner" data-microtip-position="top" role="tooltip"><i
+                            class="fas fa-redo-alt "></i></button>
                     <button class="btn black-btn " onclick="deleteRequest()"
-                        aria-label="Supprimer cette requête de suivi" data-microtip-position="top" role="tooltip"><i
+                        aria-label="❌ Supprimer cette requête de suivi" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="Effectuer le suivi"
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="✅ Effectuer le suivi"
                         data-microtip-position="top" role="tooltip"><i class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>

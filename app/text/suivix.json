@@ -6,6 +6,18 @@
             "title": "Attendance of ",
             "intro": "Attendance asked by: `{username}`\nDate: {date} :clock1:\nCategory: `{category}`\nRole(s): {role}\n\n",
             "connector": "and",
+            "csv": {
+                "user": "User",
+                "nickname": "Nickname",
+                "present": "Present",
+                "absent": "Absent",
+                "date": "Date",
+                "total": "Total",
+                "roles": "Roles",
+                "categories": "Categories",
+                "channels": "Channels",
+                "askedBy": "Attendance asked by"
+            },
             "infos": {
                 "noAbsent": "✅ There is no absent user.\n",
                 "absentsList": ":warning: List of absent:\n```",
@@ -37,8 +49,10 @@
                 "statement": {
                     "errors": {
                         "title": "Your attendance request has failed",
+                        "incomplete": "Your attendance request may be incomplete",
                         "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
-                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel."
+                        "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel.",
+                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we cannot send the full attendance result to you with Discord. However, you can download a csv file containing the complete attendance below."
                     },
                     "success": {
                         "title": "Your request has been finalized",
@@ -54,6 +68,18 @@
             "title": "Suivi de ",
             "intro": "Suivi demandé par : `{username}`\nDate : {date} :clock1:\nCatégorie(s) : `{category}`\nRole(s) : {role}\n\n",
             "connector": "et",
+            "csv": {
+                "user": "Utilisateurs",
+                "nickname": "Surnom",
+                "present": "Present",
+                "absent": "Absent",
+                "date": "Date",
+                "total": "Total ",
+                "roles": "Roles ",
+                "categories": "Categories ",
+                "channels": "Salons ",
+                "askedBy": "Suivi demandé par "
+            },
             "infos": {
                 "noAbsent": "✅ Il n'y a pas d'absent(e)(s).\n",
                 "absentsList": ":warning: Liste des absent(e)(s) :\n```",
@@ -85,8 +111,10 @@
                 "statement": {
                     "errors": {
                         "title": "Votre suivi n'a pas abouti",
+                        "incomplete": "Votre suivi est peu être incomplet",
                         "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
-                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon.",
+                        "attendanceIsTooBig": "Il semblerait que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous ne pouvons pas vous envoyer le résultat complet du suivi par Discord. Cependant, vous pouvez télécharger un fichier csv contenant le suivi complet ci dessous."
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",

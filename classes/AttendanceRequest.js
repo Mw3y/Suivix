@@ -4,6 +4,8 @@
  * See the accompanying LICENSE file for terms.
  */
 const Discord = require('discord.js'),
+    Server = require('../utils/Server'),
+    fs = require("fs"),
     moment = require('moment');
 
 class Request {
@@ -61,7 +63,11 @@ class Request {
         voiceChannels.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        voiceChannels.forEach(channel => channels[channel.id] = {category: channel.parent ? channel.parent.name : undefined, name: channel.name, users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size})
+        voiceChannels.forEach(channel => channels[channel.id] = {
+            category: channel.parent ? channel.parent.name : undefined,
+            name: channel.name,
+            users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size
+        })
         return channels;
     }
 
@@ -73,7 +79,11 @@ class Request {
         this.guild.roles.cache.sort(function (a, b) {
             return a.name.localeCompare(b.name);
         });
-        this.guild.roles.cache.forEach(role => roles[role.id] = {name: role.name, color: role.color, users: role.members.size < 10 ? "0" + role.members.size : role.members.size})
+        this.guild.roles.cache.forEach(role => roles[role.id] = {
+            name: role.name,
+            color: role.color,
+            users: role.members.size < 10 ? "0" + role.members.size : role.members.size
+        })
         return roles;
     }
 
@@ -92,6 +102,7 @@ class Request {
             success: true,
             title: TextTranslation.website.statement.success.title,
             description: TextTranslation.website.statement.success.dm,
+            download: false,
             guild_id: this.guild.id,
             channel_id: this.channel ? this.channel.id : undefined
         };
@@ -106,6 +117,7 @@ class Request {
         let categoriesList = this.getCategoriesList(parsedChannels, TextTranslation.unknown);
         let categoriesString = this.parseListIntoString(categoriesList, TextTranslation.connector);
         let categories = categoriesString.length > 55 ? TextTranslation.errors.tooMuchCategories : categoriesString;
+        let date = this.generateDate(timezone, language);
 
         let absentsText = "";
         let presentsText = "";
@@ -126,7 +138,7 @@ class Request {
         const intro = TextTranslation.intro.formatUnicorn({
             username: (this.author.displayName === this.author.user.username ? this.author.user.username : this.author.nickname + ` (@${this.author.user.username})`),
             category: categories,
-            date: this.generateDate(timezone, language),
+            date: date,
             role: rolesString
         });
         const presentSentence = TextTranslation.infos.presentsTotal.formatUnicorn({
@@ -139,7 +151,8 @@ class Request {
         });
 
         //Check if the message is too long to be send on Discord
-        if ((intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048) {
+        const tooMuchStudents = (intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048;
+        if (tooMuchStudents) { //First Check
             if (channelStudents.length !== students.length) {
                 absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
             } else if (presentUsers.length > 0) {
@@ -158,13 +171,24 @@ class Request {
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
 
-        if(this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({channel: this.channel.name})
+        if (this.channel) statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({
+            channel: this.channel.name
+        })
 
         if (!resultMessage) {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
             if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
             else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+
+        }
+
+        if (tooMuchStudents) {
+            statement.success = false;
+            statement.title = TextTranslation.website.statement.errors.incomplete;
+            statement.download = true;
+            statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
+            this.generateCsvFileForDownload(TextTranslation, this.id, students, presents, rolesString, channelsString, categories, date);
         }
 
         if (statement.success) {
@@ -179,10 +203,82 @@ class Request {
                     server: this.guild.name
                 }) + separator
             );
-            if(this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
+            if (this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
         }
 
         return statement;
+    }
+
+    /**
+     * Generate a file containing the attendanc result
+     * @param {*} id - The attendance id
+     * @param {*} students - The student list
+     * @param {*} presents - The present students
+     */
+    generateCsvFileForDownload(TextTranslation, id, students, presents, rolesString, channelsString, categories, date) {
+        const data = [];
+        students.sort((a, b) => {
+            return a.displayName.localeCompare(b.displayName)
+        })
+
+        students.forEach(student => data.push({
+            [TextTranslation.csv.user]: student.user.username + "#" + student.user.discriminator,
+            [TextTranslation.csv.nickname]: student.displayName,
+            [TextTranslation.csv.absent + "/" + TextTranslation.csv.present]: presents.find(user => user.id === student.user.id) ? TextTranslation.csv.present : TextTranslation.csv.absent,
+        }))
+
+        fs.mkdirSync(Server.getProjectDirectory() + "files\\results\\", {
+            recursive: true
+        })
+        fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(TextTranslation, students.length, presents.length, rolesString, channelsString, categories, date, data, true));
+        console.log("An csv file has been generated.".blue + separator);
+    }
+
+    /**
+     * Convert json to csv format
+     * @param {*} JSONData - The json array
+     * @param {*} ShowLabel - Show or not the columns name
+     */
+    JSONToCSVConvertor(TextTranslation, studentsNb, presentsNb, rolesString, channelsString, categoriesString, date, JSONData, ShowLabel) {
+        //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
+        var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+        var CSV = 'sep=;' + '\r\n\n';
+        //This condition will generate the Label/Header
+        if (ShowLabel) {
+            var row = "";
+            //This loop will extract the label from 1st index of on array
+            for (var index in arrData[0]) {
+                //Now convert each value to string and comma-seprated
+                row += index + ';';
+            }
+            row = row.slice(0, -1);
+            //append Label row with line break
+            CSV += row + '\r\n';
+        }
+
+        //1st loop is to extract each row
+        for (var i = 0; i < arrData.length; i++) {
+            var row = "";
+            //2nd loop will extract each column and convert it in string comma-seprated
+            for (var index in arrData[i]) {
+                row += '"' + arrData[i][index] + '";';
+            }
+            row.slice(0, row.length - 1);
+            //add a line break after each row
+            CSV += row + '\r\n';
+        }
+
+        //Attendance infos
+        CSV += "\r\n";
+        CSV += [TextTranslation.csv.date] + ":;" + date.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.askedBy] + ":;" + this.author.displayName + "\r\n";
+        CSV += [TextTranslation.csv.total] + ":;" + presentsNb + "/" + studentsNb + "\r\n";
+        CSV += [TextTranslation.csv.roles] + ":;" + rolesString.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.categories] + ":;" + categoriesString.replace(new RegExp("`", 'g'), "") + "\r\n";
+        CSV += [TextTranslation.csv.channels] + ":;" + channelsString + "\r\n";
+
+        //Initialize file format you want csv or xls
+        return CSV;
     }
 
     /**
@@ -209,7 +305,8 @@ class Request {
             for (let i in usersName) { //Create the list
                 let user = users.find(u => (u.displayName + "#" + u.user.discriminator) === usersName[i]);
                 let member = guild.member(user);
-                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + ` (@${user.user.username})`) + "\n";
+                let realUsername = users.length > 175 ? "" : ` (@${user.user.username})`;
+                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + realUsername) + "\n";
             }
             text += "```";
         }

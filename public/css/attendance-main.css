@@ -650,21 +650,20 @@ button {
     .footer {
         display: none;
     }
+
+    .container {
+        margin: 15px auto !important;
+    }
 }
 
-@media (max-aspect-ratio: 16/9) {
-    .layer1 {
-        display: none;
-    }
-
-    .layer2 {
-        display: none;
-    }
-
-    .layer3 {
-        background-image: url("../ressources/backgrounds/layers/base.jpg");
-        background-size: cover;
-        background-position: center;
+@media only screen and (max-width: 800px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        transform: none;
+        margin: 15% auto;
     }
 
     .container .attendance-card {

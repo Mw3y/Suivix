@@ -65,7 +65,7 @@ body {
     background-image: url(/ressources/backgrounds/attendance-background.jpg);
     background-size: cover;
     background-attachment: fixed;
-    overflow: hidden
+    overflow: auto;
 }
 
 .loading-text {

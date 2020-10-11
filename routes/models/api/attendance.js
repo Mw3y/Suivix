@@ -14,11 +14,12 @@ module.exports = async (req, res) => {
     } else {
         //Refresh User language or create user
         const userManager = new UserManager();
+        const userLanguage = req.cookies["language"] === undefined ? "en" : req.cookies["language"];
         let DatabaseUser = await userManager.getUserById(req.session.passport.user.identity.id);
-        if (DatabaseUser.language !== req.cookies["language"]) await userManager.changeUserParam(req.session.passport.user.identity.id, "language", req.cookies["language"]);
+        if (DatabaseUser.language !== userLanguage && req.cookies["language"] !== undefined) await userManager.changeUserParam(req.session.passport.user.identity.id, "language", userLanguage);
 
         //Execute attendance request
-        const statement = await request.doAttendance(req.query.channels, req.query.roles, req.query.timezone, req.cookies["language"]);
+        const statement = await request.doAttendance(req.query.channels, req.query.roles, req.query.timezone, userLanguage);
         let id = req.session.passport.user.attendance_request.id;
         if (statement.success || statement.download) req.session.passport.user.attendance_request = manager.deleteRequest(req.session.passport.user.attendance_request);
         if(statement.download) req.session.passport.user.attendance_download_id = id;

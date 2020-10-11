@@ -180,7 +180,6 @@ class Request {
             statement.title = TextTranslation.website.statement.errors.title;
             if (this.channel === undefined) statement.description = TextTranslation.website.statement.errors.unableToSendMessage;
             else statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
-
         }
 
         if (tooMuchStudents) {

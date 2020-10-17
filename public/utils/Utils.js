@@ -127,7 +127,7 @@ function initSelect2RoleList(lang) {
             $(newOption).appendTo('#select-2').trigger('change');
             const hexaColor = response[key].color === 0 ? "fff" : response[key].color.toString(16).padStart(6, '0');
             const colorArray = hex2RGB(hexaColor);
-            const color = hexaColor !== "fff" ? "rgba(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ",.1)" : "#222326";
+            const color = hexaColor !== "fff" ? "rgba(" + colorArray[0] + "," + colorArray[1] + "," + colorArray[2] + ",.1)" : "#36393f";
             $('head').append('<style type="text/css">.select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + ') {color: #' + hexaColor + '; border-radius: 4px; margin-bottom: 4px; text-align: left;} .select2-results__options[id*="select-2"] .select2-results__option:nth-child(' + (i + 1) + '):hover {background: ' + color + ';}</style>');
             i++;
         }
@@ -535,7 +535,7 @@ function initSelect2ChannelList(parents, lang) {
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
         }
-        $('head').append('<style type="text/css">.select2-results__options[id*="select-1"] .select2-results__option:hover {background: ' + "#23272A" + ';}</style>');
+        $('head').append('<style type="text/css">.select2-results__options[id*="select-1"] .select2-results__option:hover {background: ' + "#191a1d" + ';}</style>');
     }
     request.send();
 }

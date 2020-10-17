@@ -62,16 +62,16 @@ var {
 
 body {
     height: 100vh;
-    background-image: url(/ressources/backgrounds/background-min-blur.jpg);
+    background-image: url(/ressources/backgrounds/attendance-background.jpg);
     background-size: cover;
     background-attachment: fixed;
-    overflow: hidden
+    overflow: auto;
 }
 
 .loading-text {
     height: 25px;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgb(60, 66, 69) 0%, rgb(60, 66, 69) 40%, rgb(66, 73, 76) 50%, rgb(60, 66, 69) 60%, rgb(60, 66, 69) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
     vertical-align: middle;
     opacity: 0.5;
@@ -81,7 +81,7 @@ body {
 .loading-select {
     height: 30px;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgb(19, 22, 21) 0%, rgb(19, 22, 21) 40%, rgb(26, 28, 28) 50%, rgb(19, 22, 21) 60%, rgb(19, 22, 21) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
 }
 
@@ -89,7 +89,7 @@ body {
     width: 25px;
     height: 25px;
     border-radius: 100%;
-    background: linear-gradient(90deg, rgb(60, 66, 69) 0%, rgb(60, 66, 69) 40%, rgb(66, 73, 76) 50%, rgb(60, 66, 69) 60%, rgb(60, 66, 69) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
     opacity: 0.5;
     float: right;
@@ -128,8 +128,9 @@ body {
     height: 25px;
     padding: 15px 10%;
     white-space: nowrap;
-    background: #131615;
+    background: #191a1d;
     z-index: 350;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
 }
 
 .navbar .title {
@@ -200,12 +201,13 @@ body {
     max-width: 400px;
     min-height: 550px;
     max-height: 1000px;
-    background-color: #23272A;
-    border-radius: 8px;
+    background-color: #36393f;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
 }
 
 .container .attendance-card .content {
-    padding: 12px 24px;
+    padding: 12px 22px;
 }
 
 .container .attendance-card .content .header {
@@ -214,12 +216,13 @@ body {
 
 .container .attendance-card .content .header .logo {
     max-width: 125px;
-    padding: 15px;
+    margin: 15px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     animation: float 6s ease-in-out infinite;
     border-radius: 150px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
 }
 
 .container .attendance-card .content .header .big-logo {
@@ -239,7 +242,7 @@ body {
 }
 
 .container .attendance-card .content .header .description {
-    color: #fff;
+    color: #b9bbbe;
     font-size: 16px;
     text-align: justify;
     text-align-last: center;
@@ -262,6 +265,7 @@ body {
 
 .container .attendance-card .content .select-custom {
     margin-top: 8px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
 }
 
 .button {
@@ -272,10 +276,7 @@ body {
 }
 
 .separator {
-    height: 4px;
-    border-radius: 150px;
-    background: #fff;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 button {
@@ -299,6 +300,8 @@ button {
     font-size: 14px;
     height: 45px;
     width: 45px;
+    transition: all .3s ease-in-out;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
 }
 
 .margin-top-5 {
@@ -316,7 +319,7 @@ button {
 }
 
 .black-btn {
-    background: #131615;
+    background: #222326;
 }
 
 .m-left {
@@ -429,13 +432,14 @@ button {
 }
 
 .servers-container .servers .server-card {
-    background-color: #131615;
+    background-color: #202225;
     padding: 8px 16px;
-    border-radius: 8px;
+    border-radius: 6px;
     height: 35px;
     margin-bottom: 3px;
     cursor: pointer;
     transition: 0.3s;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
 }
 
 .server-card .loading-text {
@@ -460,8 +464,8 @@ button {
 }
 
 .servers-container .servers .server-card:hover {
-    background-color: #171a19;
-    transform: scale(0.95, 0.95);
+    background-color: #1c1e21;
+    transform: scale(0.98, 0.98);
 }
 
 .servers-container .servers .server-card:hover .server-icon {
@@ -469,7 +473,7 @@ button {
 }
 
 .servers-container .servers .server-card:hover .server-name {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .servers-container .servers .server-card:hover .add {
@@ -543,7 +547,7 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #23272a
+    background-color: #36393f
 }
 
 ::-webkit-scrollbar {
@@ -551,7 +555,7 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #131615;
+    background-color: #202225;
     border: 5px solid transparent;
     border-radius: 9px;
     background-clip: content-box;
@@ -583,17 +587,22 @@ button {
     transition: 0.3s;
 }
 
+.normal-button .content {
+    margin: 0 auto;
+    display: inline;
+    vertical-align: top;
+}
+
 .buttonLarge {
     line-height: 18px;
-    border-radius: 28px;
+    border-radius: 4px;
     font-size: 16px;
-    padding: 12px 32px;
+    width: 100%;
 }
 
 .buttonSmall {
-    border-radius: 28px;
+    border-radius: 4px;
     font-size: 16px;
-    padding: 6px 22px;
     line-height: 22px;
 }
 
@@ -609,11 +618,12 @@ button {
     max-height: 22px;
     max-width: 22px;
     margin-right: 8px;
+    vertical-align: bottom;
 }
 
 .buttonLogin:hover {
-    background-color: #171a19;
-    transform: scale(0.95, 0.95);
+    background-color:#1b1c1e;
+    transform: scale(0.99, 0.99);
 }
 
 .buttonLogin:hover .buttonLock1 {
@@ -621,11 +631,11 @@ button {
 }
 
 .buttonLogin:hover .buttonLock2 {
-    display: block;
+    display: inline;
 }
 
 .buttonLock1 {
-    display: block;
+    display: inline;
 }
 
 .buttonLock2 {
@@ -640,21 +650,20 @@ button {
     .footer {
         display: none;
     }
+
+    .container {
+        margin: 15px auto !important;
+    }
 }
 
-@media (max-aspect-ratio: 16/9) {
-    .layer1 {
-        display: none;
-    }
-
-    .layer2 {
-        display: none;
-    }
-
-    .layer3 {
-        background-image: url("../ressources/backgrounds/layers/base.jpg");
-        background-size: cover;
-        background-position: center;
+@media only screen and (max-width: 800px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        transform: none;
+        margin: 15% auto;
     }
 
     .container .attendance-card {
@@ -681,7 +690,7 @@ button {
     }
 
     .container .attendance-card .content .header .description {
-        color: #fff;
+        color: #b9bbbe;
         font-size: 14px;
         text-align: center;
     }

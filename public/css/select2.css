@@ -107,7 +107,7 @@
 }
 
 .select2-dropdown {
-    background-color: #131615;
+    background-color: #202225;
     border-radius: 4px;
     box-sizing: border-box;
     display: block;
@@ -267,7 +267,6 @@
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #888 transparent transparent transparent;
     border-style: solid;
     border-width: 5px 4px 0 4px;
     height: 0;
@@ -298,12 +297,11 @@
 }
 
 .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #888 transparent;
     border-width: 0 4px 5px 4px
 }
 
 .select2-container--default .select2-selection--multiple {
-    background-color: #131615;
+    background-color: #202225;
     border-radius: 4px;
     outline: none;
 }
@@ -314,7 +312,7 @@
     margin: 0;
     padding: 0 5px;
     width: 100%;
-    color: #fff
+    color: #fff;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
@@ -331,7 +329,7 @@
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #222326;
+    background-color: #2b2e33;
     border-radius: 4px;
     cursor: pointer;
     float: left;
@@ -472,7 +470,6 @@
 
 .select2-container--classic .select2-selection--single {
     background-color: #2C2F33;
-    border: 1px solid #aaa;
     border-radius: 4px;
     outline: 0;
     background-image: -webkit-linear-gradient(top, #fff 50%, #eee 100%);
@@ -506,7 +503,6 @@
 .select2-container--classic .select2-selection--single .select2-selection__arrow {
     background-color: #ddd;
     border: none;
-    border-left: 1px solid #aaa;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     height: 26px;
@@ -522,7 +518,6 @@
 }
 
 .select2-container--classic .select2-selection--single .select2-selection__arrow b {
-    border-color: #888 transparent transparent transparent;
     border-style: solid;
     border-width: 5px 4px 0 4px;
     height: 0;
@@ -545,7 +540,6 @@
 
 .select2-container--classic[dir="rtl"] .select2-selection--single .select2-selection__arrow {
     border: none;
-    border-right: 1px solid #aaa;
     border-radius: 0;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
@@ -564,7 +558,6 @@
 }
 
 .select2-container--classic.select2-container--open .select2-selection--single .select2-selection__arrow b {
-    border-color: transparent transparent #888 transparent;
     border-width: 0 4px 5px 4px
 }
 

@@ -1,6 +1,17 @@
 {
     "translations": {
         "en": {
+            "account_types": {
+                "1": {
+                    "name": "👦 User"
+                },
+                "2": {
+                    "name": "🧪 Tester"
+                },
+                "3": {
+                    "name": "🛠️ Developer"
+                }
+            },
             "messages": {
                 "title": "Important Message",
                 "join": "Suivix has just joined the Discord server `{guildName}` which you own. In case of problem, you will find all the help you need with the `{prefix}suivix help` command.",
@@ -12,6 +23,17 @@
             }
         },
         "fr": {
+            "account_types": {
+                "1": {
+                    "name": "👦 Utilisateur"
+                },
+                "2": {
+                    "name": "🧪 Testeur"
+                },
+                "3": {
+                    "name": "🛠️ Développeur"
+                }
+            },
             "messages": {
                 "title": "Message Important",
                 "join": "Suivix vient de rejoindre le serveur Discord `{guildName}` dont vous êtes propriétaire. En cas de problème, vous trouverez toute l'aide dont vous avez besoin avec la commande `{prefix}suivix aide`.",

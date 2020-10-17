@@ -682,7 +682,9 @@ function initChoice(language) {
     request.onload = function () {
         const response = JSON.parse(this.response);
         $(".username").text(response.username);
-        $("#user-loader-image").html(`<img class="avatar" src="${response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "/icons/avatar.png"}"></div>`)
+        $("#user-loader-image").html(`<img class="avatar" src="${response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "/icons/avatar.png"}"></div><var class="accountType"></var>`)
+        displayAccountType(response);
+
 
         $("#user-loader").hide();
         $("#welcome").show();
@@ -712,6 +714,12 @@ function initChoice(language) {
     }
     request.send();
 
+}
+
+function displayAccountType(response) {
+    $(".accountType").text(response.account_type.name);
+    $(".accountType").css('background-color', response.account_type.color)
+    if(response.account_type.type > 1) $(".accountType").show();
 }
 
 function initServerSelection(language, type) {

@@ -8,7 +8,8 @@ const routes = require('express').Router();
 //Global imports
 const home = require("./models/home"),
     servers = require('./models/servers'),
-    login = require("./models/login");
+    login = require("./models/login"),
+    upgrade = require('./models/upgrade');
 
 //Errors
 const error404 = require('./models/error/404');
@@ -23,6 +24,9 @@ const attendance = require('./models/attendance/attendance'),
     done = require('./models/api/attendance'),
     newAttendanceRequest = require('./models/attendance/new'),
     deleteAttendanceRequest = require('./models/attendance/delete');
+
+//Poll
+const poll = require('./models/poll/poll');
 
 //Api imports
 const getUser = require('./models/api/user'),
@@ -50,6 +54,7 @@ class RoutesList {
             home(req, res, "en")
         });
         routes.get(Routes.SERVERS_SELECTION, passport.authenticate('main'), servers);
+        routes.get(Routes.UPGRADE_PAGE, upgrade);
 
         //Login
         routes.get(Routes.LOGIN_PAGE, login);
@@ -68,6 +73,9 @@ class RoutesList {
         routes.get(Routes.ATTENDANCE_RESULT, passport.authenticate('main'), result);
         routes.get(Routes.ATTENDANCE_NEWREQUEST, newAttendanceRequest);
         routes.get(Routes.ATTENDANCE_DELETE, passport.authenticate('main'), deleteAttendanceRequest);
+
+        //Poll
+        routes.get(Routes.POLL_PAGE, passport.authenticate('main'), poll);
 
         //Api
         routes.get(Routes.API_USER_URL, passport.authenticate('main', {

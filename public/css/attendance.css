@@ -102,6 +102,14 @@ body {
     animation: 0.7s linear 0s infinite normal none running loading;
 }
 
+.loading-select span {
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #b9bbbe;
+    font-size: 14px;
+    line-height: 30px;
+}
+
 .loading-image {
     width: 25px;
     height: 25px;
@@ -223,15 +231,27 @@ body {
     box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
 }
 
-.container .attendance-card .content {
+.container .rectangle-card {
+    position: relative;
+    min-height: 200px;
+    max-height: 600px;
+    min-width: 300px;
+    max-width: 500px;
+    background-color: #36393f;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
+}
+
+.content {
     padding: 12px 22px;
 }
 
-.container .attendance-card .content .header {
+.content .header {
     margin-bottom: 25px;
+    max-width: 100%;
 }
 
-.container .attendance-card .content .header .logo {
+.content .header .logo {
     max-width: 125px;
     margin: 15px;
     display: block;
@@ -242,7 +262,7 @@ body {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
 }
 
-.container .attendance-card .content .header .big-logo {
+.content .header .big-logo {
     max-width: 150px;
     padding: 15px;
     display: block;
@@ -252,20 +272,28 @@ body {
     border-radius: 150px;
 }
 
-.container .attendance-card .content .header .title {
+.content .header .full-logo {
+    max-width: 90%;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content .header .title {
     color: #fff;
     font-size: 32px;
     text-align: center;
 }
 
-.container .attendance-card .content .header .description {
+.content .header .description {
     color: #b9bbbe;
     font-size: 16px;
     text-align: justify;
     text-align-last: center;
 }
 
-.container .attendance-card .content .infos .expiresIn {
+.content .infos .expiresIn {
     color: #fff;
     font-size: 14px;
     text-align: left;
@@ -273,14 +301,14 @@ body {
     vertical-align: middle;
 }
 
-.container .attendance-card .content .infos .select {
+.content .infos .select {
     color: #fff;
     font-size: 14px;
     text-align: left;
     font-weight: 500;
 }
 
-.container .attendance-card .content .select-custom {
+.content .select-custom {
     margin-top: 8px;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
 }
@@ -643,6 +671,11 @@ button {
     transform: scale(0.99, 0.99);
 }
 
+.buttonHover:hover {
+    background-color:#1b1c1e;
+    transform: scale(0.99, 0.99);
+}
+
 .buttonLogin:hover .buttonLock1 {
     display: none;
 }
@@ -688,11 +721,17 @@ button {
         max-width: 400px;
     }
 
-    .container .attendance-card .content .header {
+    .container .rectangle-card {
+        margin-top: 10%;
+        width: 95vw;
+        max-width: 400px;
+    }
+
+    .content .header {
         margin-bottom: 25px;
     }
 
-    .container .attendance-card .content .header .logo {
+    .content .header .logo {
         max-width: 125px;
         display: block;
         margin-left: auto;
@@ -700,25 +739,25 @@ button {
         animation: float 6s ease-in-out infinite;
     }
 
-    .container .attendance-card .content .header .title {
+    .content .header .title {
         color: #fff;
         font-size: 26px;
         text-align: center;
     }
 
-    .container .attendance-card .content .header .description {
+    .content .header .description {
         color: #b9bbbe;
         font-size: 14px;
         text-align: center;
     }
 
-    .container .attendance-card .content .infos .expiresIn {
+    .content .infos .expiresIn {
         color: #fff;
         font-size: 11px;
         text-align: left;
     }
 
-    .container .attendance-card .content .infos .select {
+    .content .infos .select {
         color: #fff;
         font-size: 12px;
         text-align: left;

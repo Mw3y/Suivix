@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Suivix - Login</title>
+  <title>Suivix - Upgrade Account</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description"
@@ -20,23 +20,28 @@
     <a href="?language=en" class="language margin-15">EN.</a>
   </div>
   <div class="container">
-    <div class="attendance-card" id="card">
+    <div class="rectangle-card">
       <div class="content">
         <div class="header">
-          <img src="/icons/login.png" class="big-logo" style="border-radius: 0 !important;">
-          <h1 class="title">You're not logged in</h1>
+          <img src='/icons/money.png' class="full-logo">
+          <h1 class="title">This feature has not yet been released to the public.</h1>
           <div class="separator centered" style="width: 125px"></div>
-          <p class="description" id="attendance-desc">You must login into your Discord account to use Suivix. You might
-            get disconnected if you don't use Suivix for too long.</p>
+          <p class="description" id="attendance-desc">The feature you've tried to use is <strong>only available for "Testers"</strong>. Suivix is a free Discord bot. Therefore, if you want to <strong>access features before their release date</strong>, please consider supporting the bot hosting and development by donating <strong>at least 5€</strong>.</p>
         </div>
-        <div class="centered" style="margin-top: 125px;">
+        <div class="centered" style="margin-top: 25px;">
           <button class="normal-button buttonLarge black-btn buttonLogin buttonSeparator"
-            onclick="redirect('LOGIN_REDIRECT')" title="Login with Discord">
+            onclick="window.open('https://utip.io/mw3y')">
             <p class="content">
               <img src="/icons/lock.png" class="buttonIconImage buttonLock1">
               <img src="/icons/unlock.png" class="buttonIconImage buttonLock2">
-              Login with Discord</p>
+              I want to support Suivix hosting & development</p>
           </button>
+          <button class="normal-button buttonLarge black-btn buttonHover buttonSeparator"
+          onclick="redirect('ATTENDANCE_PAGE')">
+          <p class="content">
+            <img src="/icons/redo.png" class="buttonIconImage buttonLock1">
+            I just want to take attendance</p>
+        </button>
         </div>
       </div>
     </div>

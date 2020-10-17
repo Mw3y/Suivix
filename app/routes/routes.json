@@ -1,11 +1,13 @@
 {
     "HOME_PAGE": "/",
+    "UPGRADE_PAGE": "/upgrade",
     "SERVERS_SELECTION": "/servers",
     "ATTENDANCE_PAGE": "/attendance",
     "ATTENDANCE_PAGE_DONE": "/api/get/attendance/done",
     "ATTENDANCE_RESULT": "/attendance/result",
     "ATTENDANCE_NEWREQUEST": "/attendance/new",
     "ATTENDANCE_DELETE": "/attendance/delete",
+    "POLL_PAGE": "/poll",
     "LOGIN_PAGE": "/login",
     "LOGIN_REDIRECT": "/auth/login",
     "LOGOUT_REDIRECT": "/auth/logout",

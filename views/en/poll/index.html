@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Suivix - Poll Request</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="You are a professor or maybe even a business manager and you want to take attendance on Discord. No worries! Suivix will take care of it for you.">
+    <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
+
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/css/attendance.css">
+    <link rel="stylesheet" href="/css/poll.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="/css/microtip.css">
+    <link href="/css/select2.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/" class="title">SUIVIX</a>
+        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Disconnect" data-microtip-position="bottom"
+            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
+        <div class="loading-image" id="user-loader-image"></div>
+        <div style="width: 150px;" class="loading-text" id="user-loader"></div>
+        <p class="user" id="user-infos">
+            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
+                id="avatar"></p>
+        <a href="?language=fr" class="language margin">FR.</a>
+        <a href="javascript:void(0)" class="language margin-15">EN.</a>
+    </div>
+    <div class="container">
+        <div class="attendance-card" id="card">
+            <div class="content">
+                <div class="header">
+                    <img src="/icons/poll.jpg" class="logo">
+                    <h1 class="title">Create a poll</h1>
+                    <div class="separator centered" style="width: 125px"></div>
+                </div>
+                <div class="select-custom" id="select-roles">
+                    <div style="width: 100%; " class="loading-select"
+                        aria-label="🔄 Please wait while the roles list is being loaded."
+                        data-microtip-position="top" role="tooltip"><span>Who can answer the poll?</span></div>
+                </div>
+                <div class="select-custom" id="select-channels">
+                    <div style="width: 100%; " class="loading-select"
+                        aria-label="🔄 Please wait while the roles list is being loaded."
+                        data-microtip-position="top" role="tooltip"><span>Where will the poll be send?</span></div>
+                </div>
+                <div class="rows">
+                    <div class="left-row">
+                        <div class="select-custom" id="select-channels">
+                            <div style="width: 100%; " class="loading-select"
+                                aria-label="🔄 Please wait while the roles list is being loaded."
+                                data-microtip-position="top" role="tooltip"><span>Left row</span></div>
+                        </div>
+                    </div>
+                    <div class="right-row">
+                        <div class="select-custom" id="select-channels">
+                            <div style="width: 100%; " class="loading-select"
+                                aria-label="🔄 Please wait while the roles list is being loaded."
+                                data-microtip-position="top" role="tooltip"><span>Right row</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button">
+                    <button class="btn white-btn m-right " onclick="clearSelection()"
+                        aria-label="🔄 Clear the selection" data-microtip-position="top" role="tooltip"><i
+                            class="fas fa-redo-alt "></i></button>
+                    <button class="btn black-btn " onclick="deleteRequest()"
+                        aria-label="❌ Delete this attendance request" data-microtip-position="top" role="tooltip"><i
+                            class="fas fa-times "></i></button>
+                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="✅ Take Attendance"
+                        data-microtip-position="top" role="tooltip"><i class="fas fa-check "></i></button>
+                    <div id="loading"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="footer ">
+        <p class="credits ">Made with <var class="systemui-emoji ">♥</var> by MΛX</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    <script src="/js/jqueryui.js"></script>
+    <script src="/utils/Utils.js"></script>
+    <script>
+        (function () {
+            var css = document.createElement('link');
+            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.rel = 'stylesheet';
+            css.type = 'text/css';
+            document.getElementsByTagName('head')[0].appendChild(css);
+        })();
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-108500515-2');
+    </script>
+
+</body>
+
+</html>

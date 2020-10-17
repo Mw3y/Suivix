@@ -1,0 +1,107 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.container .poll-card {
+    position: relative;
+    min-width: 350px;
+    max-width: 400px;
+    min-height: 550px;
+    max-height: 1000px;
+    background-color: #36393f;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
+}
+
+.container .poll-card .content {
+    padding: 12px 22px;
+}
+
+.rows {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.left-row {
+    display: flex;
+    justify-content: end;
+    margin-right: 5px;
+    width: 100%;
+}
+
+.right-row {
+    display: flex;
+    justify-content: start;
+    margin-left: 5px;
+    width: 100%;
+}
+
+
+.container .poll-card .content .header {
+    margin-bottom: 25px;
+}
+
+.container .poll-card .content .header .logo {
+    max-width: 125px;
+    margin: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+}
+
+.container .poll-card .content .header .big-logo {
+    max-width: 150px;
+    padding: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
+}
+
+.container .poll-card .content .header .title {
+    color: #fff;
+    font-size: 32px;
+    text-align: center;
+}
+
+.container .poll-card .content .header .description {
+    color: #b9bbbe;
+    font-size: 16px;
+    text-align: justify;
+    text-align-last: center;
+}
+
+.container .poll-card .content .infos .expiresIn {
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    display: inline;
+    vertical-align: middle;
+}
+
+.container .poll-card .content .infos .select {
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.container .poll-card .content .select-custom {
+    margin-top: 8px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+}

@@ -68,6 +68,23 @@ body {
     overflow: auto;
 }
 
+.accountType {
+    border-radius: 4px;
+    padding: 2px 5px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 11px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    position: absolute;
+    bottom: 25px;
+    right: -3px;
+}
+
+.userImageContainer {
+    position: relative;
+    text-align: center;
+}
+
 .loading-text {
     height: 25px;
     border-radius: 5px;

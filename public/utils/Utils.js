@@ -110,7 +110,7 @@ function getAttendanceStatement(channels, roles) {
     request.send();
 }
 
-function initSelect2RoleList(lang) {
+function initSelect2RoleList(lang, customPlaceholder, max = 8) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/roles`, window), true)
     request.onload = function () {
@@ -118,9 +118,9 @@ function initSelect2RoleList(lang) {
         if (this.status === 404) {
             return;
         }
-        const placeholder = (lang === "fr" ? "Rôles" : "Roles") + " 📚";
+        const placeholder = customPlaceholder ? customPlaceholder : (lang === "fr" ? "Rôles" : "Roles") + " 📚";
         document.getElementById("select-roles").innerHTML = "<select id='select-2'multiple><option> <select></option></select > ";
-        initSelect2($("#select-2"), placeholder, [], 8)
+        initSelect2($("#select-2"), placeholder, [], max)
         let i = 0;
         for (let key in response) {
             var newOption = new Option(reductText(response[key].name, 32) + "<span class='select2-users big'><img class='select2-users-icon' src='/icons/users.png'><var class='select2-users-text'> " + response[key].users + "</var></span>", key, false, false);
@@ -518,7 +518,7 @@ function closePopup(id) {
 
 }
 
-function initSelect2ChannelList(parents, lang) {
+function initSelect2ChannelList(parents, lang, customPlaceholder, max = 8) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/channels`, window), true)
     request.onload = function () {
@@ -527,9 +527,9 @@ function initSelect2ChannelList(parents, lang) {
             return;
         }
         const channelsJSON = JSON.parse(this.response);
-        const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
+        const placeholder = customPlaceholder ? customPlaceholder : (lang === "fr" ? "Salons" : "Channels") + " 🎧";
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
-        initSelect2($("#select-1"), placeholder, [], 8)
+        initSelect2($("#select-1"), placeholder, [], max)
         for (let key in channelsJSON) {
             const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>";
             var newOption = new Option(text, key, false, false);
@@ -547,7 +547,7 @@ function clearSelection() {
 
 function deleteRequest(type = "attendance") {
     if (type === "attendance") redirect("ATTENDANCE_DELETE", undefined);
-    else redirect("PAULL_DELETE", undefined);
+    else redirect("POLL_DELETE", undefined);
 }
 
 const reductText = function (name, maxLength, separator = false) {
@@ -711,6 +711,22 @@ function initChoice(language) {
             });
         }
 
+        if (response.poll_request && !response.poll_request.isExpired) {
+            if (language === "en") {
+                $("#create-poll").text("Continue creating the poll");
+            } else {
+                $("#create-poll").text("Continuer de créer le sondage");
+            }
+            $("#poll-option").on("click", function () {
+                redirect("POLL_PAGE", undefined)
+            });
+        } else {
+            $("#poll-option").on("click", function () {
+                initServerSelection(language, "poll")
+            });
+        }
+
+
     }
     request.send();
 
@@ -719,11 +735,16 @@ function initChoice(language) {
 function displayAccountType(response) {
     $(".accountType").text(response.account_type.name);
     $(".accountType").css('background-color', response.account_type.color)
-    if(response.account_type.type > 1) $(".accountType").show();
+    if (response.account_type.type > 1) $(".accountType").show();
 }
 
 function initServerSelection(language, type) {
     let redirectTo = "ATTENDANCE_NEWREQUEST";
+    if(type === "poll") {
+        redirectTo = "POLL_NEWREQUEST";
+        $("#attendance-desc").hide();
+        $("#poll-desc").show();
+    }
     $("#overlay").fadeOut(200);
 
     let request = new XMLHttpRequest();

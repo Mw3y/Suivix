@@ -8,6 +8,8 @@
     "ATTENDANCE_NEWREQUEST": "/attendance/new",
     "ATTENDANCE_DELETE": "/attendance/delete",
     "POLL_PAGE": "/poll",
+    "POLL_NEWREQUEST": "/poll/new",
+    "POLL_DELETE": "/poll/delete",
     "LOGIN_PAGE": "/login",
     "LOGIN_REDIRECT": "/auth/login",
     "LOGOUT_REDIRECT": "/auth/logout",

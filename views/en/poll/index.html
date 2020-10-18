@@ -38,41 +38,52 @@
                     <img src="/icons/poll.jpg" class="logo">
                     <h1 class="title">Create a poll</h1>
                     <div class="separator centered" style="width: 125px"></div>
+                    <p class="description">Suivix allows you to use multiple channels and roles to match most of the
+                        situations.</p>
                 </div>
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select"
-                        aria-label="🔄 Please wait while the roles list is being loaded."
-                        data-microtip-position="top" role="tooltip"><span>Who can answer the poll?</span></div>
+                        aria-label="🔄 Please wait while the roles list is being loaded." data-microtip-position="top"
+                        role="tooltip"><span>Who can answer the poll?</span></div>
                 </div>
                 <div class="select-custom" id="select-channels">
                     <div style="width: 100%; " class="loading-select"
-                        aria-label="🔄 Please wait while the roles list is being loaded."
-                        data-microtip-position="top" role="tooltip"><span>Where will the poll be send?</span></div>
+                        aria-label="🔄 Please wait while the roles list is being loaded." data-microtip-position="top"
+                        role="tooltip"><span>Where will the poll be send?</span></div>
                 </div>
+                <textarea class="subject" placeholder="The poll subject" onkeyup="textAreaAdjust(this)" type="text"
+                    minlength="4" maxlength="600"></textarea>
                 <div class="rows">
-                    <div class="left-row">
-                        <div class="select-custom" id="select-channels">
-                            <div style="width: 100%; " class="loading-select"
-                                aria-label="🔄 Please wait while the roles list is being loaded."
-                                data-microtip-position="top" role="tooltip"><span>Left row</span></div>
-                        </div>
+                    <div class="left-row checkboxContainer" aria-label="Will the poll participants be anonymous?"
+                        data-microtip-position="top" role="tooltip">
+                        <input type="checkbox" checked='true' id="anonymous" value="Anonymous?"><label
+                            for="anonymous">Anonymous?</label>
                     </div>
-                    <div class="right-row">
-                        <div class="select-custom" id="select-channels">
-                            <div style="width: 100%; " class="loading-select"
-                                aria-label="🔄 Please wait while the roles list is being loaded."
-                                data-microtip-position="top" role="tooltip"><span>Right row</span></div>
-                        </div>
+                    <div class="middle-row checkboxContainer" aria-label="Will everyone be able to see the results?"
+                        data-microtip-position="top" role="tooltip">
+                        <input type="checkbox" id="publicResult" value="Public Result?"><label for="publicResult">Public
+                            Result?</label>
+                    </div>
+                    <div class="right-row checkboxContainer"
+                        aria-label="The number of answers to the poll. (maximum: 10)" data-microtip-position="top"
+                        role="tooltip">
+                        <div class="numbersArea" id="answers" contenteditable="true" placeholder="Answers" nopaste
+                            onlynumbers></div>
+                    </div>
+                    <div class="right-row checkboxContainer" aria-label="How long the poll will last (in minutes)."
+                        data-microtip-position="top" role="tooltip">
+                        <div class="numbersArea" id="duration" contenteditable="true" placeholder="Duration (min)"
+                            nopaste onlynumbers></div>
                     </div>
                 </div>
                 <div class="button">
-                    <button class="btn white-btn m-right " onclick="clearSelection()"
+                    <button class="btn white-btn m-right " onclick="clearPollSelection()"
                         aria-label="🔄 Clear the selection" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-redo-alt "></i></button>
-                    <button class="btn black-btn " onclick="deleteRequest()"
-                        aria-label="❌ Delete this attendance request" data-microtip-position="top" role="tooltip"><i
+                    <button class="btn black-btn " onclick="deleteRequest('poll')"
+                        aria-label="❌ Delete this poll request" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="doAttendance();" aria-label="✅ Take Attendance"
+                    <button class="btn blue-btn m-left " onclick="createPoll();" aria-label="✅ Create the poll"
                         data-microtip-position="top" role="tooltip"><i class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>
@@ -89,6 +100,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="/js/jqueryui.js"></script>
     <script src="/utils/Utils.js"></script>
+    <script src="/utils/Paull.js"></script>
     <script>
         (function () {
             var css = document.createElement('link');
@@ -109,6 +121,8 @@
         gtag('js', new Date());
         gtag('config', 'UA-108500515-2');
     </script>
+
+    <script>initPaull("en")</script>
 
 </body>
 

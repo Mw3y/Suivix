@@ -26,7 +26,9 @@ const attendance = require('./models/attendance/attendance'),
     deleteAttendanceRequest = require('./models/attendance/delete');
 
 //Poll
-const poll = require('./models/poll/poll');
+const poll = require('./models/poll/poll'),
+    newPollRequest = require('./models/poll/new'),
+    deletePollRequest = require('./models/poll/delete');
 
 //Api imports
 const getUser = require('./models/api/user'),
@@ -76,6 +78,8 @@ class RoutesList {
 
         //Poll
         routes.get(Routes.POLL_PAGE, passport.authenticate('main'), poll);
+        routes.get(Routes.POLL_NEWREQUEST, newPollRequest);
+        routes.get(Routes.POLL_DELETE, passport.authenticate('main'), deletePollRequest);
 
         //Api
         routes.get(Routes.API_USER_URL, passport.authenticate('main', {

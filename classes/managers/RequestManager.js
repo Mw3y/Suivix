@@ -3,7 +3,8 @@
  * Copyrights licensed under the GNU General Public License v3.0.
  * See the accompanying LICENSE file for terms.
  */
-const AttendanceRequest = require('../AttendanceRequest');
+const AttendanceRequest = require('../AttendanceRequest'),
+    PollRequest = require('../PollRequest');
 
 /**
  * Represents a RequestManager
@@ -22,7 +23,8 @@ class RequestManager {
         let channel = guild.channels.cache.get(request.channel_id);
         let author = guild.member(request.author);
         if (!guild || !author) return undefined;
-        return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
+        if (request.type === "attendance") return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
+        else return new PollRequest(request.id, author, new Date(request.date), guild, channel);
     }
 
     /** 
@@ -53,7 +55,7 @@ class RequestManager {
      * @param {*} request - The request
      */
     deleteRequest(request) {
-        console.log("⚠   An attendance request has been deleted!".red + ` (id: ${request.id})` + separator);
+        console.log("⚠   A(n) ".red + request.type.red + " request has been deleted!".red + ` (id: ${request.id})` + separator);
         return undefined;
     }
 

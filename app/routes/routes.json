@@ -10,6 +10,7 @@
     "POLL_PAGE": "/poll",
     "POLL_NEWREQUEST": "/poll/new",
     "POLL_DELETE": "/poll/delete",
+    "POLL_CREATE": "/api/get/poll/create",
     "LOGIN_PAGE": "/login",
     "LOGIN_REDIRECT": "/auth/login",
     "LOGOUT_REDIRECT": "/auth/logout",

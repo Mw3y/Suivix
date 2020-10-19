@@ -19,8 +19,7 @@ module.exports = async (req, res) => {
         if (DatabaseUser.language !== userLanguage && req.cookies["language"] !== undefined) await userManager.changeUserParam(req.session.passport.user.identity.id, "language", userLanguage);
 
         //Execute attendance request
-        const statement = await request.createPoll(req.query.channel, req.query.roles, req.query.timezone, userLanguage);
-        let id = req.session.passport.user.poll_request.id;
+        const statement = await request.createPoll(req.query.channel, req.query.roles, req.query.subject, req.query.description, req.query.anonymous, req.query.publicResult, req.query.answers, req.query.duration, userLanguage);
         if (statement.success) req.session.passport.user.poll_request = manager.deleteRequest(req.session.passport.user.poll_request);
         res.status(200).send(statement);
     }

@@ -518,7 +518,7 @@ function closePopup(id) {
 
 }
 
-function initSelect2ChannelList(parents, lang, customPlaceholder, max = 8) {
+function initSelect2ChannelList(parents, lang, customPlaceholder, max = 8, showUsers = true) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/channels`, window), true)
     request.onload = function () {
@@ -531,7 +531,7 @@ function initSelect2ChannelList(parents, lang, customPlaceholder, max = 8) {
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
         initSelect2($("#select-1"), placeholder, [], max)
         for (let key in channelsJSON) {
-            const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>";
+            const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + (showUsers ? "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>" : "");
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
         }
@@ -798,32 +798,6 @@ function initServerSelection(language, type) {
     request.send();
 
 }
-
-function initParallax() {
-
-    if (!$('.parallax div')) return;
-    var currentX = '';
-    var currentY = '';
-    var movementConstant = .004;
-    $(document).mousemove(function (e) {
-        if (currentX == '') currentX = e.pageX;
-        var xdiff = e.pageX - currentX;
-        currentX = e.pageX;
-        if (currentY == '') currentY = e.pageY;
-        var ydiff = e.pageY - currentY;
-        currentY = e.pageY;
-        $('.parallax div').each(function (i, el) {
-            var movement = (i + 1) * (xdiff * movementConstant);
-            var movementy = (i + 1) * (ydiff * movementConstant);
-            var newX = $(el).position().left + movement;
-            var newY = $(el).position().top + movementy;
-            $(el).css('left', newX + 'px');
-            $(el).css('top', newY + 'px');
-        });
-    });
-}
-//initParallax();
-
 
 function shake() {
     $("#card").effect("shake");

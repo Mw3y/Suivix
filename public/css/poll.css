@@ -8,14 +8,21 @@ textarea {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
-.subject {
+.pollSubject {
     margin-top: 8px;
+    width: 98.3%;
+    height: 30px;
+    padding: 3px;
+}
+
+.pollDescription {
+    margin-top: 4px;
     width: 98.3%;
     height: 60px;
     padding: 3px;
 }
 
-.subject::placeholder {
+textarea::placeholder {
     padding: 0 4px;
     color: #686869;
     font-size: 18px;
@@ -79,6 +86,9 @@ textarea {
     cursor: pointer;
     padding-left: 8px;
     padding-right: 9px;
+    height: 34px;
+    line-height: 34px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
 .checkboxContainer label:before {
@@ -167,10 +177,6 @@ textarea {
     width: 28%;
 }
 
-.container .poll-card .content .header {
-    margin-bottom: 25px;
-}
-
 .container .poll-card .content .header .logo {
     max-width: 125px;
     margin: 15px;
@@ -225,13 +231,81 @@ textarea {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
+@media (max-height: 700px) {
+    .container {
+        margin: 15px auto !important;
+    }
+}
+
 @media only screen and (max-width: 800px) {
+    .footer {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        transform: none;
+        margin: 15% auto;
+    }
+
+    .poll-card {
+        width: 95vw;
+        max-width: 400px;
+    }
+
+    .content .header {
+        margin-bottom: 25px;
+    }
+
+    .content .header .logo {
+        max-width: 125px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .content .header .title {
+        color: #fff;
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .content .header .description {
+        color: #b9bbbe;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .content .infos .expiresIn {
+        color: #fff;
+        font-size: 11px;
+        text-align: left;
+    }
+
+    .content .infos .select {
+        color: #fff;
+        font-size: 12px;
+        text-align: left;
+        font-weight: 500;
+    }
 
     .checkboxContainer input[type="checkbox"]:checked+label::before {
-        content: "";
+        display: none;
     }
 
     .checkboxContainer label:before {
-        content: "";
+        display: none;
+    }
+
+    .numbersArea {
+        font-size: 12px;
+    }
+
+    [contenteditable=true]:empty:before {
+        font-size: 12px;
     }
 }

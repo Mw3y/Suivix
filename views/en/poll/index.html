@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Suivix - Poll Request</title>
+    <title>Suivix - Create a Poll</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
@@ -32,7 +32,7 @@
         <a href="javascript:void(0)" class="language margin-15">EN.</a>
     </div>
     <div class="container">
-        <div class="attendance-card" id="card">
+        <div class="poll-card" id="card">
             <div class="content">
                 <div class="header">
                     <img src="/icons/poll.jpg" class="logo">
@@ -51,21 +51,21 @@
                         aria-label="🔄 Please wait while the roles list is being loaded." data-microtip-position="top"
                         role="tooltip"><span>Where will the poll be send?</span></div>
                 </div>
-                <textarea class="subject" placeholder="The poll subject" onkeyup="textAreaAdjust(this)" type="text"
-                    minlength="4" maxlength="600"></textarea>
+                <textarea class="pollSubject" id="subject" placeholder="The poll subject" type="text" minlength="4" maxlength="256"></textarea>
+                <textarea class="pollDescription" id="description" onkeyup="textAreaAdjust(this)"  placeholder="The poll description (Optional)" type="text" minlength="4" maxlength="600"></textarea>
                 <div class="rows">
                     <div class="left-row checkboxContainer" aria-label="Will the poll participants be anonymous?"
                         data-microtip-position="top" role="tooltip">
                         <input type="checkbox" checked='true' id="anonymous" value="Anonymous?"><label
                             for="anonymous">Anonymous?</label>
                     </div>
-                    <div class="middle-row checkboxContainer" aria-label="Will everyone be able to see the results?"
+                    <div class="middle-row checkboxContainer" aria-label="Will everyone be able to see the result?"
                         data-microtip-position="top" role="tooltip">
                         <input type="checkbox" id="publicResult" value="Public Result?"><label for="publicResult">Public
                             Result?</label>
                     </div>
                     <div class="right-row checkboxContainer"
-                        aria-label="The number of answers to the poll. (maximum: 10)" data-microtip-position="top"
+                        aria-label="The number of answers to the poll. (maximum: 11)" data-microtip-position="top"
                         role="tooltip">
                         <div class="numbersArea" id="answers" contenteditable="true" placeholder="Answers" nopaste
                             onlynumbers></div>

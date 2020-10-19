@@ -57,7 +57,7 @@ class Request {
     /**
      * Returns the entire list of voice channels with their category in the guild that the user can see
      */
-    getVoiceChannels() {
+    getChannels() {
         const voiceChannels = this.guild.channels.cache.filter(channel => channel.type === "voice" && (this.author.id === Config.BOT_OWNER_ID ? true : channel.permissionsFor(this.author).has('VIEW_CHANNEL')));
         const channels = {};
         voiceChannels.sort(function (a, b) {

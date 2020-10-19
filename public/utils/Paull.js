@@ -15,8 +15,8 @@ const initPaull = function (lang) {
         displayChangelog(lang, document.getElementById("version"), document.getElementById("changelogText"));
 
         if (response.poll_request) {
-            initSelect2RoleList(lang, "Who can answer the poll?", 8);
-            initSelect2ChannelList(true, lang, "Where will the poll be send?", 1);
+            initSelect2RoleList(lang, "Who can answer the poll?", 4);
+            initSelect2ChannelList(true, lang, "Where will the poll be send?", 1, false);
         } else {
             redirect("SERVERS_SELECTION");
         }
@@ -25,6 +25,84 @@ const initPaull = function (lang) {
     request.send();
 }
 
+function createPoll(selectedChannels, rolesList) {
+    getSelectedChannel();
+}
+
+function getSelectedChannel() {
+    const channelsList = $("#select-1").val();
+    if (channelsList.length === 0) {
+        shake();
+        return;
+    };
+    getSelectedRoles(channelsList);
+}
+
+function getSelectedRoles(selectedChannels) {
+    const rolesList = $("#select-2").val();
+    if (rolesList.length === 0) {
+        shake();
+        return;
+    }
+    getPollStatement(selectedChannels, rolesList);
+}
+
+function getPollStatement(channel, roles) {
+    const subject = $("#subject").val();
+    const description = $("#description").val().replace(/\r?\n\r?/g, '\n').replace(/\r/g, '\n').replace(/\n/g,'<br>');
+    const anonymous = $('#anonymous').is(":checked");
+    const publicResult = $('#publicResult').is(":checked");
+    const answers = $('#answers').text();
+    const duration = $('#duration').text();
+    console.log(subject, anonymous, publicResult, answers, duration)
+    console.log(subject.length, answers.length, duration.length)
+    if (subject.length === 0 || answers.length === 0 || duration.length === 0) {
+        shake();
+        return;
+    }
+    $(".btn").hide();
+    $("#loading").show();
+    setInterval(() => {
+        $("#loading").hide();
+    }, 1000);
+
+    const params = "channel=" + channel + "&roles=" + roles.join("-") + "&subject=" + subject + "&description=" + description + "&anonymous=" + anonymous + "&publicResult=" + publicResult +
+    "&answers=" + answers + "&duration=" + duration;
+    console.log(params)
+    var request = new XMLHttpRequest()
+    request.open('GET', getUrl(`api/get/poll/create`, window) + "?" + params, true)
+    request.setRequestHeader('Content-Type', 'application/json');
+    request.onload = function () {
+        const response = JSON.parse(this.response);
+        if (response.success) {
+            $("#loading").hide();
+            $("#statement-title").text(response.title);
+            $("#statement-description").text(response.description);
+            $("#redirect-button").css("display", "flex");
+            $("#warning-button").hide();
+            $(".warning").attr("src", "/icons/party.svg")
+            $("#newRequest").attr("onclick", "redirect('POLL_NEWREQUEST', 'guild_id=" + response.guild_id + (response.channel_id ? "&channel_id=" + response.channel_id : "") + "');")
+            $("#newRequest").css("display", "flex");
+            $("#support-option").hide();
+            $("#support-option1").hide();
+            $("#statement").show();
+        } else {
+            $("#loading").hide();
+            $("#statement-title").text(response.title);
+            $("#statement-description").text(response.description);
+            if (response.download) {
+                $("#redirect-button").css("display", "flex");
+                $("#download-button").show();
+            } else {
+                $("#warning-button").show();
+            }
+            $("#support-option").show();
+            $("#support-option1").show();
+            $("#statement").show();
+        }
+    }
+    request.send();
+}
 $('#duration').on('keydown paste', function (event) {
     if ($(this).text().length >= 5 && event.keyCode != 8) {
         event.preventDefault();
@@ -43,7 +121,7 @@ $('[nopaste]').on('paste', function (event) {
 });
 
 $("[onlynumbers]").keypress(function (e) {
-    if (isNaN(String.fromCharCode(e.which))) e.preventDefault();
+    if (isNaN(String.fromCharCode(e.which)) || e.keyCode === 32 || e.keyCode === 13) e.preventDefault();
 });
 
 
@@ -52,13 +130,13 @@ function textAreaAdjust(element) {
     element.style.height = (element.scrollHeight) + "px";
 }
 
-$('.subject').focus(function () {
+$('.pollDescription').focus(function () {
     $(this).animate({
         height: this.scrollHeight
     }, 500);
 });
 
-$('.subject').focusout(function () {
+$('.pollDescription').focusout(function () {
     $(this).animate({
         height: "60px"
     }, 500);

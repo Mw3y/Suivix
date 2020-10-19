@@ -89,7 +89,8 @@
 }
 
 .select2-container .select2-search--inline {
-    float: left
+    float: left;
+    margin-left: 4px;
 }
 
 .select2-container .select2-search--inline .select2-search__field {

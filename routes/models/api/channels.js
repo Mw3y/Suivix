@@ -10,6 +10,6 @@ module.exports = async(req, res) => {
     if (!request) {
         res.status(404).json("Request does not exists")
     } else {
-        res.send(request.getVoiceChannels());
+        res.send(request.getChannels());
     }
 };

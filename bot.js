@@ -10,7 +10,7 @@ const Discord = require("discord.js"),
 class BotClient {
 
     constructor() {
-        this.client = new Discord.Client();
+        this.client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
     }
 
     /**

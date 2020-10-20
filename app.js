@@ -14,6 +14,7 @@ const express = require("express"),
     Sequelize = require("sequelize");
 
 require("format-unicorn"); //Initialize project formatter
+require("moment-duration-format"); //Initialize moment duration format
 require('colors'); //Add colors to console
 
 //Node package.json
@@ -22,6 +23,7 @@ var package = require("./package.json");
 //Bot commands
 const SuivixCommand = require("./classes/commands/Suivix"),
     SuivixCommandLines = require("./classes/commands/SuivixCmd");
+const RequestManager = new (require("./classes/managers/RequestManager"))();
 
 const app = express(); //Create the express server
 
@@ -120,6 +122,9 @@ client.on("ready", async () => {
         SuivixClient.setActivity(activity); //Display it
         activityNumber++;
     }, 10000); //Execute every 10 seconds
+    setInterval(async () => {
+        await RequestManager.updateAllPolls();
+    }, 45000)
 });
 
 //Trigger when a message is sent
@@ -143,9 +148,18 @@ client.on("message", (message) => {
 
 //Trigger when a reaction is add on a message
 client.on("messageReactionAdd", async (reaction, user) => {
+    if (reaction.partial) {
+		try {
+			await reaction.fetch();
+		} catch (error) {
+			return;
+		}
+	}
     if (user.bot) return; //If the user is a bot
     if (reaction.message.author !== client.user) return; //if the message is not sent by the bot
     await Language.handleLanguageChange(reaction, user);
+    const poll = await RequestManager.getPollRequestByMessage(reaction.message);
+    if(poll) await poll.handleVote(reaction, user);
 });
 
 //Trigger when the bot joins a guild

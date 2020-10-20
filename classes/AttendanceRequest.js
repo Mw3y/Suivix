@@ -8,7 +8,7 @@ const Discord = require('discord.js'),
     fs = require("fs"),
     moment = require('moment');
 
-class Request {
+class AttendanceRequest {
 
     /**
      * Represents an attendance request
@@ -327,7 +327,7 @@ class Request {
 
     /**
      * Transform id list into an array of discord roles/channels
-     * @param {String} channels - The list
+     * @param {String} stringList - The list
      * @param {String} type - Roles or Channels
      */
     transformStringListIntoArray(stringList, type) {
@@ -432,4 +432,4 @@ class Request {
         return "`" + dateString.charAt(0).toUpperCase() + dateString.slice(1) + "`";
     };
 }
-module.exports = Request;
+module.exports = AttendanceRequest;

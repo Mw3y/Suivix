@@ -104,14 +104,15 @@ function getPollStatement(channel, roles) {
     request.send();
 }
 $('#duration').on('keydown paste', function (event) {
-    if ($(this).text().length >= 5 && event.keyCode != 8) {
+    const value = parseInt($(this).text() + event.key);
+    if (($(this).text().length >= 5 || value < 1) && event.keyCode != 8) {
         event.preventDefault();
     }
 });
 
 $('#answers').on('keydown paste', function (event) {
     const value = parseInt($(this).text() + event.key);
-    if (value > 10 || value < 1 && event.keyCode != 8) {
+    if ((value > 10 || value < 1) && event.keyCode != 8) {
         event.preventDefault();
     }
 });

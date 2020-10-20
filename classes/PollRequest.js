@@ -7,11 +7,11 @@ const Discord = require('discord.js'),
     Server = require('../utils/Server'),
     moment = require('moment');
 
-class Request {
+class PollRequest {
 
     /**
-     * Represents an attendance request
-     * @param {*} id - The attendance request id
+     * Represents a poll request
+     * @param {*} id - The poll id
      * @param {Member} author - The attendance request author
      * @param {Date} date - The creation date of the attendance request
      * @param {Guild} guild - The attendance request guild
@@ -23,34 +23,6 @@ class Request {
         this.date = date;
         this.guild = guild;
         this.channel = channel;
-    }
-
-    /**
-     * Returns the attendance request id
-     */
-    getId() {
-        return this.id;
-    }
-
-    /**
-     * Returns the attendance request author
-     */
-    getAuthor() {
-        return this.author;
-    }
-
-    /**
-     * Returns the attendance request creation date
-     */
-    getDate() {
-        return this.date;
-    }
-
-    /**
-     * Returns the attendance request guild
-     */
-    getGuild() {
-        return this.guild;
     }
 
     /**
@@ -112,6 +84,7 @@ class Request {
 
         let parsedRoles = this.transformStringListIntoArray(roles, "roles");
         let rolesString = this.parseListIntoString(parsedRoles, TextTranslation.connector, true, false);
+        const expiresAt = moment(new Date()).add(duration, "minutes")
 
         const poll = new Discord.MessageEmbed()
             .setColor("#006D68")
@@ -119,17 +92,35 @@ class Request {
             .setTitle(subject.split("%20").join(" "))
             .addField("Anonymous", anonymous, true)
             .addField("Public result", publicResult, true)
-            .addField("Expires in", "10h53min", true)
-            .setFooter("Created thanks to suivix.xyz | Poll created by " + this.author.displayName + ".");
+            .addField("Expires in", this.getTimeLeft(expiresAt), true)
+            .setFooter("suivix.xyz | Poll created by " + this.author.displayName + "." + " • 0 votes");
 
         const message = await this.guild.channels.cache.get(channel).send(poll);
-        let possibleAnswers = {"1": "1️⃣", "2": "2️⃣", "3": "3️⃣", "4": "4️⃣", "5": "5️⃣", "6": "6️⃣", "7": "7️⃣", "8": "8️⃣", "9": "9️⃣", "10": "🔟"}
+        let possibleAnswers = {
+            "1": "1️⃣",
+            "2": "2️⃣",
+            "3": "3️⃣",
+            "4": "4️⃣",
+            "5": "5️⃣",
+            "6": "6️⃣",
+            "7": "7️⃣",
+            "8": "8️⃣",
+            "9": "9️⃣",
+            "10": "🔟"
+        }
 
-        for(let i = 1; i <= parseInt(answers); i++) {
-            message.react(possibleAnswers[i])
+        for (let i = 1; i <= parseInt(answers); i++) {
+            if (message) message.react(possibleAnswers[i])
+        }
+
+        if (!message) {
+            statement.success = false;
+            statement.title = TextTranslation.website.statement.errors.title;
+            statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
         }
 
         if (statement.success) {
+            this.registerPoll(message.id, channel, message.guild.id, this.author.user.id, roles, expiresAt.toISOString(), answers, anonymous, publicResult);
             console.log(
                 "{username}#{discriminator}".formatUnicorn({
                     username: this.author.user.username,
@@ -144,6 +135,25 @@ class Request {
         }
 
         return statement;
+    }
+
+    /**
+     * Returns the time left before the poll expires
+     */
+    getTimeLeft(expiresAt) {
+        var ms = moment(expiresAt).diff(moment(new Date()));
+        var d = moment.duration(ms);
+        var s = d.format("hh[h]mm:ss[s]");
+        return s;
+    }
+
+    /**
+     * Add the poll into the database
+     */
+    registerPoll(messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) {
+        sequelize.query("CREATE TABLE IF NOT EXISTS vote (messageId TEXT, author TEXT, vote TEXT)");
+        sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT)");
+        sequelize.query(`INSERT INTO poll (messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) VALUES (${messageId},${channelId},${guildId},${author},"${roles}","${expiresAt}",${answers},"${anonymous}","${publicResult}")`);
     }
 
     /**
@@ -205,17 +215,5 @@ class Request {
             return string;
         }
     }
-
-    /**
-     * Parse the date
-     * @param {*} timezone - The user timezone 
-     * @param {*} language - The user language 
-     */
-    generateDate(timezone, lang) {
-        if (timezone === undefined) timezone = "Europe/Paris";
-        if (lang === undefined) lang = "fr";
-        let dateString = moment(new Date()).tz(timezone).locale(lang).format("LLLL");
-        return "`" + dateString.charAt(0).toUpperCase() + dateString.slice(1) + "`";
-    };
 }
-module.exports = Request;
+module.exports = PollRequest;

@@ -4,7 +4,8 @@
  * See the accompanying LICENSE file for terms.
  */
 const AttendanceRequest = require('../AttendanceRequest'),
-    PollRequest = require('../PollRequest');
+    PollRequest = require('../PollRequest'),
+    Poll = require('../Poll');
 
 /**
  * Represents a RequestManager
@@ -14,7 +15,7 @@ const AttendanceRequest = require('../AttendanceRequest'),
 class RequestManager {
 
     /**
-     * Fetch an attendance request
+     * Fetch a request
      * @param {*} request - The request 
      */
     async getRequest(request) {
@@ -25,6 +26,26 @@ class RequestManager {
         if (!guild || !author) return undefined;
         if (request.type === "attendance") return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
         else return new PollRequest(request.id, author, new Date(request.date), guild, channel);
+    }
+
+    /**
+     * Fetch a poll by its message
+     * @param {*} message - The message 
+     */
+    async getPollRequestByMessage(message) {
+        const [poll] = await sequelize.query(`SELECT * FROM poll WHERE messageId = ${message.id}`);
+        if (!poll[0]) return undefined;
+        return new Poll(poll[0]);
+    }
+
+    /**
+     * Update all the polls which are not expired
+     */
+    async updateAllPolls() {
+        const [polls] = await sequelize.query(`SELECT * FROM poll`);
+        for(let i = 0; i < polls.length; i++) {
+            await (new Poll(polls[i])).updateTimeLeft();
+        }
     }
 
     /** 

@@ -26,7 +26,7 @@
     padding: 16px;
     min-width: 300px;
     max-width: 425px;
-    min-height: 550px;
+    min-height: 575px;
     z-index: 130;
     margin: auto;
 
@@ -56,6 +56,10 @@
     top: 15px;
     right: 15px;
     cursor: pointer;
+    color: #fff;
+}
+
+a {
     color: #fff;
 }
 

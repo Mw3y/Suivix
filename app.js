@@ -39,7 +39,7 @@ global.sequelize = new Sequelize({ //Initialize Database
 });
 //Update Database for polls
 sequelize.query("CREATE TABLE IF NOT EXISTS vote (messageId TEXT, author TEXT, vote TEXT)");
-sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT)");
+sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT, language TEXT)");
 global.SuivixClient = new BotClient(); //Launch the Discord bot instance
 global.client = SuivixClient.login(); //The bot client
 global.getGuildInvite = async (guild) => {

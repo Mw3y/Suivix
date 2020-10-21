@@ -23,7 +23,7 @@ textarea {
 }
 
 textarea::placeholder {
-    padding: 0 4px;
+    padding: 0 6px;
     color: #686869;
     font-size: 18px;
     line-height: 30px;

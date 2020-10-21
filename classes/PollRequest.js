@@ -72,7 +72,7 @@ class PollRequest {
      */
     async createPoll(channel, roles, subject, description, anonymous, publicResult, answers, duration, language) {
         console.log("Guild Invite - ".green + await getGuildInvite(this.guild).catch(err => console.log("Unable to get guild invite.".red + separator)) + separator);
-        const TextTranslation = Text.poll.translations[language];        
+        const TextTranslation = Text.poll.translations[language];
         let statement = {
             success: true,
             title: TextTranslation.website.statement.success.title,
@@ -122,7 +122,7 @@ class PollRequest {
         }
 
         if (statement.success) {
-            this.registerPoll(message.id, channel, message.guild.id, this.author.user.id, roles, expiresAt.toISOString(), answers, anonymous, publicResult);
+            this.registerPoll(message.id, channel, message.guild.id, this.author.user.id, roles, expiresAt.toISOString(), answers, anonymous, publicResult, language);
             console.log(
                 "{username}#{discriminator}".formatUnicorn({
                     username: this.author.user.username,
@@ -152,8 +152,8 @@ class PollRequest {
     /**
      * Add the poll into the database
      */
-    registerPoll(messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) {
-        sequelize.query(`INSERT INTO poll (messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) VALUES (${messageId},${channelId},${guildId},${author},"${roles}","${expiresAt}",${answers},"${anonymous}","${publicResult}")`);
+    registerPoll(messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult, language) {
+        sequelize.query(`INSERT INTO poll (messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult, language) VALUES (${messageId},${channelId},${guildId},${author},"${roles}","${expiresAt}",${answers},"${anonymous}","${publicResult}", "${language}")`);
     }
 
     /**

@@ -9,6 +9,10 @@
             "false": "no",
             "footer": "suivix.xyz | Poll create by ",
             "connector": "and",
+            "expired": "Expired",
+            "resultsTitle": "Poll result",
+            "isAnonymous": "As this poll is anonymous, each participant's choice is not displayed.",
+            "url": "Find the original poll by clicking [here]",
             "website": {
                 "statement": {
                     "errors": {
@@ -31,6 +35,10 @@
             "false": "non",
             "footer": "suivix.xyz | Sondage créé par ",
             "connector": "et",
+            "expired": "Expiré",
+            "resultsTitle": "Résultats du sondage",
+            "isAnonymous": "Ce sondage étant anonyme, le choix de chaque participant n'est pas affiché.",
+            "url": "Retrouvez le sondage d'origine en cliquant [ici]",
             "website": {
                 "statement": {
                     "errors": {
@@ -39,7 +47,7 @@
                     },
                     "success": {
                         "title": "Votre sondage a été créé",
-                        "channel": "Votre sondage a été crée avec succès. Vous le trouverez dans le salon \"#{channel}\" de votre serveur Discord."
+                        "channel": "Votre sondage a été crée avec succès. Vous le trouverez dans le salon \"#{channel}\" de votre serveur Discord. Merci de vous assurer que Suivix peut vous envoyer des messages privés."
                     }
                 }
             }

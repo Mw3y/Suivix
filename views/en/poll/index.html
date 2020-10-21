@@ -19,6 +19,17 @@
 </head>
 
 <body>
+    <div class="overlay" style="display: none;" id="overlay">
+        <div class="popup-center">
+            <div class="popup">
+                <div class="centered"><img class="news" src="/img/news.svg"></div>
+                <div class="title centered margin-top">Version <var id="version">Unknown</var></div>
+                <div class="changelog centered"><var id="changelogText">Unable to fetch changelog.</var></div>
+                <div id="close"><i class="fas fa-times-circle"></i></div>
+                <p class="close-info centered">Close this popup by clicking on the "x" icon in the top right corner.</p>
+            </div>
+        </div>
+    </div>
     <div class="overlay" style="display: none;" id="statement">
         <div class="popup-center">
             <div class="popup">
@@ -86,7 +97,7 @@
                     <img src="/icons/poll.jpg" class="logo">
                     <h1 class="title">Create a poll</h1>
                     <div class="separator centered" style="width: 125px"></div>
-                    <p class="description">Your subject must be under 256 characters and your description under 600.</p>
+                    <p class="description">Your subject must be under 240 characters and your description under 600.</p>
                 </div>
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select"
@@ -95,11 +106,11 @@
                 </div>
                 <div class="select-custom" id="select-channels">
                     <div style="width: 100%; " class="loading-select"
-                        aria-label="🔄 Please wait while the channels list is being loaded." data-microtip-position="top"
-                        role="tooltip"><span>Where will the poll be send?</span></div>
+                        aria-label="🔄 Please wait while the channels list is being loaded."
+                        data-microtip-position="top" role="tooltip"><span>Where will the poll be send?</span></div>
                 </div>
                 <textarea class="pollSubject" id="subject" placeholder="The poll subject" type="text" minlength="4"
-                    maxlength="256"></textarea>
+                    maxlength="240"></textarea>
                 <textarea class="pollDescription" id="description" onkeyup="textAreaAdjust(this)"
                     placeholder="The poll description (Optional)" type="text" minlength="4" maxlength="600"></textarea>
                 <div class="rows">
@@ -150,7 +161,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script src="/js/jqueryui.js"></script>
     <script src="/utils/Utils.js"></script>
-    <script src="/utils/Paull.js"></script>
+    <script src="/utils/Poll.js"></script>
     <script>
         (function () {
             var css = document.createElement('link');
@@ -172,7 +183,10 @@
         gtag('config', 'UA-108500515-2');
     </script>
 
-    <script>initPaull("en")</script>
+    <script>
+        initPaull("en");
+        displayChangelog("en");
+    </script>
 
 </body>
 

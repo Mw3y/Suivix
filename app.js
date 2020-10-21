@@ -23,7 +23,7 @@ var package = require("./package.json");
 //Bot commands
 const SuivixCommand = require("./classes/commands/Suivix"),
     SuivixCommandLines = require("./classes/commands/SuivixCmd");
-const RequestManager = new (require("./classes/managers/RequestManager"))();
+const RequestManager = new(require("./classes/managers/RequestManager"))();
 
 const app = express(); //Create the express server
 
@@ -37,6 +37,9 @@ global.sequelize = new Sequelize({ //Initialize Database
     storage: __dirname + Config.DATABASE_FILE,
     logging: false,
 });
+//Update Database for polls
+sequelize.query("CREATE TABLE IF NOT EXISTS vote (messageId TEXT, author TEXT, vote TEXT)");
+sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT)");
 global.SuivixClient = new BotClient(); //Launch the Discord bot instance
 global.client = SuivixClient.login(); //The bot client
 global.getGuildInvite = async (guild) => {
@@ -47,6 +50,7 @@ global.oauth = new(require("discord-oauth2"));
 global.Text = {
     global: require('./app/text/global.json'),
     suivix: require('./app/text/suivix.json'),
+    poll: require('./app/text/poll.json'),
 }
 
 /** ******************************************************** EXPRESS APP CONFIG **********************************************************/
@@ -148,18 +152,17 @@ client.on("message", (message) => {
 
 //Trigger when a reaction is add on a message
 client.on("messageReactionAdd", async (reaction, user) => {
-    if (reaction.partial) {
-		try {
-			await reaction.fetch();
-		} catch (error) {
-			return;
-		}
-	}
+    try { // Handle partial reactions
+        await reaction.fetch();
+        await reaction.users.fetch();
+    } catch (error) {
+        return;
+    }
     if (user.bot) return; //If the user is a bot
     if (reaction.message.author !== client.user) return; //if the message is not sent by the bot
     await Language.handleLanguageChange(reaction, user);
     const poll = await RequestManager.getPollRequestByMessage(reaction.message);
-    if(poll) await poll.handleVote(reaction, user);
+    if (poll) await poll.handleVote(reaction, user);
 });
 
 //Trigger when the bot joins a guild

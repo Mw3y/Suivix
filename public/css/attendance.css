@@ -234,7 +234,7 @@ body {
 .container .rectangle-card {
     position: relative;
     min-height: 200px;
-    max-height: 600px;
+    max-height: 650px;
     min-width: 300px;
     max-width: 500px;
     background-color: #36393f;

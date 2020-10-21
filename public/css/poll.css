@@ -161,20 +161,20 @@ textarea::placeholder {
     display: flex;
     justify-content: flex-start;
     margin-right: 2px;
-    width: 35%;
+    width: 37%;
 }
 
 .middle-row {
     display: flex;
     justify-content: flex-start;
-    width: 35%;
+    width: 40%;
 }
 
 .right-row {
     display: flex;
     justify-content: flex-end;
     margin-left: 5px;
-    width: 28%;
+    width: 26%;
 }
 
 .container .poll-card .content .header .logo {

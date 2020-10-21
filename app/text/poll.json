@@ -1,0 +1,48 @@
+{
+    "translations": {
+        "en": {
+            "anonymous": "Anonymous",
+            "publicResult": "Public result",
+            "expiresIn": "Expires in",
+            "canAnswer": " can answer this poll.",
+            "true": "yes",
+            "false": "no",
+            "footer": "suivix.xyz | Poll create by ",
+            "connector": "and",
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Your poll creation has failed",
+                        "unableToSendMessageInChannel": "We were unable to send the poll in the requested channel. Before creating a poll, please make sure to allow Suivix to send messages in this channel."
+                    },
+                    "success": {
+                        "title": "Your request has been finalized",
+                        "channel": "You have successfully created a poll. It has been sent in the \"#{channel}\" channel on your Discord server. Please make sure Suivix can send you private message."
+                    }
+                }
+            }
+        },
+        "fr": {
+            "anonymous": "Anonyme",
+            "publicResult": "Résultat public",
+            "expiresIn": "Expire dans",
+            "canAnswer": " peut/peuvent répondre à ce sondage.",
+            "true": "oui",
+            "false": "non",
+            "footer": "suivix.xyz | Sondage créé par ",
+            "connector": "et",
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Votre sondage n'a pas été créé",
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le sondage dans le salon désiré. Avant de créer un sondage, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
+                    },
+                    "success": {
+                        "title": "Votre sondage a été créé",
+                        "channel": "Votre sondage a été crée avec succès. Vous le trouverez dans le salon \"#{channel}\" de votre serveur Discord."
+                    }
+                }
+            }
+        }
+    }
+}

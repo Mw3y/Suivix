@@ -15,8 +15,8 @@ const initPaull = function (lang) {
         displayChangelog(lang, document.getElementById("version"), document.getElementById("changelogText"));
 
         if (response.poll_request) {
-            initSelect2RoleList(lang, "Who can answer the poll?", 4);
-            initSelect2ChannelList(true, lang, "Where will the poll be send?", 1, false);
+            initSelect2RoleList(lang, lang === "en" ? "Who can answer the poll?" : "Qui peut répondre au sondage ?", 4);
+            initSelect2ChannelList(true, lang, lang === "en" ? "Where will the poll be send?" : "Où le sondage va-t-il être envoyé ?", 1, false);
         } else {
             redirect("SERVERS_SELECTION");
         }
@@ -90,12 +90,7 @@ function getPollStatement(channel, roles) {
             $("#loading").hide();
             $("#statement-title").text(response.title);
             $("#statement-description").text(response.description);
-            if (response.download) {
-                $("#redirect-button").css("display", "flex");
-                $("#download-button").show();
-            } else {
-                $("#warning-button").show();
-            }
+            $("#warning-button").show();
             $("#support-option").show();
             $("#support-option1").show();
             $("#statement").show();
@@ -125,6 +120,14 @@ $("[onlynumbers]").keypress(function (e) {
     if (isNaN(String.fromCharCode(e.which)) || e.keyCode === 32 || e.keyCode === 13) e.preventDefault();
 });
 
+function clearPollSelection() {
+    $('#select-1').val([]).trigger('change');
+    $('#select-2').val([]).trigger('change');
+    $('#answers').text("");
+    $('#duration').text("");
+    $('#subject').val("");
+    $('#description').val("");
+}
 
 function textAreaAdjust(element) {
     element.style.height = "1px";

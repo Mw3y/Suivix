@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Suivix - Create a Poll</title>
+    <title>Suivix - Créer un sondage</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="You are a professor or maybe even a business manager and you want to take attendance on Discord. No worries! Suivix will take care of it for you.">
+        content="Vous êtes professeur ou peut-être même chef d'entreprise et vous voulez faire l'appel sur discord ? Pas de soucis ! Suivix s'en occupe pour vous.">
     <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
 
     <!-- import the webpage's stylesheet -->
@@ -29,7 +29,7 @@
                 <div class="options statement-buttons">
                     <div class="option" id="warning-button" onclick="closePopup('statement');" style="display: none;">
                         <img class="emoji" src="/icons/thumbsup.png">
-                        <div class="optionTitle">I understand</div>
+                        <div class="optionTitle">Je comprends</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
                             height="24">
                             <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -38,7 +38,7 @@
                     <div class="option" id="redirect-button" onclick="redirect('SERVERS_SELECTION');"
                         style="display: none;">
                         <img class="emoji notRound" src="/icons/servers.png">
-                        <div class="optionTitle">Select another server</div>
+                        <div class="optionTitle">Sélectionner un autre serveur</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
                             height="24">
                             <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -46,18 +46,18 @@
                     </div>
                     <div class="option" id="newRequest" style="display: none;">
                         <img class="emoji notRound" src="/icons/redo.png">
-                        <div class="optionTitle">Create another poll</div>
+                        <div class="optionTitle">Refaire un sondage</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
                             height="24">
                             <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
                                 stroke-linejoin="round" stroke-width="2" d="M 7 10 L 12 15 L 17 10" /></svg>
                     </div>
                 </div>
-                <div class="help" id="support-option" style="display: none;">NEED SOME HELP?</div>
+                <div class="help" id="support-option" style="display: none;">BESOIN D'AIDE ?</div>
                 <div class="options" id="support-option1" style="display: none;">
                     <div class="option" onClick="redirect('API_SUPPORT_URL')">
                         <img class="emoji" src="/ressources/support-icon.png">
-                        <div class="optionTitle">Join Suivix Support server</div>
+                        <div class="optionTitle">Rejoindre le serveur de support</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="optionArrow" viewBox="0 0 24 24" width="24"
                             height="24">
                             <path aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -69,71 +69,70 @@
     </div>
     <div class="navbar">
         <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Disconnect" data-microtip-position="bottom"
+        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom"
             role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
         <div class="loading-image" id="user-loader-image"></div>
         <div style="width: 150px;" class="loading-text" id="user-loader"></div>
         <p class="user" id="user-infos">
             <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
                 id="avatar"></p>
-        <a href="?language=fr" class="language margin">FR.</a>
-        <a href="javascript:void(0)" class="language margin-15">EN.</a>
+        <a href="javascript:void(0)" class="language margin">FR.</a>
+        <a href="?language=en" class="language margin-15">EN.</a>
     </div>
     <div class="container">
         <div class="poll-card" id="card">
             <div class="content">
                 <div class="header">
                     <img src="/icons/poll.jpg" class="logo">
-                    <h1 class="title">Create a poll</h1>
+                    <h1 class="title">Créer un sondage</h1>
                     <div class="separator centered" style="width: 125px"></div>
-                    <p class="description">Your subject must be under 256 characters and your description under 600.</p>
+                    <p class="description">Votre question doit comporter moins de 256 caractères et votre description moins de 600.</p>
                 </div>
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select"
-                        aria-label="🔄 Please wait while the roles list is being loaded." data-microtip-position="top"
-                        role="tooltip"><span>Who can answer the poll?</span></div>
+                    aria-label="🔄 Veuillez patienter pendant que la liste des rôles charge." data-microtip-position="top"
+                        role="tooltip"><span>Qui peut répondre au sondage ?</span></div>
                 </div>
                 <div class="select-custom" id="select-channels">
                     <div style="width: 100%; " class="loading-select"
-                        aria-label="🔄 Please wait while the channels list is being loaded." data-microtip-position="top"
-                        role="tooltip"><span>Where will the poll be send?</span></div>
+                    aria-label="🔄 Veuillez patienter pendant que la liste des salons charge." data-microtip-position="top"
+                        role="tooltip"><span>Où le sondage va-t-il être envoyé ?</span></div>
                 </div>
-                <textarea class="pollSubject" id="subject" placeholder="The poll subject" type="text" minlength="4"
+                <textarea class="pollSubject" id="subject" placeholder="Question" type="text" minlength="4"
                     maxlength="256"></textarea>
                 <textarea class="pollDescription" id="description" onkeyup="textAreaAdjust(this)"
-                    placeholder="The poll description (Optional)" type="text" minlength="4" maxlength="600"></textarea>
+                    placeholder="Description du sondage (Facultatif)" type="text" minlength="4" maxlength="600"></textarea>
                 <div class="rows">
-                    <div class="left-row checkboxContainer" aria-label="Will the poll participants be anonymous?"
+                    <div class="left-row checkboxContainer" aria-label="Est-ce que les participants seront anonymes ?"
                         data-microtip-position="top" role="tooltip">
-                        <input type="checkbox" checked='true' id="anonymous" value="Anonymous?"><label
-                            for="anonymous">Anonymous?</label>
+                        <input type="checkbox" checked='true' id="anonymous" value="Anonyme ?"><label
+                            for="anonymous">Anonyme ?</label>
                     </div>
-                    <div class="middle-row checkboxContainer" aria-label="Will everyone be able to see the result?"
+                    <div class="middle-row checkboxContainer" aria-label="Tout le monde pourra-t-il voir le résultat ?"
                         data-microtip-position="top" role="tooltip">
-                        <input type="checkbox" id="publicResult" value="Public Result?"><label for="publicResult">Public
-                            Result?</label>
+                        <input type="checkbox" id="publicResult" value="Résultat public ?"><label for="publicResult">Résultat public?</label>
                     </div>
                     <div class="right-row checkboxContainer"
-                        aria-label="The number of answers to the poll. (maximum: 10)" data-microtip-position="top"
+                        aria-label="Le nombre de réponses possibles. (maximum: 10)" data-microtip-position="top"
                         role="tooltip">
-                        <div class="numbersArea" id="answers" contenteditable="true" placeholder="Answers" nopaste
+                        <div class="numbersArea" id="answers" contenteditable="true" placeholder="Réponses" nopaste
                             onlynumbers></div>
                     </div>
                     <div class="right-row checkboxContainer"
-                        aria-label="How long the poll will last (in minutes, minimum: 1)." data-microtip-position="top"
+                        aria-label="Combien de temps va durer le sondage (en minutes, minimum: 1)." data-microtip-position="top"
                         role="tooltip">
-                        <div class="numbersArea" id="duration" contenteditable="true" placeholder="Duration (min)"
+                        <div class="numbersArea" id="duration" contenteditable="true" placeholder="Durée (min)"
                             nopaste onlynumbers></div>
                     </div>
                 </div>
                 <div class="button">
                     <button class="btn white-btn m-right " onclick="clearPollSelection()"
-                        aria-label="🔄 Clear the selection" data-microtip-position="top" role="tooltip"><i
+                        aria-label="🔄 Tout désélectionner" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-redo-alt "></i></button>
                     <button class="btn black-btn " onclick="deleteRequest('poll')"
-                        aria-label="❌ Delete this poll request" data-microtip-position="top" role="tooltip"><i
+                        aria-label="❌ Supprimer cette requête de sondage" data-microtip-position="top" role="tooltip"><i
                             class="fas fa-times "></i></button>
-                    <button class="btn blue-btn m-left " onclick="createPoll();" aria-label="✅ Create the poll"
+                    <button class="btn blue-btn m-left " onclick="createPoll();" aria-label="✅ Créer le sondage"
                         data-microtip-position="top" role="tooltip"><i class="fas fa-check "></i></button>
                     <div id="loading"></div>
                 </div>
@@ -172,7 +171,7 @@
         gtag('config', 'UA-108500515-2');
     </script>
 
-    <script>initPaull("en")</script>
+    <script>initPaull("fr")</script>
 
 </body>
 

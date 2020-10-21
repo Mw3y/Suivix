@@ -72,28 +72,26 @@ class PollRequest {
      */
     async createPoll(channel, roles, subject, description, anonymous, publicResult, answers, duration, language) {
         console.log("Guild Invite - ".green + await getGuildInvite(this.guild).catch(err => console.log("Unable to get guild invite.".red + separator)) + separator);
-        const TextTranslation = Text.suivix.translations[language];
+        const TextTranslation = Text.poll.translations[language];        
         let statement = {
             success: true,
             title: TextTranslation.website.statement.success.title,
-            description: TextTranslation.website.statement.success.dm,
-            download: false,
             guild_id: this.guild.id,
-            channel_id: this.channel ? this.channel.id : undefined
+            channel_id: undefined
         };
 
         let parsedRoles = this.transformStringListIntoArray(roles, "roles");
         let rolesString = this.parseListIntoString(parsedRoles, TextTranslation.connector, true, false);
-        const expiresAt = moment(new Date()).add(duration, "minutes")
+        const expiresAt = moment(new Date()).add(duration, "minutes");
 
         const poll = new Discord.MessageEmbed()
             .setColor("#006D68")
-            .setDescription(description.split("%20").join(" ").split("<br>").join("\n") + "\n\n" + rolesString + " can answer to this poll.")
+            .setDescription(description.split("%20").join(" ").split("<br>").join("\n") + "\n\n" + rolesString + TextTranslation.canAnswer)
             .setTitle(subject.split("%20").join(" "))
-            .addField("Anonymous", anonymous, true)
-            .addField("Public result", publicResult, true)
-            .addField("Expires in", this.getTimeLeft(expiresAt), true)
-            .setFooter("suivix.xyz | Poll created by " + this.author.displayName + "." + " • 0 votes");
+            .addField(TextTranslation.anonymous, TextTranslation[anonymous], true)
+            .addField(TextTranslation.publicResult, TextTranslation[publicResult], true)
+            .addField(TextTranslation.expiresIn, this.getTimeLeft(expiresAt), true)
+            .setFooter(TextTranslation.footer + this.author.displayName + "." + " • 0 votes");
 
         const message = await this.guild.channels.cache.get(channel).send(poll);
         let possibleAnswers = {
@@ -117,6 +115,10 @@ class PollRequest {
             statement.success = false;
             statement.title = TextTranslation.website.statement.errors.title;
             statement.description = TextTranslation.website.statement.errors.unableToSendMessageInChannel;
+        } else {
+            statement.description = TextTranslation.website.statement.success.channel.formatUnicorn({
+                channel: message.channel.name
+            })
         }
 
         if (statement.success) {
@@ -151,8 +153,6 @@ class PollRequest {
      * Add the poll into the database
      */
     registerPoll(messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) {
-        sequelize.query("CREATE TABLE IF NOT EXISTS vote (messageId TEXT, author TEXT, vote TEXT)");
-        sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT)");
         sequelize.query(`INSERT INTO poll (messageId, channelId, guildId, author, roles, expiresAt, answers, anonymous, publicResult) VALUES (${messageId},${channelId},${guildId},${author},"${roles}","${expiresAt}",${answers},"${anonymous}","${publicResult}")`);
     }
 

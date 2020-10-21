@@ -30,7 +30,7 @@ class Poll {
      */
     async handleVote(reaction, user) {
         if (!this.isExpired()) {
-            if(this.canVote(reaction, user)) {
+            if(this.canVote(reaction, user) && this.reactionIsValid(reaction)) {
                 if (await this.getNumberOfVote(user) === 0) this.saveVote(reaction, user);
                 else this.updateVote(reaction, user);
                 await this.updatePoll(reaction);
@@ -39,6 +39,14 @@ class Poll {
             await this.deletePoll();
         }
         await reaction.users.remove(user);
+    }
+
+    /**
+     * Check if the reaction is part of the poll
+     * @param {*} reaction 
+     */
+    reactionIsValid(reaction) {
+        return reaction.users.cache.map(user => user.id).includes(client.user.id);
     }
 
     /**

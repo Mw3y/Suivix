@@ -35,7 +35,7 @@ class PollRequest {
             return a.name.localeCompare(b.name);
         });
         textChannels.forEach(channel => channels[channel.id] = {
-            category: channel.parent ? channel.parent.name : undefined,
+            category: (channel.parent ? channel.parent.name : undefined),
             name: channel.name,
         })
         return channels;

@@ -68,6 +68,10 @@ const getCsvAttendanceResult = function (id) {
     return __dirname.replace("utils", "") + "files/results/" + id + ".csv";
 }
 
+const getPollResult = function (id) {
+  return __dirname.replace("utils", "") + "files/polls/" + id + ".png";
+}
+
 const getProjectDirectory = function () {
   return __dirname.replace("utils", "");
 }
@@ -78,5 +82,6 @@ module.exports = {
   getViewsFile,
   getApiViewsFile,
   getCsvAttendanceResult,
+  getPollResult,
   getProjectDirectory
 };

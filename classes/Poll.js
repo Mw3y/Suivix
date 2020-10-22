@@ -149,7 +149,7 @@ class Poll {
             .setDescription((this.anonymous === "false" ? resultsText : Text.poll.translations[this.language].isAnonymous) + "\n\n" +
             Text.poll.translations[this.language].url + "(" + message.url + ").")
             .setColor("#FFD983")
-            .attachFiles(['.\\files\\polls\\' + this.messageId + '.png'])
+            .attachFiles(['./files/polls/' + this.messageId + '.png'])
             .setImage("attachment://" + this.messageId + ".png");
 
         if(this.publicResult === "true") channel.send(resultsEmbed);
@@ -219,6 +219,12 @@ class Poll {
         }, function (err) {
             if (err)
                 console.log(err);
+        });
+        fs.mkdirSync(Server.getProjectDirectory() + "files\\polls\\", {
+            recursive: true
+        })
+        fs.writeFileSync(Server.getPollResult(this.messageId), base64Image, {
+            encoding: 'base64'
         });
     }
 

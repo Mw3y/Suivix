@@ -64,7 +64,7 @@ class AttendanceRequest {
             return a.name.localeCompare(b.name);
         });
         voiceChannels.forEach(channel => channels[channel.id] = {
-            category: channel.parent ? channel.parent.name : undefined,
+            category: (channel.parent ? channel.parent.name : undefined),
             name: channel.name,
             users: channel.members.size < 10 ? "0" + channel.members.size : channel.members.size
         })

@@ -46,6 +46,9 @@ global.getGuildInvite = async (guild) => {
     const invite = [...await guild.fetchInvites()][0]
     return invite ? invite.toString().split(',')[1] : "No";
 }
+global.getProtocol = () => {
+    return Config.HTTPS_ENABLED ? "https" : "http";
+}
 global.oauth = new(require("discord-oauth2"));
 global.Text = {
     global: require('./app/text/global.json'),
@@ -54,7 +57,6 @@ global.Text = {
 }
 
 /** ******************************************************** EXPRESS APP CONFIG **********************************************************/
-
 app.use(compression());
 app.use(
     express.static("public", {

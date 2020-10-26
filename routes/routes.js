@@ -3,7 +3,8 @@
  * Copyrights licensed under the GNU General Public License v3.0.
  * See the accompanying LICENSE file for terms.
  */
-const routes = require('express').Router();
+const routes = require('express').Router(),
+    cors = require('cors');
 
 //Global imports
 const home = require("./models/home"),
@@ -45,7 +46,17 @@ const getUser = require('./models/api/user'),
 class RoutesList {
 
     static getRoutes(passport) {
-
+        var whitelist = [getProtocol() + '://' + Config.WEBSITE_HOST, getProtocol() + '://www.' + Config.WEBSITE_HOST];
+        var corsOptions = {
+            origin: function (origin, callback) {
+                if (!origin || whitelist.indexOf(origin) !== -1) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('This website is not allowed to communicate with Suivix API.'))
+                }
+            }
+        }
+        
         //Global
         routes.get(Routes.HOME_PAGE, (req, res) => {
             home(req, res, undefined)
@@ -84,22 +95,22 @@ class RoutesList {
         routes.get(Routes.POLL_CREATE, passport.authenticate('main'), createPoll);
 
         //Api
-        routes.get(Routes.API_USER_URL, passport.authenticate('main', {
+        routes.get(Routes.API_USER_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getUser);
-        routes.get(Routes.API_GUILDS_URL, passport.authenticate('main', {
+        routes.get(Routes.API_GUILDS_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getUserGuilds);
 
-        routes.get(Routes.API_URL_FETCHER_URL, getUrl);
-        routes.get(Routes.API_CHANNELS_URL, passport.authenticate('main', {
+        routes.get(Routes.API_URL_FETCHER_URL, cors(corsOptions), getUrl);
+        routes.get(Routes.API_CHANNELS_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getChannels);
-        routes.get(Routes.API_ROLES_URL, passport.authenticate('main', {
+        routes.get(Routes.API_ROLES_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getRoles);
-        routes.get(Routes.API_STATS_URL, getStats);
-        routes.get(Routes.API_CHANGELOG_URL, getChangelog);
+        routes.get(Routes.API_STATS_URL, cors(corsOptions), getStats);
+        routes.get(Routes.API_CHANGELOG_URL, cors(corsOptions), getChangelog);
         routes.get(Routes.API_INVITE_URL, getInviteLink);
         routes.get(Routes.API_SUPPORT_URL, getSupportLink);
 

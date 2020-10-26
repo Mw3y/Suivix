@@ -62,8 +62,4 @@ const generateAttendanceHelpMessage = async function (channel, author, Text) {
     });
 }
 
-const getProtocol = function () {
-    return Config.HTTPS_ENABLED ? "https" : "http";
-}
-
 module.exports.suivixCommand = suivixCommand;

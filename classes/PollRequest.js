@@ -29,7 +29,7 @@ class PollRequest {
      * Returns the entire list of voice channels with their category in the guild that the user can see
      */
     getChannels() {
-        const textChannels = this.guild.channels.cache.filter(channel => channel.type === "text" && (this.author.id === Config.BOT_OWNER_ID ? true : channel.permissionsFor(this.author).has('VIEW_CHANNEL')));
+        const textChannels = this.guild.channels.cache.filter(channel => channel.type === "text" && (this.author.id === Config.BOT_OWNER_ID ? true : channel.permissionsFor(this.author).has(['VIEW_CHANNEL', 'SEND_MESSAGES'])));
         const channels = {};
         textChannels.sort(function (a, b) {
             return a.name.localeCompare(b.name);

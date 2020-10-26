@@ -102,7 +102,7 @@ class Poll {
         await this.sendPollResult();
         await sequelize.query(`DELETE FROM poll WHERE messageId = ${this.messageId}`);
         await sequelize.query(`DELETE FROM vote WHERE messageId = ${this.messageId}`);
-        console.log("A poll has been deleted!".red + separator);
+        console.log("A poll has been deleted!".red + "(author: " + this.author + ", pollId: " + this.messageId + ")" + separator);
         await this.updateTimeLeft(true)
     }
 
@@ -138,13 +138,13 @@ class Poll {
             choices.push(answers.length);
             if (answers.length !== 0) resultsText += possibleAnswers[i] + " - "
             for (let a = 0; a < answers.length; a++) {
-                resultsText += guild.members.cache.get(answers[a].author).displayName + ", ";
+                const guildMember = guild.members.cache.get(answers[a].author);
+                if(guildMember) resultsText += guildMember.displayName + ", ";
             }
             if (answers.length !== 0) resultsText += "\n"
         }
 
         await this.generatePollResultChart(labels, choices);
-
         resultsEmbed.setTitle(Text.poll.translations[this.language].resultsTitle)
             .setDescription((this.anonymous === "false" ? resultsText : Text.poll.translations[this.language].isAnonymous) + "\n\n" +
             Text.poll.translations[this.language].url + "(" + message.url + ").")
@@ -152,10 +152,15 @@ class Poll {
             .attachFiles(['./files/polls/' + this.messageId + '.png'])
             .setImage("attachment://" + this.messageId + ".png");
 
-        if(this.publicResult === "true") channel.send(resultsEmbed);
-        else guild.members.cache.get(this.author).user.send(resultsEmbed);
+        if(this.publicResult === "true") await channel.send(resultsEmbed);
+        else await guild.members.cache.get(this.author).user.send(resultsEmbed);
     }
 
+    /**
+     * Generates the chart image for the poll result
+     * @param {*} labels - The possibble answers
+     * @param {*} choices - Users's choice
+     */
     async generatePollResultChart(labels, choices) {
         const canvasRenderService = new CanvasRenderService(600, 400, (Chart) => {
             Chart.plugins.register({

@@ -47,6 +47,8 @@ function getSelectedRoles(selectedChannels) {
     getPollStatement(selectedChannels, rolesList);
 }
 
+function isInteger(argument) { return argument == ~~argument; }
+
 function getPollStatement(channel, roles) {
     const subject = $("#subject").val();
     const description = $("#description").val().replace(/\r?\n\r?/g, '\n').replace(/\r/g, '\n').replace(/\n/g,'<br>');
@@ -54,9 +56,7 @@ function getPollStatement(channel, roles) {
     const publicResult = $('#publicResult').is(":checked");
     const answers = $('#answers').text();
     const duration = $('#duration').text();
-    console.log(subject, anonymous, publicResult, answers, duration)
-    console.log(subject.length, answers.length, duration.length)
-    if (subject.length === 0 || answers.length === 0 || duration.length === 0) {
+    if (subject.length === 0 || answers.length === 0 || duration.length === 0 || !isInteger(answers) || !isInteger(duration)) {
         shake();
         return;
     }

@@ -44,7 +44,7 @@ class Poll {
         } else {
             await this.deletePoll();
         }
-        await reaction.users.remove(user);
+        await reaction.users.remove(user).catch(console.log("The bot was unable to remove user's reaction!".red + separator));
     }
 
     /**
@@ -139,7 +139,7 @@ class Poll {
             if (answers.length !== 0) resultsText += possibleAnswers[i] + " - "
             for (let a = 0; a < answers.length; a++) {
                 const guildMember = guild.members.cache.get(answers[a].author);
-                if(guildMember) resultsText += guildMember.displayName + ", ";
+                if (guildMember) resultsText += guildMember.displayName + ", ";
             }
             if (answers.length !== 0) resultsText += "\n"
         }
@@ -147,12 +147,12 @@ class Poll {
         await this.generatePollResultChart(labels, choices);
         resultsEmbed.setTitle(Text.poll.translations[this.language].resultsTitle)
             .setDescription((this.anonymous === "false" ? resultsText : Text.poll.translations[this.language].isAnonymous) + "\n\n" +
-            Text.poll.translations[this.language].url + "(" + message.url + ").")
+                Text.poll.translations[this.language].url + "(" + message.url + ").")
             .setColor("#FFD983")
             .attachFiles(['./files/polls/' + this.messageId + '.png'])
             .setImage("attachment://" + this.messageId + ".png");
 
-        if(this.publicResult === "true") await channel.send(resultsEmbed);
+        if (this.publicResult === "true") await channel.send(resultsEmbed);
         else await guild.members.cache.get(this.author).user.send(resultsEmbed);
     }
 
@@ -216,18 +216,9 @@ class Poll {
 
         const dataUrl = await canvasRenderService.renderToDataURL(configuration);
         let base64Image = dataUrl.split(';base64,').pop();
-        fs.mkdirSync(Server.getProjectDirectory() + "files\\polls\\", {
+        if (!fs.existsSync('files/polls')) fs.mkdirSync("files/polls", {
             recursive: true
-        })
-        fs.writeFile('files\\polls\\' + this.messageId + '.png', base64Image, {
-            encoding: 'base64'
-        }, function (err) {
-            if (err)
-                console.log(err);
         });
-        fs.mkdirSync(Server.getProjectDirectory() + "files\\polls\\", {
-            recursive: true
-        })
         fs.writeFileSync(Server.getPollResult(this.messageId), base64Image, {
             encoding: 'base64'
         });

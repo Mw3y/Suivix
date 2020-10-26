@@ -90,7 +90,7 @@ class BotClient {
     }
 
     /**
-     * Write logs into a folder
+     * Write logs into a folder (Code from https://github.com/DraftBot-A-Discord-Adventure/DraftBot)
      */
     handleLogs() {
         const fs = require('fs');

@@ -25,7 +25,7 @@ const initPaull = function (lang) {
     request.send();
 }
 
-function createPoll(selectedChannels, rolesList) {
+function createPoll() {
     getSelectedChannel();
 }
 

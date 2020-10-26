@@ -45,7 +45,11 @@ const getUser = require('./models/api/user'),
 
 class RoutesList {
 
+    /**
+     * Return all the routes of the application
+     */
     static getRoutes(passport) {
+        //API whitelist for more security
         var whitelist = [getProtocol() + '://' + Config.WEBSITE_HOST, getProtocol() + '://www.' + Config.WEBSITE_HOST];
         var corsOptions = {
             origin: function (origin, callback) {
@@ -56,7 +60,8 @@ class RoutesList {
                 }
             }
         }
-        
+        /** ******************************************************** EXPRESS ROUTER **********************************************************/
+
         //Global
         routes.get(Routes.HOME_PAGE, (req, res) => {
             home(req, res, undefined)

@@ -7,7 +7,7 @@ const RequestManager = require('../../../classes/managers/RequestManager');
 
 module.exports = async (req, res) => {
     if (!req.session.passport) {
-        req.session.pending_request = {
+        req.session.poll_pending_request = {
             guild_id: req.query.guild_id,
             channel_id: req.query.channel_id
         }

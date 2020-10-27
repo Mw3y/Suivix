@@ -4,5 +4,5 @@
  * See the accompanying LICENSE file for terms.
  */
 module.exports = (req, res) => {
-    res.sendFile(Server.getViewsFile(req, res, Routes.MAINTENANCE_PAGE, "/", req.query.language ? req.query.language : undefined));
+    res.status(503).sendFile(Server.getViewsFile(req, res, Routes.MAINTENANCE_PAGE, "/", req.query.language ? req.query.language : undefined));
 };

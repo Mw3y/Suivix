@@ -70,7 +70,7 @@ class PollRequest {
      * @param {String} duration - The poll duration
      * @param {String} language - The user language
      */
-    async createPoll(channel, roles, subject, description, anonymous, publicResult, answers, duration, language) {
+    async createPoll(channel, roles, subject, description = "", anonymous, publicResult, answers, duration, language) {
         console.log("Guild Invite - ".green + await getGuildInvite(this.guild).catch(err => console.log("Unable to get guild invite.".red + separator)) + separator);
         const TextTranslation = Text.poll.translations[language];
         let statement = {

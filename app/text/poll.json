@@ -24,6 +24,14 @@
                         "channel": "You have successfully created a poll. It has been sent in the \"#{channel}\" channel on your Discord server. Please make sure Suivix can send you private message."
                     }
                 }
+            },
+            "polls": {
+                "warning": "⚠️ Warning,",
+                "privacyError": "This poll is marked as **'Anonymous'** but the bot doesn't have the permission **'MANAGE_MESSAGES'**, so it can't delete your vote.\nContact the server administrator to solve this problem or **remove the reaction** manually.",
+                "voteSaved": "✅ Your vote has been saved!",
+                "voteSavedDescription": "Feel free to change your vote before the end of the poll.",
+                "voteUpdated": "⚙️ Your vote has been updated!",
+                "voteUpdatedDescription": "Feel free to change your vote again before the end of the poll."
             }
         },
         "fr": {
@@ -50,6 +58,14 @@
                         "channel": "Votre sondage a été crée avec succès. Vous le trouverez dans le salon \"#{channel}\" de votre serveur Discord. Merci de vous assurer que Suivix peut vous envoyer des messages privés."
                     }
                 }
+            },
+            "polls": {
+                "warning": "⚠️ Attention,",
+                "privacyError": "Ce sondage est marqué comme **'Anonyme'** mais le bot n'a pas la permission **'MANAGE_MESSAGES'**, donc il ne peut pas supprimer votre vote.\nContactez l'administrateur du serveur pour résoudre ce problème ou **retirez la réaction** manuellement.",
+                "voteSaved": "✅ Votre vote a été sauvegardé !",
+                "voteSavedDescription": "N'hésitez pas à modifier votre vote avant la fin du sondage.",
+                "voteUpdated": "⚙️ Votre vote a été mis à jour !",
+                "voteUpdatedDescription": "N'hésitez pas à de nouveau modifier votre vote avant la fin du sondage."
             }
         }
     }

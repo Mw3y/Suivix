@@ -41,10 +41,11 @@ class Poll {
                 else this.updateVote(reaction, user);
                 await this.updatePoll(reaction);
             }
+            await reaction.users.remove(user).catch(error => this.anonymous === "true" ? user.send(new Discord.MessageEmbed().setColor("#faa61a").setTitle(Text.poll.translations[this.language].polls.warning).setDescription(Text.poll.translations[this.language].polls.privacyError)) : "");
         } else {
             await this.deletePoll();
+            await reaction.users.remove(user).catch(error => console.log("Unable to remove user's reaction from the message".red + separator));
         }
-        await reaction.users.remove(user).catch(console.log("The bot was unable to remove user's reaction!".red + separator));
     }
 
     /**
@@ -243,6 +244,7 @@ class Poll {
     async saveVote(reaction, user) {
         await sequelize.query(`INSERT INTO vote (messageId, author, vote) VALUES (${this.messageId},${user.id},"${reaction.emoji.name}")`);
         console.log("A vote has been saved! ".blue + "(user: " + user.username + ", pollId: " + this.messageId + ")" + separator);
+        user.send(new Discord.MessageEmbed().setColor("#43b581").setTitle(Text.poll.translations[this.language].polls.voteSaved).setDescription(Text.poll.translations[this.language].polls.voteSavedDescription)).catch(error => console.log("User's dms are closed!".red + separator))
     }
 
     /**
@@ -261,6 +263,7 @@ class Poll {
     async updateVote(reaction, user) {
         sequelize.query(`UPDATE vote SET vote = "${reaction.emoji.name}" WHERE author = ${user.id} AND messageId = ${this.messageId}`);
         console.log("A vote has been updated! ".blue + "(user: " + user.username + ", pollId: " + this.messageId + ")" + separator);
+        user.send(new Discord.MessageEmbed().setColor("#202225").setTitle(Text.poll.translations[this.language].polls.voteUpdated).setDescription(Text.poll.translations[this.language].polls.voteUpdatedDescription)).catch(error => console.log("User's dms are closed!".red + separator))
     }
 
     /**

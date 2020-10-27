@@ -61,6 +61,9 @@ class RoutesList {
             }
         }
         /** ******************************************************** EXPRESS ROUTER **********************************************************/
+        
+        //If the application is in maintenance, overrides all route
+        if(process.argv[2] === "-maintenance") routes.get('/*', require('./models/error/maintenance'));
 
         //Global
         routes.get(Routes.HOME_PAGE, (req, res) => {

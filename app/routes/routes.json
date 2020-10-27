@@ -24,5 +24,6 @@
     "API_INVITE_URL": "/invite",
     "API_SUPPORT_URL": "/support",
     "DISCORD_OAUTH_CALLBACK_URL": "/auth/callback",
-    "ERROR_404": "/404"
+    "ERROR_404": "/404",
+    "MAINTENANCE_PAGE": "/maintenance"
 }

@@ -28,7 +28,7 @@ class Poll {
         this.publicResult = poll.publicResult;
         this.language = poll.language;
 
-        //Fetch message
+        //Fetch guild and channel
         this.guild = client.guilds.cache.get(this.guildId);
         this.channel = this.guild.channels.cache.get(this.channelId);
     }
@@ -50,6 +50,15 @@ class Poll {
             await this.deletePoll();
             await reaction.users.remove(user).catch(error => console.log("Unable to remove user's reaction from the message".red + separator));
         }
+    }
+
+    /**
+     * Erase the poll from the database
+     */
+    async deletePollFromDatabase() {
+        await sequelize.query(`DELETE FROM poll WHERE messageId = ${this.messageId}`);
+        await sequelize.query(`DELETE FROM vote WHERE messageId = ${this.messageId}`);
+        console.log("A poll has been deleted!".red + "(author: " + this.author + ", pollId: " + this.messageId + ")" + separator);
     }
 
     /**
@@ -84,8 +93,8 @@ class Poll {
      * Update the poll message
      */
     async updateTimeLeft(doNotDelete = false) {
-        const message = await this.channel.messages.fetch(this.messageId).catch(err => console.log("Unable to fetch message".red + separator));
-        if(!message) return;
+        const message = await this.channel.messages.fetch(this.messageId).catch(async (err) => await this.deletePollFromDatabase());
+        if (!message) return;
         const isExpired = this.isExpired();
         if (isExpired && doNotDelete) {
             message.embeds[0].color = "#f04747";
@@ -103,10 +112,8 @@ class Poll {
      */
     async deletePoll() {
         await this.sendPollResult();
-        await sequelize.query(`DELETE FROM poll WHERE messageId = ${this.messageId}`);
-        await sequelize.query(`DELETE FROM vote WHERE messageId = ${this.messageId}`);
-        console.log("A poll has been deleted!".red + "(author: " + this.author + ", pollId: " + this.messageId + ")" + separator);
-        await this.updateTimeLeft(true)
+        await this.deletePollFromDatabase();
+        await this.updateTimeLeft(true);
     }
 
     /**
@@ -114,8 +121,8 @@ class Poll {
      */
     async sendPollResult() {
         const [votes] = await sequelize.query(`SELECT * FROM vote WHERE messageId = "${this.messageId}"`);
-        const message = await this.channel.messages.fetch(this.messageId).catch(err => console.log("Unable to fetch message".red + separator));
-        if(!message) return;
+        const message = await this.channel.messages.fetch(this.messageId).catch(async (err) => await this.deletePollFromDatabase());
+        if (!message) return;
         const resultsEmbed = new Discord.MessageEmbed();
         let possibleAnswers = {
             "1": "1️⃣",

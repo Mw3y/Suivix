@@ -27,6 +27,10 @@ class Poll {
         this.anonymous = poll.anonymous;
         this.publicResult = poll.publicResult;
         this.language = poll.language;
+
+        //Fetch message
+        this.guild = client.guilds.cache.get(this.guildId);
+        this.channel = this.guild.channels.cache.get(this.channelId);
     }
 
     /**
@@ -80,10 +84,8 @@ class Poll {
      * Update the poll message
      */
     async updateTimeLeft(doNotDelete = false) {
-        const guild = client.guilds.cache.get(this.guildId);
-        const channel = guild.channels.cache.get(this.channelId);
-        const message = await channel.messages.fetch(this.messageId);
-
+        const message = await this.channel.messages.fetch(this.messageId).catch(err => console.log("Unable to fetch message".red + separator));
+        if(!message) return;
         const isExpired = this.isExpired();
         if (isExpired && doNotDelete) {
             message.embeds[0].color = "#f04747";
@@ -111,11 +113,9 @@ class Poll {
      * Send the results of the poll
      */
     async sendPollResult() {
-        const guild = client.guilds.cache.get(this.guildId);
-        const channel = guild.channels.cache.get(this.channelId);
-        const message = await channel.messages.fetch(this.messageId);
-
         const [votes] = await sequelize.query(`SELECT * FROM vote WHERE messageId = "${this.messageId}"`);
+        const message = await this.channel.messages.fetch(this.messageId).catch(err => console.log("Unable to fetch message".red + separator));
+        if(!message) return;
         const resultsEmbed = new Discord.MessageEmbed();
         let possibleAnswers = {
             "1": "1️⃣",
@@ -139,7 +139,7 @@ class Poll {
             choices.push(answers.length);
             if (answers.length !== 0) resultsText += possibleAnswers[i] + " - "
             for (let a = 0; a < answers.length; a++) {
-                const guildMember = guild.members.cache.get(answers[a].author);
+                const guildMember = this.guild.members.cache.get(answers[a].author);
                 if (guildMember) resultsText += guildMember.displayName + ", ";
             }
             if (answers.length !== 0) resultsText += "\n"
@@ -153,8 +153,8 @@ class Poll {
             .attachFiles(['./files/polls/' + this.messageId + '.png'])
             .setImage("attachment://" + this.messageId + ".png");
 
-        if (this.publicResult === "true") await channel.send(resultsEmbed);
-        else await guild.members.cache.get(this.author).user.send(resultsEmbed);
+        if (this.publicResult === "true") await this.channel.send(resultsEmbed);
+        else await this.guild.members.cache.get(this.author).user.send(resultsEmbed);
     }
 
     /**
@@ -292,7 +292,7 @@ class Poll {
         const list = stringList.split("-");
         let arrayList = new Array();
         for (let i = 0; i < list.length; i++) {
-            arrayList.push(...guild.roles.cache.get(list[i]).members.map(member => member.id)); //Add it in in the array
+            arrayList.push(...this.guild.roles.cache.get(list[i]).members.map(member => member.id)); //Add it in in the array
         }
         return arrayList;
     }

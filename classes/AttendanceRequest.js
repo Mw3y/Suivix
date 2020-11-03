@@ -151,7 +151,7 @@ class AttendanceRequest {
         });
 
         //Check if the message is too long to be send on Discord
-        const tooMuchStudents = (intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2048;
+        const tooMuchStudents = (intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2000;
         if (tooMuchStudents) { //First Check
             if (channelStudents.length !== students.length) {
                 absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
@@ -407,7 +407,7 @@ class AttendanceRequest {
     async clearChannel(language) {
         let messages = await this.channel.messages.fetch({
             limit: 100
-        });
+        }).catch(err => console.log("Unable to fetch channel messages.".red + separator));
         const guild = this.guild;
         messages.forEach(function (message) {
             if ((message.embeds.length > 0 && message.embeds[0].title != undefined)) {

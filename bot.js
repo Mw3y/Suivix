@@ -13,7 +13,7 @@ class BotClient {
      * The discord bot
      */
     constructor() {
-        this.client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], ws: { intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_PRESENCES', 'GUILD_MESSAGE_REACTIONS'] } });
+        this.client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], ws: { intents: new Discord.Intents(Discord.Intents.ALL) } });
         this.handleLogs();
     }
 

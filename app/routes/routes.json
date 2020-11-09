@@ -1,6 +1,6 @@
 {
     "HOME_PAGE": "/",
-    "UPGRADE_PAGE": "/upgrade",
+    "PRIVACY_POLICY": "/privacy",
     "SERVERS_SELECTION": "/servers",
     "ATTENDANCE_PAGE": "/attendance",
     "ATTENDANCE_PAGE_DONE": "/api/get/attendance/done",
@@ -24,6 +24,5 @@
     "API_INVITE_URL": "/invite",
     "API_SUPPORT_URL": "/support",
     "DISCORD_OAUTH_CALLBACK_URL": "/auth/callback",
-    "ERROR_404": "/404",
-    "MAINTENANCE_PAGE": "/maintenance"
+    "ERROR_404": "/404"
 }

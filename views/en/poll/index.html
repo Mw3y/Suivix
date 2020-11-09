@@ -79,16 +79,11 @@
         </div>
     </div>
     <div class="navbar">
-        <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Disconnect" data-microtip-position="bottom"
-            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
-        <div class="loading-image" id="user-loader-image"></div>
-        <div style="width: 150px;" class="loading-text" id="user-loader"></div>
-        <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
-                id="avatar"></p>
-        <a href="?language=fr" class="language margin">FR.</a>
-        <a href="javascript:void(0)" class="language margin-15">EN.</a>
+        <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+        <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Login</a>
+        <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+        <a class="button buttonSmall buttonLanguage" href="?language=fr"><i
+                class="fas fa-globe-americas buttonSmallIcon"></i>Français</a>
     </div>
     <div class="container">
         <div class="poll-card" id="card">

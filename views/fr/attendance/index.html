@@ -89,16 +89,17 @@
         </div>
     </div>
     <div class="navbar">
-        <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom"
-            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
-        <div class="loading-image" id="user-loader-image"></div>
-        <div style="width: 150px;" class="loading-text" id="user-loader"></div>
-        <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
-                id="avatar"></p>
-        <a href="javascript:void(0)" class="language margin">FR.</a>
-        <a href="?language=en" class="language margin-15">EN.</a>
+        <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+        <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Connexion</a>
+        <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+        <a class="button buttonSmall buttonLanguage" href="?language=en"><i
+                class="fas fa-globe-americas buttonSmallIcon"></i>English</a>
+    </div>
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p>⚠️ Attention, vous êtes en train d'utiliser une copie de la version originale de Suivix qui ne sera valide
+            que temporairement. Il est donc fort probable que vous deviez réinstaller Suivix sur votre serveur dans
+            quelques temps.</p>
     </div>
     <div class="container">
         <div class="attendance-card" id="card">

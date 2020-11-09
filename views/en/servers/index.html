@@ -71,9 +71,17 @@
         </div>
     </div>
     <div class="navbar">
-        <a href="/" class="title">SUIVIX</a>
-        <a href="?language=fr" class="language margin">FR.</a>
-        <a href="?language=en" class="language margin-15">EN.</a>
+        <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+        <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Login</a>
+        <a class="button buttonGrey buttonSmall isVisible" href="/servers"><i class="fas fa-clipboard-list buttonSmallIcon"></i> Display menu</a>
+        <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+        <a class="button buttonSmall buttonLanguage" href="?language=fr"><i
+                class="fas fa-globe-americas buttonSmallIcon"></i>Français</a>
+    </div>
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <p>⚠️ Warning, you are temporarly using a copy of the original version of Suivix. It is therefore very likely
+            that you will have to reinstall Suivix on your server in a few days/weeks.</p>
     </div>
     <div class="container">
         <div class="attendance-card" id="card">
@@ -84,8 +92,9 @@
                     <div class="separator centered" style="width: 125px"></div>
                     <p class="description" id="attendance-desc">Before anything, click on the server in which you want
                         to take attendance.</p>
-                    <p class="description" id="poll-desc" style="display: none;">Before anything, click on the server in which you want
-                            to create a poll.</p>
+                    <p class="description" id="poll-desc" style="display: none;">Before anything, click on the server in
+                        which you want
+                        to create a poll.</p>
                 </div>
                 <div class="servers-container">
                     <div class="servers">
@@ -120,7 +129,7 @@
     <script>
         (function () {
             var css = document.createElement('link');
-            css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+            css.href = 'https://use.fontawesome.com/releases/v5.10.1/css/all.css';
             css.rel = 'stylesheet';
             css.type = 'text/css';
             document.getElementsByTagName('head')[0].appendChild(css);

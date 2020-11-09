@@ -30,7 +30,7 @@ class Poll {
 
         //Fetch guild and channel
         this.guild = client.guilds.cache.get(this.guildId);
-        this.channel = this.guild.channels.cache.get(this.channelId);
+        if(this.guild) this.channel = this.guild.channels.cache.get(this.channelId);
     }
 
     /**
@@ -93,6 +93,7 @@ class Poll {
      * Update the poll message
      */
     async updateTimeLeft(doNotDelete = false) {
+        if (!this.channel) return;
         const message = await this.channel.messages.fetch(this.messageId).catch(async (err) => await this.deletePollFromDatabase());
         if (!message) return;
         const isExpired = this.isExpired();
@@ -121,6 +122,7 @@ class Poll {
      */
     async sendPollResult() {
         const [votes] = await sequelize.query(`SELECT * FROM vote WHERE messageId = "${this.messageId}"`);
+        if (!this.channel) return;
         const message = await this.channel.messages.fetch(this.messageId).catch(async (err) => await this.deletePollFromDatabase());
         if (!message) return;
         const resultsEmbed = new Discord.MessageEmbed();

@@ -5,12 +5,12 @@ const initPaull = function (lang) {
 
     request.onload = function () {
         const response = JSON.parse(this.response);
-        document.getElementById("username").innerHTML = response.username;
-        document.getElementById("discriminator").innerHTML = "#" + response.discriminator;
-        document.getElementById("avatar").src = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
-        $("#user-loader").hide();
-        $("#user-loader-image").hide();
-        $("#user-infos").show();
+        const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
+        const navUser = $(".buttonUser");
+        if (navUser.is(":visible")) navUser.html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+                '</p><p class="buttonUserHover">' +
+                (lang === "en" ? "Logout" : "Déconnexion") + '</p>')
+            .attr("href", "/auth/logout?redirectTo=/");
 
         displayChangelog(lang, document.getElementById("version"), document.getElementById("changelogText"));
 

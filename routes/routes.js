@@ -8,9 +8,9 @@ const routes = require('express').Router(),
 
 //Global imports
 const home = require("./models/home"),
+    privacy = require("./models/privacy"),
     servers = require('./models/servers'),
-    login = require("./models/login"),
-    upgrade = require('./models/upgrade');
+    login = require("./models/login");
 
 //Errors
 const error404 = require('./models/error/404');
@@ -75,8 +75,8 @@ class RoutesList {
         routes.get(Routes.HOME_PAGE + "en", (req, res) => {
             home(req, res, "en")
         });
+        routes.get(Routes.PRIVACY_POLICY, privacy)
         routes.get(Routes.SERVERS_SELECTION, passport.authenticate('main'), servers);
-        routes.get(Routes.UPGRADE_PAGE, upgrade);
 
         //Login
         routes.get(Routes.LOGIN_PAGE, login);

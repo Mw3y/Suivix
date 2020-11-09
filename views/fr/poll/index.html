@@ -80,16 +80,11 @@
         </div>
     </div>
     <div class="navbar">
-        <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom"
-            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
-        <div class="loading-image" id="user-loader-image"></div>
-        <div style="width: 150px;" class="loading-text" id="user-loader"></div>
-        <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
-                id="avatar"></p>
-        <a href="javascript:void(0)" class="language margin">FR.</a>
-        <a href="?language=en" class="language margin-15">EN.</a>
+        <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+        <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Connexion</a>
+        <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+        <a class="button buttonSmall buttonLanguage" href="?language=en"><i
+                class="fas fa-globe-americas buttonSmallIcon"></i>English</a>
     </div>
     <div class="container">
         <div class="poll-card" id="card">
@@ -98,22 +93,25 @@
                     <img src="/icons/poll.jpg" class="logo">
                     <h1 class="title">Créer un sondage</h1>
                     <div class="separator centered" style="width: 125px"></div>
-                    <p class="description">Votre question doit comporter moins de 240 caractères et votre description moins de 600.</p>
+                    <p class="description">Votre question doit comporter moins de 240 caractères et votre description
+                        moins de 600.</p>
                 </div>
                 <div class="select-custom" id="select-roles">
                     <div style="width: 100%; " class="loading-select"
-                    aria-label="🔄 Veuillez patienter pendant que la liste des rôles charge." data-microtip-position="top"
-                        role="tooltip"><span>Qui peut répondre au sondage ?</span></div>
+                        aria-label="🔄 Veuillez patienter pendant que la liste des rôles charge."
+                        data-microtip-position="top" role="tooltip"><span>Qui peut répondre au sondage ?</span></div>
                 </div>
                 <div class="select-custom" id="select-channels">
                     <div style="width: 100%; " class="loading-select"
-                    aria-label="🔄 Veuillez patienter pendant que la liste des salons charge." data-microtip-position="top"
-                        role="tooltip"><span>Où le sondage va-t-il être envoyé ?</span></div>
+                        aria-label="🔄 Veuillez patienter pendant que la liste des salons charge."
+                        data-microtip-position="top" role="tooltip"><span>Où le sondage va-t-il être envoyé ?</span>
+                    </div>
                 </div>
                 <textarea class="pollSubject" id="subject" placeholder="Question" type="text" minlength="4"
                     maxlength="240"></textarea>
                 <textarea class="pollDescription" id="description" onkeyup="textAreaAdjust(this)"
-                    placeholder="Description du sondage (Facultatif)" type="text" minlength="4" maxlength="600"></textarea>
+                    placeholder="Description du sondage (Facultatif)" type="text" minlength="4"
+                    maxlength="600"></textarea>
                 <div class="rows">
                     <div class="left-row checkboxContainer" aria-label="Est-ce que les participants seront anonymes ?"
                         data-microtip-position="top" role="tooltip">
@@ -122,19 +120,19 @@
                     </div>
                     <div class="middle-row checkboxContainer" aria-label="Tout le monde pourra-t-il voir le résultat ?"
                         data-microtip-position="top" role="tooltip">
-                        <input type="checkbox" id="publicResult" value="Résultat public ?"><label for="publicResult">Résultat public?</label>
+                        <input type="checkbox" id="publicResult" value="Résultat public ?"><label
+                            for="publicResult">Résultat public?</label>
                     </div>
-                    <div class="right-row checkboxContainer"
-                        aria-label="Le nombre de réponses possibles. (maximum: 10)" data-microtip-position="top"
-                        role="tooltip">
+                    <div class="right-row checkboxContainer" aria-label="Le nombre de réponses possibles. (maximum: 10)"
+                        data-microtip-position="top" role="tooltip">
                         <div class="numbersArea" id="answers" contenteditable="true" placeholder="Réponses" nopaste
                             onlynumbers></div>
                     </div>
                     <div class="right-row checkboxContainer"
-                        aria-label="Combien de temps va durer le sondage (en minutes, minimum: 1)." data-microtip-position="top"
-                        role="tooltip">
-                        <div class="numbersArea" id="duration" contenteditable="true" placeholder="Durée (min)"
-                            nopaste onlynumbers></div>
+                        aria-label="Combien de temps va durer le sondage (en minutes, minimum: 1)."
+                        data-microtip-position="top" role="tooltip">
+                        <div class="numbersArea" id="duration" contenteditable="true" placeholder="Durée (min)" nopaste
+                            onlynumbers></div>
                     </div>
                 </div>
                 <div class="button">

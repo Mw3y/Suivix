@@ -109,7 +109,6 @@ client.on("ready", async () => {
     //Change suivix activity on Discord
     const activities = [
         "!suivix help",
-        "{students} élèves",
         "{servercount} serveurs",
         "v.{version} | suivix.xyz",
         "{requests} requêtes",
@@ -118,12 +117,10 @@ client.on("ready", async () => {
     setInterval(async () => {
         if (activityNumber >= activities.length) activityNumber = 0; //Check if the number is too big
         let [requestsQuery] = await sequelize.query(`SELECT SUM(attendance_requests + poll_requests) AS requests FROM stats`);
-        const dblGuild = client.guilds.cache.get("264445053596991498");
         const activity = activities[activityNumber].formatUnicorn({
             servercount: client.guilds.cache.size,
             version: package.version,
             requests: requestsQuery[0].requests,
-            students: client.users.cache.size - (dblGuild ? dblGuild.members.cache.size : 0),
         }); //Get and parse the activity string
         SuivixClient.setActivity(activity); //Display it
         activityNumber++;
@@ -173,8 +170,9 @@ client.on("guildCreate", async (guild) => {
     console.log(`✅ The bot has joined a new server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
 
     //Join Message
-    guild.owner.send(await SuivixClient.getJoinMessage(guild, "fr")).catch(err => console.log("Cannot send join message!".red + separator));
-    guild.owner.send(await SuivixClient.getJoinMessage(guild, "en")).catch(err => console.log("Cannot send join message!".red + separator));
+    const owner = await guild.members.fetch(guild.ownerID);
+    owner.send(await SuivixClient.getJoinMessage(guild, "fr")).catch(err => console.log("Cannot send join message!".red + separator));
+    owner.send(await SuivixClient.getJoinMessage(guild, "en")).catch(err => console.log("Cannot send join message!".red + separator));
 
     //Update the bot guilds number on the Discord Bot List
     SuivixClient.postDBLStats();
@@ -186,7 +184,8 @@ client.on("guildDelete", async (guild) => {
     console.log(`❌ The bot has left a server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
 
     //Leave Message
-    guild.owner.send(await SuivixClient.getLeaveMessage(guild)).catch(err => console.log("Unable to send the leave message.".red + separator));
+    const owner = await guild.members.cache.find(m => m.id === guild.ownerID);
+    if (owner) owner.send(await SuivixClient.getLeaveMessage(guild)).catch(err => console.log("Unable to send the leave message.".red + separator));
 
     //Update the bot guilds number on the Discord Bot List
     SuivixClient.postDBLStats();

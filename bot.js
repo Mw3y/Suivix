@@ -13,7 +13,12 @@ class BotClient {
      * The discord bot
      */
     constructor() {
-        this.client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], ws: { intents: new Discord.Intents(Discord.Intents.ALL) } });
+        this.client = new Discord.Client({
+            partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+            ws: {
+                intents: new Discord.Intents(Discord.Intents.ALL - Discord.Intents.FLAGS["GUILD_PRESENCES"])
+            }
+        });
         this.handleLogs();
     }
 
@@ -72,8 +77,14 @@ class BotClient {
         const user = await new UserManager().getUserById(guild.owner.id);
         const text = Text.global.translations[user.language].messages;
         return new Discord.MessageEmbed().setTitle(text.title)
-            .setDescription(text.leave.description.formatUnicorn({guildName: guild.name}))
-            .addField("\u200b", text.leave.field1.formatUnicorn({host: Config.WEBSITE_HOST, protocol: Config.HTTPS_ENABLED ? "https" : "http", guildId: guild.id}), false)
+            .setDescription(text.leave.description.formatUnicorn({
+                guildName: guild.name
+            }))
+            .addField("\u200b", text.leave.field1.formatUnicorn({
+                host: Config.WEBSITE_HOST,
+                protocol: Config.HTTPS_ENABLED ? "https" : "http",
+                guildId: guild.id
+            }), false)
             .addField("\u200b", text.leave.field2, false)
             .setThumbnail("https://i.imgur.com/Q1rdarX.png");
     }
@@ -85,7 +96,10 @@ class BotClient {
     async getJoinMessage(guild, language) {
         const text = Text.global.translations[language].messages;
         return new Discord.MessageEmbed().setTitle(text.title)
-            .setDescription(text.join.formatUnicorn({guildName: guild.name, prefix: Config.PREFIX}))
+            .setDescription(text.join.formatUnicorn({
+                guildName: guild.name,
+                prefix: Config.PREFIX
+            }))
             .setThumbnail("https://i.imgur.com/QOh0nwk.png");
     }
 
@@ -100,8 +114,7 @@ class BotClient {
         /* Create log folder and remove old logs (> 7 days) */
         if (!fs.existsSync('files/logs')) {
             fs.mkdirSync('files/logs');
-        }
-        else {
+        } else {
             fs.readdir('files/logs', function (err, files) {
                 if (err) {
                     console.log('Unable to scan directory: ' + err);

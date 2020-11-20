@@ -23,6 +23,9 @@ class PollRequest {
         this.date = date;
         this.guild = guild;
         this.channel = channel;
+
+        //Cache guild members
+        this.guild.members.fetch()
     }
 
     /**

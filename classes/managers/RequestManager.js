@@ -21,10 +21,10 @@ class RequestManager {
     async getRequest(request) {
         if (!request || (Math.abs(new Date(request.date) - new Date()) / 36e5) > parseInt(Config.ATTENDANCE_VALIDITY_TIME)) return undefined;
         let guild = await client.guilds.cache.get(request.guild_id);
-        if (!guild) return undefined;
-        let channel = guild.channels.cache.get(request.channel_id);
-        let author = guild.member(request.author);
-        if (!author) return undefined;
+        if(!guild) return undefined;
+        let channel = request.channel_id ? guild.channels.cache.get(request.channel_id) : undefined;
+        let author = await guild.members.fetch(request.author);
+        if(!author) return undefined;
         if (request.type === "attendance") return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
         else return new PollRequest(request.id, author, new Date(request.date), guild, channel);
     }

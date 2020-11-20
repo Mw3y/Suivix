@@ -30,7 +30,11 @@ class Poll {
 
         //Fetch guild and channel
         this.guild = client.guilds.cache.get(this.guildId);
-        if(this.guild) this.channel = this.guild.channels.cache.get(this.channelId);
+        if (this.guild) {
+            //Cache guild members
+            this.guild.members.fetch().catch(err => console.log("Unable to fetch guild members.".red + separator))
+            this.channel = this.guild.channels.cache.get(this.channelId)
+        };
     }
 
     /**
@@ -86,7 +90,7 @@ class Poll {
         const [number] = await sequelize.query(`SELECT count(*) AS number FROM vote WHERE messageId = ${this.messageId}`);
         reaction.message.embeds[0].setFooter(reaction.message.embeds[0].footer.text.split("•")[0] + "• " + number[0].number + " vote(s)")
         reaction.message.embeds[0].fields[2].value = this.isExpired() ? "0s" : this.getTimeLeft(this.expiresAt);
-        await reaction.message.edit(reaction.message.embeds[0]);
+        await reaction.message.edit(reaction.message.embeds[0]).catch(err => console.log("Unable to edit the original message".red + separator));
     }
 
     /**
@@ -104,7 +108,7 @@ class Poll {
         } else {
             message.embeds[0].fields[2].value = this.getTimeLeft(this.expiresAt);
         }
-        if (message) await message.edit(message.embeds[0]);
+        if (message) await message.edit(message.embeds[0]).catch(err => console.log("Unable to edit the original message".red + separator));
         if (isExpired && !doNotDelete) this.deletePoll();
     }
 
@@ -162,8 +166,8 @@ class Poll {
             .attachFiles(['./files/polls/' + this.messageId + '.png'])
             .setImage("attachment://" + this.messageId + ".png");
 
-        if (this.publicResult === "true") await this.channel.send(resultsEmbed);
-        else await this.guild.members.cache.get(this.author).user.send(resultsEmbed);
+        if (this.publicResult === "true") await this.channel.send(resultsEmbed).catch(err => "Unable to send the poll result message".red + separator);
+        else await this.guild.members.cache.get(this.author).user.send(resultsEmbed).catch(err => "Unable to send the poll result message to its author".red + separator);
     }
 
     /**

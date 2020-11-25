@@ -22,7 +22,6 @@ List of **commands** that can be launched in a **Discord text channel**.
 ```
 !suivix
 !suivix help
-!suivixcmd
 ```
 
 ## Contributing

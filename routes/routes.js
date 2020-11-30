@@ -117,7 +117,7 @@ class RoutesList {
         routes.get(Routes.API_ROLES_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getRoles);
-        routes.get(Routes.API_STATS_URL, cors(corsOptions), getStats);
+        routes.get(Routes.API_STATS_URL, cors({ origin: false }), getStats);
         routes.get(Routes.API_CHANGELOG_URL, cors(corsOptions), getChangelog);
         routes.get(Routes.API_INVITE_URL, getInviteLink);
         routes.get(Routes.API_SUPPORT_URL, getSupportLink);

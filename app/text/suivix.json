@@ -1,10 +1,10 @@
 {
     "translations": {
         "en": {
-            "credits": "2020 - Suivix | Made with ❤️ by MΛX#2231",
+            "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Unknown",
             "title": "Attendance of ",
-            "intro": "Attendance asked by: `{username}`\nDate: {date} :clock1:\nCategory: `{category}`\nRole(s): {role}\n\n",
+            "intro": "Asked by {username}, for {role}\n\n",
             "connector": "and",
             "csv": {
                 "user": "User",
@@ -20,10 +20,9 @@
             },
             "infos": {
                 "noAbsent": "✅ There is no absent user.\n",
-                "absentsList": ":warning: List of absent:\n```",
-                "presentsList": "\n:man: List of present:\n```",
-                "presentsTotal": ":white_check_mark: Total of present: `{presents}/{total}`\n",
-                "absentsTotal": ":x: Total of absents: `{absents}/{total}`\n\n"
+                "absentsList": "List of **Absentees**:",
+                "presentsTotal": ":white_check_mark: Total attendees: `{presents}/{total}`\n",
+                "absentsTotal": ":x: Total absentees: `{absents}/{total}`\n\n"
             },
             "errors": {
                 "tooMuchAbsents": "Too much users are absent.```",
@@ -63,10 +62,10 @@
             }
         },
         "fr": {
-            "credits": "2020 - Suivix | Crée avec ❤️ par MΛX#2231",
+            "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Inconnue",
-            "title": "Suivi de ",
-            "intro": "Suivi demandé par : `{username}`\nDate : {date} :clock1:\nCatégorie(s) : `{category}`\nRole(s) : {role}\n\n",
+            "title": "Suivi du ",
+            "intro": "Suivi demandé par {username}, pour {role}\n\n",
             "connector": "et",
             "csv": {
                 "user": "Utilisateurs",
@@ -82,8 +81,7 @@
             },
             "infos": {
                 "noAbsent": "✅ Il n'y a pas d'absent(e)(s).\n",
-                "absentsList": ":warning: Liste des absent(e)(s) :\n```",
-                "presentsList": "\n:man: Liste des présent(e)(s) :\n```",
+                "absentsList": "Liste des **Absent(e)(s)**:",
                 "presentsTotal": ":white_check_mark: Total des présent(e)(s) : `{presents}/{total}`\n",
                 "absentsTotal": ":x: Total des absent(e)(s) : `{absents}/{total}`\n\n"
             },

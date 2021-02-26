@@ -113,7 +113,9 @@ class AttendanceRequest {
         let parsedRoles = this.transformStringListIntoArray(roles, "roles");
         let parsedChannels = this.transformStringListIntoArray(channels, "channels");
         let students = this.getUsersFromRoles(parsedRoles); //fetch users with roles
-        let channelStudents = this.getChannelsPresents(parsedChannels, parsedRoles); //fetch users in voice channels
+
+        let channelsData = this.getChannelsPresents(parsedChannels, parsedRoles);
+        let channelStudents = channelsData.get("data"); //fetch users in voice channels
 
         let rolesString = this.parseListIntoString(parsedRoles, TextTranslation.connector, true, this.channel === undefined ? true : false, "`@", "`");
         let channelsString = this.parseListIntoString(parsedChannels, TextTranslation.connector, false, true);
@@ -122,30 +124,24 @@ class AttendanceRequest {
         let categories = categoriesString.length > 55 ? TextTranslation.errors.tooMuchCategories : categoriesString;
         let date = this.generateDate(timezone, language);
 
+        let collection = students.filter(x => channelStudents.indexOf(x) === -1); //compare the two arrays
+        let absents = Array.from(collection.values()); //Convert into an array
+        let absentees = "";
         let absentsText = "";
-        let presentsText = "";
-        let absents;
-        let presents;
-
-        //Creating the list string of absents users
-        let data = this.dataToString(TextTranslation.infos.noAbsent, TextTranslation.infos.absentsList, students, channelStudents);
-        absentsText = data.get("text");
-        absents = data.get("diff");
-
-        //Creating the list string of presents users
-        data = this.dataToString("", TextTranslation.infos.presentsList, students, absents);
-        presentsText = data.get("text");
-        presents = data.get("diff");
+        absents.forEach(member => absentees += 
+            "• ❌ " + (member.displayName === member.user.username 
+            ? member.user.username 
+            : member.nickname + ` (@${member.user.username})`) + "\n"
+        )
+        if(absents.length > 0) absentsText += TextTranslation.infos.absentsList + "\n```" + absentees + "```";
 
         //Parsing TextTranslation
         const intro = TextTranslation.intro.formatUnicorn({
-            username: (this.author.displayName === this.author.user.username ? this.author.user.username : this.author.nickname + ` (@${this.author.user.username})`),
-            category: categories,
-            date: date,
+            username: this.author.toString(),
             role: rolesString
         });
         const presentSentence = TextTranslation.infos.presentsTotal.formatUnicorn({
-            presents: presents.length,
+            presents: channelStudents.length,
             total: students.length
         });
         const absentSentence = TextTranslation.infos.absentsTotal.formatUnicorn({
@@ -153,24 +149,24 @@ class AttendanceRequest {
             total: students.length
         });
 
-        //Check if the message is too long to be send on Discord
-        const tooMuchStudents = (intro + absentsText + presentsText + presentSentence + absentSentence).length >= 2000;
-        if (tooMuchStudents) { //First Check
-            if (channelStudents.length !== students.length) {
-                absentsText = TextTranslation.infos.absentsList + TextTranslation.errors.tooMuchAbsents; //Minimize TextTranslation
-            } else if (presentUsers.length > 0) {
-                presentsText = TextTranslation.infos.presentsList + TextTranslation.errors.tooMuchPresents; //Minimize TextTranslation
-            }
-        }
-
+        let tooMuchStudents = false;
         let colors = parsedRoles.filter(role => role.color !== 0); //Getting colored roles
         const selectedColor = colors[Math.floor(Math.random() * colors.length)];
         const color = selectedColor ? selectedColor.color : 0; //Picking a random one
+        const lists = absentsText.length > channelsData.get("text").length
+                ? channelsData.get("text") + absentsText
+                : absentsText + channelsData.get("text");
 
         //Send result to the user
-        const resultMessage = await this[this.channel === undefined ? "author" : "channel"].send(new Discord.MessageEmbed().setTitle(TextTranslation.title + channelsString).setFooter(TextTranslation.credits) //send result
-                .setDescription(intro + presentSentence + absentSentence + absentsText + presentsText).setColor(color))
+        const resultMessage = await this[this.channel === undefined ? "author" : "channel"]
+            .send(new Discord.MessageEmbed()
+                .setTitle(TextTranslation.title + date)
+                .setFooter(TextTranslation.credits) //send result
+                .setDescription(intro + presentSentence + absentSentence + lists)
+                .setColor(color)
+                )
             .catch(function (err) {
+                if(err.code == "50035") tooMuchStudents = true;
                 console.log("⚠   Error while sending ".red + "ATTENDANCE_RESULT" + " message!".red + separator)
             });
 
@@ -190,7 +186,7 @@ class AttendanceRequest {
             statement.title = TextTranslation.website.statement.errors.incomplete;
             statement.download = true;
             statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
-            this.generateCsvFileForDownload(TextTranslation, this.id, students, presents, rolesString, channelsString, categories, date);
+            this.generateCsvFileForDownload(TextTranslation, this.id, students, channelsData.get("data"), rolesString, channelsString, categories, date);
         }
 
         if (statement.success) {
@@ -284,38 +280,6 @@ class AttendanceRequest {
     }
 
     /**
-     * Convert data to a string
-     * @param {String} basicSentence - The base sentence 
-     * @param {String} sentence - The sentence if data is not null
-     * @param {Discord.Collection} usersList - All the users
-     * @param {Array} channelUsers - The users in the voice channel
-     */
-    dataToString(basicSentence, sentence, usersList, channelUsers) {
-        const guild = this.guild;
-        let text = basicSentence;
-        let collection = usersList.filter(x => channelUsers.indexOf(x) === -1); //compare the two arrays
-        let users = Array.from(collection.values()); //Convert into an array
-        let usersName = new Array();
-        for (let i = 0; i < users.length; i++) { //Create a list with all users name
-            const user = guild.member(users[i]);
-            usersName[i] = user.displayName + "#" + user.user.discriminator;
-        }
-        usersName.sort(); //Sort it A -> Z
-
-        if (users.length > 0) { //If there is more than 1 user
-            text = sentence; //Display the sentence when there is users
-            for (let i in usersName) { //Create the list
-                let user = users.find(u => (u.displayName + "#" + u.user.discriminator) === usersName[i]);
-                let member = guild.member(user);
-                let realUsername = users.length > 175 ? "" : ` (@${user.user.username})`;
-                text += "• " + (member.displayName === user.user.username ? user.user.username : member.nickname + realUsername) + "\n";
-            }
-            text += "```";
-        }
-        return new Map().set("text", text).set("diff", users);
-    }
-
-    /**
      * Returns the list of channels category
      * @param {Array} channels - The list
      * @param {String} unknown - "Unknown" translation
@@ -350,13 +314,23 @@ class AttendanceRequest {
      */
     getChannelsPresents(channels, roles) {
         let users = new Array();
-        for (let i = 0; i < roles.length; i++) {
-            for (let a = 0; a < channels.length; a++) {
-                const presents = channels[a].members.filter(member => member.roles.cache.has(roles[i].id)); //fetch users in the voice channel
-                users.push(...Array.from(presents.values())); //Add it in in the array
+        let text = "";
+        let channelUsers = "";
+        for (let i = 0; i < channels.length; i++) {
+            channelUsers = ""
+            for (let a = 0; a < roles.length; a++) {
+                const presents = Array.from(channels[i].members.filter(member => member.roles.cache.has(roles[a].id)).values()); //fetch users in the voice channel
+                users.push(...presents); //Add it in in the array
+                presents.forEach(member => channelUsers += 
+                    "• ✅ " + (member.displayName === member.user.username 
+                    ? member.user.username 
+                    : member.nickname + ` (@${member.user.username})`) + "\n"
+                )
             }
+            const category = channels[i].parent ? channels[i].parent.name + " - " : "";
+            if(channelUsers.length > 0) text += category + "**" + channels[i].name + "**:\n```" + channelUsers + "```";
         }
-        return [...new Set(users)]; //Delete duplicated entries
+        return new Map().set("data", [...new Set(users)]).set("text", text); //Delete duplicated entries
     }
 
     /**
@@ -432,7 +406,7 @@ class AttendanceRequest {
         if (timezone === undefined) timezone = "Europe/Paris";
         if (lang === undefined) lang = "fr";
         let dateString = moment(new Date()).tz(timezone).locale(lang).format("LLLL");
-        return "`" + dateString.charAt(0).toUpperCase() + dateString.slice(1) + "`";
+        return dateString.charAt(0).toUpperCase() + dateString.slice(1);
     };
 }
 module.exports = AttendanceRequest;

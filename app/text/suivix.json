@@ -4,7 +4,7 @@
             "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Unknown",
             "title": "Attendance of ",
-            "intro": "Asked by {username}, for {role}\n\n",
+            "intro": "Asked by {username}, for {role}.\n\n",
             "connector": "and",
             "csv": {
                 "user": "User",
@@ -51,7 +51,7 @@
                         "incomplete": "Your attendance request may be incomplete",
                         "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
                         "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel.",
-                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we cannot send the full attendance result to you with Discord. However, you can download a csv file containing the complete attendance below."
+                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we've sent you the full attendance result in the csv format. You can also download the result below."
                     },
                     "success": {
                         "title": "Your request has been finalized",
@@ -65,7 +65,7 @@
             "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Inconnue",
             "title": "Suivi du ",
-            "intro": "Suivi demandé par {username}, pour {role}\n\n",
+            "intro": "Suivi demandé par {username}, pour {role}.\n\n",
             "connector": "et",
             "csv": {
                 "user": "Utilisateurs",
@@ -109,10 +109,10 @@
                 "statement": {
                     "errors": {
                         "title": "Votre suivi n'a pas abouti",
-                        "incomplete": "Votre suivi est peu être incomplet",
+                        "incomplete": "Votre suivi est peut-être incomplet",
                         "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
                         "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon.",
-                        "attendanceIsTooBig": "Il semblerait que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous ne pouvons pas vous envoyer le résultat complet du suivi par Discord. Cependant, vous pouvez télécharger un fichier csv contenant le suivi complet ci dessous."
+                        "attendanceIsTooBig": "Il semblerait que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous vous avons envoyé le résultat complet du suivi sous le format csv. Vous pouvez également télécharger le résultat ci dessous."
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",

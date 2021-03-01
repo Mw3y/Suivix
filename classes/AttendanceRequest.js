@@ -186,7 +186,7 @@ class AttendanceRequest {
             statement.title = TextTranslation.website.statement.errors.incomplete;
             statement.download = true;
             statement.description = TextTranslation.website.statement.errors.attendanceIsTooBig;
-            this.generateCsvFileForDownload(TextTranslation, this.id, students, channelsData.get("data"), rolesString, channelsString, categories, date);
+            this.generateCsvFileForDownload(TextTranslation.title + date, TextTranslation, this.id, students, channelsData.get("data"), rolesString, channelsString, categories, date);
         }
 
         if (statement.success) {
@@ -201,9 +201,9 @@ class AttendanceRequest {
                     server: this.guild.name
                 }) + separator
             );
-            if (this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
         }
 
+        if (this.channel) await this.clearChannel(language); //Clear channel from unfinished suivix queries
         return statement;
     }
 
@@ -213,7 +213,7 @@ class AttendanceRequest {
      * @param {*} students - The student list
      * @param {*} presents - The present students
      */
-    generateCsvFileForDownload(TextTranslation, id, students, presents, rolesString, channelsString, categories, date) {
+    generateCsvFileForDownload(title, TextTranslation, id, students, presents, rolesString, channelsString, categories, date) {
         const data = [];
         students.sort((a, b) => {
             return a.displayName.localeCompare(b.displayName)
@@ -230,6 +230,10 @@ class AttendanceRequest {
         });
         fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(TextTranslation, students.length, presents.length, rolesString, channelsString, categories, date, data, true));
         console.log("An csv file has been generated.".blue + separator);
+
+        //Send to discord
+        this[this.channel === undefined? "author":"channel"]
+        .send(title, {files: [Server.getCsvAttendanceResult(id)]});
     }
 
     /**

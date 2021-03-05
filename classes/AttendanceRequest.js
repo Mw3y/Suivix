@@ -126,9 +126,10 @@ class AttendanceRequest {
 
         let collection = students.filter(x => channelStudents.indexOf(x) === -1); //compare the two arrays
         let absents = Array.from(collection.values()); //Convert into an array
-        absents.sort((a, b) => {return a.displayName.localeCompare(b.displayName)})
         let absentees = "";
         let absentsText = "";
+
+        absents.sort((a, b) => {return a.displayName.localeCompare(b.displayName)})
         absents.forEach(member => absentees += 
             "• ❌ " + (member.displayName === member.user.username 
             ? member.user.username 

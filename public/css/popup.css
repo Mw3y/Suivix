@@ -238,6 +238,8 @@ a {
     font-weight: 500px;
     color: #b9bbbe;
     vertical-align: middle;
+    text-align:  justify;
+    max-width: 95%;
 }
 
 .popup .options .option .optionArrow {

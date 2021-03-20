@@ -4,6 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 const express = require("express"),
+    mkdirp = require("mkdirp"),
     session = require('express-session'),
     compression = require("compression"),
     cookieParser = require("cookie-parser"),
@@ -55,6 +56,12 @@ global.Text = {
     suivix: require('./app/text/suivix.json'),
     poll: require('./app/text/poll.json'),
 }
+
+// Creating required folders
+mkdirp(Server.getProjectDirectory() + "files/logs");
+mkdirp(Server.getProjectDirectory() + "files/qrcodes");
+mkdirp(Server.getProjectDirectory() + "files/results");
+mkdirp(Server.getProjectDirectory() + "files/polls");
 
 /** ******************************************************** EXPRESS APP CONFIG **********************************************************/
 app.use(compression());

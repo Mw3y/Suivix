@@ -36,7 +36,8 @@
             },
             "request": {
                 "title": "Attendance Request",
-                "description": "Click on this link: [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) to take attendance.\n\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
+                "qrCode": "{protocol}://{host}/api/qr?guild_id={guild_id}&channel_id={channel_id}",
+                "description": "Click on the following link [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) or scan the qrcode to take attendance.\n\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
                 "unableToSendMessage": ":x: | Something went wrong while trying to send the message.\nPlease verify the bot permissions in the channel where you wanted to take attendance.",
                 "help": {
                     "content": "For more information or assistance, please visit https://discord.gg/xRNEzGM.",
@@ -97,7 +98,8 @@
             },
             "request": {
                 "title": "Demande de suivi",
-                "description": "Rendez-vous à l'adresse suivante [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) pour effectuer votre suivi visuel.\n\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
+                "qrCode": "{protocol}://{host}/api/qr?guild_id={guild_id}&channel_id={channel_id}",
+                "description": "Cliquez sur le lien suivant [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) ou scannez le qrcode pour effectuer votre suivi.\n\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
                 "unableToSendMessage": ":x: | Une erreur est survenue au moment d'envoyer le message.\nVeuillez vérifier les permissions du bot dans le salon où vous effectuez le suivi.",
                 "help": {
                     "content": "Pour toute information ou aide supplémentaire, rendez-vous sur https://discord.gg/xRNEzGM.",

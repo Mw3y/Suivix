@@ -230,9 +230,6 @@ class Poll {
 
         const dataUrl = await canvasRenderService.renderToDataURL(configuration);
         let base64Image = dataUrl.split(';base64,').pop();
-        if (!fs.existsSync('files/polls')) fs.mkdirSync("files/polls", {
-            recursive: true
-        });
         fs.writeFileSync(Server.getPollResult(this.messageId), base64Image, {
             encoding: 'base64'
         });

@@ -14,6 +14,7 @@
     "LOGIN_PAGE": "/login",
     "LOGIN_REDIRECT": "/auth/login",
     "LOGOUT_REDIRECT": "/auth/logout",
+    "API_QRCODE_GEN": "/api/qr",
     "API_USER_URL": "/api/get/user",
     "API_GUILDS_URL": "/api/get/user/guilds",
     "API_URL_FETCHER_URL": "/api/get/url",

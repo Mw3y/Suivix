@@ -106,34 +106,30 @@ class BotClient {
     /**
      * Write logs into a folder (Code from https://github.com/DraftBot-A-Discord-Adventure/DraftBot)
      */
-    handleLogs() {
+    async handleLogs() {
         const fs = require('fs');
         const now = new Date();
         const originalConsoleLog = console.log;
 
-        /* Create log folder and remove old logs (> 7 days) */
-        if (!fs.existsSync('files/logs')) {
-            fs.mkdirSync('files/logs');
-        } else {
-            fs.readdir('files/logs', function (err, files) {
-                if (err) {
-                    console.log('Unable to scan directory: ' + err);
-                    return;
-                }
-                files.forEach(function (file) {
-                    const parts = file.split('-');
-                    if (parts.length === 5) {
-                        if (now - new Date(parseInt(parts[1]), parseInt(parts[2]) - 1, parseInt(parts[3])) > 7 * 24 * 60 * 60 * 1000) { // 7 days
-                            fs.unlink('files/logs/' + file, function (err) {
-                                if (err !== undefined && err !== null) {
-                                    originalConsoleError("Error while deleting files/logs/" + file + ": " + err);
-                                }
-                            });
-                        }
+        /* Remove old logs (> 7 days) */
+        fs.readdir('files/logs', function (err, files) {
+            if (err) {
+                console.log('Unable to scan directory: ' + err);
+                return;
+            }
+            files.forEach(function (file) {
+                const parts = file.split('-');
+                if (parts.length === 5) {
+                    if (now - new Date(parseInt(parts[1]), parseInt(parts[2]) - 1, parseInt(parts[3])) > 7 * 24 * 60 * 60 * 1000) { // 7 days
+                        fs.unlink('files/logs/' + file, function (err) {
+                            if (err !== undefined && err !== null) {
+                                originalConsoleError("Error while deleting files/logs/" + file + ": " + err);
+                            }
+                        });
                     }
-                });
+                }
             });
-        }
+        });
 
         /* Find first available log file */
         let i = 1;

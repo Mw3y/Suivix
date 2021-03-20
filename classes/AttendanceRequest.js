@@ -227,9 +227,6 @@ class AttendanceRequest {
             [TextTranslation.csv.absent + "/" + TextTranslation.csv.present]: presents.find(user => user.id === student.user.id) ? TextTranslation.csv.present : TextTranslation.csv.absent,
         }))
 
-        if (!fs.existsSync('files/results')) fs.mkdirSync("files/results", {
-            recursive: true
-        });
         fs.writeFileSync(Server.getCsvAttendanceResult(id), this.JSONToCSVConvertor(TextTranslation, students.length, presents.length, rolesString, channelsString, categories, date, data, true));
         console.log("An csv file has been generated.".blue + separator);
 

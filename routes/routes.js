@@ -41,7 +41,8 @@ const getUser = require('./models/api/user'),
     getStats = require('./models/api/stats'),
     getChangelog = require('./models/api/changelog'),
     getInviteLink = require('./models/api/invite'),
-    getSupportLink = require('./models/api/support');
+    getSupportLink = require('./models/api/support'),
+    genQrCode = require("./models/api/qrCode");
 
 class RoutesList {
 
@@ -109,7 +110,7 @@ class RoutesList {
         routes.get(Routes.API_GUILDS_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true
         }), getUserGuilds);
-
+        routes.get(Routes.API_QRCODE_GEN, genQrCode);
         routes.get(Routes.API_URL_FETCHER_URL, cors(corsOptions), getUrl);
         routes.get(Routes.API_CHANNELS_URL, cors(corsOptions), passport.authenticate('main', {
             noredirect: true

@@ -10,15 +10,17 @@
     content="You are a professor or maybe even a business manager and you want to take attendance on Discord. No worries! Suivix will take care of it for you.">
   <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
   <!-- import the webpage's stylesheet -->
-  <link rel="stylesheet" href="/css/attendance-main.css">
+  <link rel="stylesheet" href="/css/attendance.css">
 </head>
 
 <body>
   <div class="navbar">
-    <a href="/" class="title">SUIVIX</a>
-    <a href="?language=fr" class="language margin">FR.</a>
-    <a href="?language=en" class="language margin-15">EN.</a>
-  </div>
+    <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+    <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Login</a>
+    <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+    <a class="button buttonSmall buttonLanguage" href="?language=fr"><i
+            class="fas fa-globe-americas buttonSmallIcon"></i>Français</a>
+</div>
   <div class="container">
     <div class="attendance-card" id="card">
       <div class="content">
@@ -49,6 +51,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="/utils/Utils.js"></script>
+  <script>
+    (function () {
+        var css = document.createElement('link');
+        css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css';
+        css.rel = 'stylesheet';
+        css.type = 'text/css';
+        document.getElementsByTagName('head')[0].appendChild(css);
+    })();
+</script>
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108500515-2"></script>
   <script>

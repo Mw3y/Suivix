@@ -1,10 +1,10 @@
 {
     "translations": {
         "en": {
-            "credits": "2020 - Suivix | Made with ❤️ by MΛX#2231",
+            "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Unknown",
             "title": "Attendance of ",
-            "intro": "Attendance asked by: `{username}`\nDate: {date} :clock1:\nCategory: `{category}`\nRole(s): {role}\n\n",
+            "intro": "Asked by {username}, for {role}.\n\n",
             "connector": "and",
             "csv": {
                 "user": "User",
@@ -20,10 +20,9 @@
             },
             "infos": {
                 "noAbsent": "✅ There is no absent user.\n",
-                "absentsList": ":warning: List of absent:\n```",
-                "presentsList": "\n:man: List of present:\n```",
-                "presentsTotal": ":white_check_mark: Total of present: `{presents}/{total}`\n",
-                "absentsTotal": ":x: Total of absents: `{absents}/{total}`\n\n"
+                "absentsList": "List of **Absentees**:",
+                "presentsTotal": ":white_check_mark: Total attendees: `{presents}/{total}`\n",
+                "absentsTotal": ":x: Total absentees: `{absents}/{total}`\n\n"
             },
             "errors": {
                 "tooMuchAbsents": "Too much users are absent.```",
@@ -37,7 +36,8 @@
             },
             "request": {
                 "title": "Attendance Request",
-                "description": "Click on this link: [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) to take attendance.\n\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
+                "qrCode": "{protocol}://{host}/api/qr?guild_id={guild_id}&channel_id={channel_id}",
+                "description": "Click on the following link [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) or scan the qrcode to take attendance.\n\n• Help is available by typing `!suivix help`.\n• Official Website : {protocol}://{host}/en\n• Suivix Support Server : https://discord.gg/xRNEzGM.\n\n**Changez de langue en utilisant les réactions sous ce message.**",
                 "unableToSendMessage": ":x: | Something went wrong while trying to send the message.\nPlease verify the bot permissions in the channel where you wanted to take attendance.",
                 "help": {
                     "content": "For more information or assistance, please visit https://discord.gg/xRNEzGM.",
@@ -52,7 +52,7 @@
                         "incomplete": "Your attendance request may be incomplete",
                         "unableToSendMessage": "We were unable to send you the attendance result with a private message. Before creating an attendance request, please make sure to allow Suivix to send you private messages on Discord.",
                         "unableToSendMessageInChannel": "We were unable to send the attendance result in the channel in which you started your attendance request. Before creating an attendance request, please make sure to allow Suivix to send messages in this channel.",
-                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we cannot send the full attendance result to you with Discord. However, you can download a csv file containing the complete attendance below."
+                        "attendanceIsTooBig": "It looks like you have too many users. Discord has strict message length limitations thus we've sent you the full attendance result in the csv format. You can also download the result below."
                     },
                     "success": {
                         "title": "Your request has been finalized",
@@ -63,10 +63,10 @@
             }
         },
         "fr": {
-            "credits": "2020 - Suivix | Crée avec ❤️ par MΛX#2231",
+            "credits": "Copyright © 2021 | Made with ❤️ by MΛX",
             "unknown": "Inconnue",
-            "title": "Suivi de ",
-            "intro": "Suivi demandé par : `{username}`\nDate : {date} :clock1:\nCatégorie(s) : `{category}`\nRole(s) : {role}\n\n",
+            "title": "Suivi du ",
+            "intro": "Suivi demandé par {username}, pour {role}.\n\n",
             "connector": "et",
             "csv": {
                 "user": "Utilisateurs",
@@ -82,8 +82,7 @@
             },
             "infos": {
                 "noAbsent": "✅ Il n'y a pas d'absent(e)(s).\n",
-                "absentsList": ":warning: Liste des absent(e)(s) :\n```",
-                "presentsList": "\n:man: Liste des présent(e)(s) :\n```",
+                "absentsList": "Liste des **Absent(e)(s)**:",
                 "presentsTotal": ":white_check_mark: Total des présent(e)(s) : `{presents}/{total}`\n",
                 "absentsTotal": ":x: Total des absent(e)(s) : `{absents}/{total}`\n\n"
             },
@@ -99,7 +98,8 @@
             },
             "request": {
                 "title": "Demande de suivi",
-                "description": "Rendez-vous à l'adresse suivante [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) pour effectuer votre suivi visuel.\n\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
+                "qrCode": "{protocol}://{host}/api/qr?guild_id={guild_id}&channel_id={channel_id}",
+                "description": "Cliquez sur le lien suivant [{protocol}://{host}/attendance]({protocol}://{host}/attendance/new?guild_id={guild_id}&channel_id={channel_id}) ou scannez le qrcode pour effectuer votre suivi.\n\n• Une aide est disponible. Tapez `!suivix aide`.\n• Site Internet Officiel : {protocol}://{host}\n• Server Discord de Support : https://discord.gg/xRNEzGM.\n\n**Change language by using reactions under this message.**",
                 "unableToSendMessage": ":x: | Une erreur est survenue au moment d'envoyer le message.\nVeuillez vérifier les permissions du bot dans le salon où vous effectuez le suivi.",
                 "help": {
                     "content": "Pour toute information ou aide supplémentaire, rendez-vous sur https://discord.gg/xRNEzGM.",
@@ -111,10 +111,10 @@
                 "statement": {
                     "errors": {
                         "title": "Votre suivi n'a pas abouti",
-                        "incomplete": "Votre suivi est peu être incomplet",
+                        "incomplete": "Votre suivi est peut-être incomplet",
                         "unableToSendMessage": "Nous n'avons pas pu vous envoyer le résultat du suivi par un message privé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à vous envoyer des messages privés dans Discord.",
                         "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le résultat du suivi dans le salon où vous l'avez lancé. Avant de demander un suivi, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon.",
-                        "attendanceIsTooBig": "Il semblerait que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous ne pouvons pas vous envoyer le résultat complet du suivi par Discord. Cependant, vous pouvez télécharger un fichier csv contenant le suivi complet ci dessous."
+                        "attendanceIsTooBig": "Il semblerait que votre suivi soit trop gros. La longueur maximale des messages étant très limité sur Discord, nous vous avons envoyé le résultat complet du suivi sous le format csv. Vous pouvez également télécharger le résultat ci dessous."
                     },
                     "success": {
                         "title": "Votre demande de suivi a abouti",

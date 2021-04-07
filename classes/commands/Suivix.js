@@ -31,6 +31,8 @@ const suivixCommand = async function (message, args, client, sequelize) {
  * @param {*} channel - The channel where the command was trigerred
  */
 const generateAttendanceRequestMessage = async function (channel, author, Text) {
+    const qrCode = generateQrCode(channel, Text);
+    console.log("New qrCode generated: ".cyan + qrCode + separator)
     return await channel.send(new Discord.MessageEmbed().setDescription(Text.request.description.formatUnicorn({
             protocol: getProtocol(),
             host: Config.WEBSITE_HOST,
@@ -38,11 +40,21 @@ const generateAttendanceRequestMessage = async function (channel, author, Text) 
             channel_id: channel.id
         }))
         .setColor("628bf7")
+        .setThumbnail(qrCode)
         .setImage("https://suivix.xyz/ressources/header.png")
         .setTitle(Text.request.title)).catch((err) => {
         console.log("⚠   Error while sending message!".brightRed + separator);
         author.send(Text.request.unableToSendMessage)
     });
+}
+
+const generateQrCode = function (channel, Text) {
+    return Text.request.qrCode.formatUnicorn({
+        protocol: getProtocol(),
+        host: Config.WEBSITE_HOST,
+        guild_id: channel.guild.id,
+        channel_id: channel.id
+    })
 }
 
 /**
@@ -60,10 +72,6 @@ const generateAttendanceHelpMessage = async function (channel, author, Text) {
         console.log("⚠   Error while sending message!".brightRed + separator);
         author.send(Text.request.unableToSendMessage);
     });
-}
-
-const getProtocol = function () {
-    return Config.HTTPS_ENABLED ? "https" : "http";
 }
 
 module.exports.suivixCommand = suivixCommand;

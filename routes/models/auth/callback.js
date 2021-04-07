@@ -16,12 +16,17 @@ module.exports = async (req, res) => {
         discriminator: user.discriminator
     }).yellow + " logged in on ".blue + new Date().toString().yellow + ".".blue + separator);
 
-    if (req.session.pending_request) {
-        res.redirect(Routes.ATTENDANCE_NEWREQUEST + "/?guild_id=" + req.session.pending_request.guild_id + "&channel_id=" + req.session.pending_request.channel_id);
-        req.session.pending_request = undefined;
+    if (req.session.attendance_pending_request ||req.session.poll_pending_request) {
+        if (req.session.attendance_pending_request) {
+            res.redirect(Routes.ATTENDANCE_NEWREQUEST + "/?guild_id=" + req.session.attendance_pending_request.guild_id + "&channel_id=" + req.session.attendance_pending_request.channel_id);
+            req.session.attendance_pending_request = undefined;
+        }
+        if (req.session.poll_pending_request) {
+            res.redirect(Routes.POLL_NEWREQUEST + "/?guild_id=" + req.session.poll_pending_request.guild_id + "&channel_id=" + req.session.poll_pending_request.channel_id);
+            req.session.poll_pending_request = undefined;
+        }
         return;
     }
-
     const request = await new RequestManager().getRequest(req.session.passport.user.attendance_request);
     if (!request && req.query.redirect !== "false") {
         res.redirect(Routes.SERVERS_SELECTION);

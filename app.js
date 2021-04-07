@@ -4,6 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 const express = require("express"),
+    mkdirp = require("mkdirp"),
     session = require('express-session'),
     compression = require("compression"),
     cookieParser = require("cookie-parser"),
@@ -14,6 +15,7 @@ const express = require("express"),
     Sequelize = require("sequelize");
 
 require("format-unicorn"); //Initialize project formatter
+require("moment-duration-format"); //Initialize moment duration format
 require('colors'); //Add colors to console
 
 //Node package.json
@@ -22,6 +24,7 @@ var package = require("./package.json");
 //Bot commands
 const SuivixCommand = require("./classes/commands/Suivix"),
     SuivixCommandLines = require("./classes/commands/SuivixCmd");
+const RequestManager = new(require("./classes/managers/RequestManager"))();
 
 const app = express(); //Create the express server
 
@@ -35,20 +38,32 @@ global.sequelize = new Sequelize({ //Initialize Database
     storage: __dirname + Config.DATABASE_FILE,
     logging: false,
 });
+//Update Database for polls
+sequelize.query("CREATE TABLE IF NOT EXISTS vote (messageId TEXT, author TEXT, vote TEXT)");
+sequelize.query("CREATE TABLE IF NOT EXISTS poll (messageId TEXT, channelId TEXT, guildId TEXT, author TEXT, roles TEXT, expiresAt TEXT, answers INTEGER, anonymous TEXT, publicResult TEXT, language TEXT)");
 global.SuivixClient = new BotClient(); //Launch the Discord bot instance
 global.client = SuivixClient.login(); //The bot client
 global.getGuildInvite = async (guild) => {
     const invite = [...await guild.fetchInvites()][0]
     return invite ? invite.toString().split(',')[1] : "No";
 }
+global.getProtocol = () => {
+    return Config.HTTPS_ENABLED ? "https" : "http";
+}
 global.oauth = new(require("discord-oauth2"));
 global.Text = {
     global: require('./app/text/global.json'),
     suivix: require('./app/text/suivix.json'),
+    poll: require('./app/text/poll.json'),
 }
 
-/** ******************************************************** EXPRESS APP CONFIG **********************************************************/
+// Creating required folders
+mkdirp(Server.getProjectDirectory() + "files/logs");
+mkdirp(Server.getProjectDirectory() + "files/qrcodes");
+mkdirp(Server.getProjectDirectory() + "files/results");
+mkdirp(Server.getProjectDirectory() + "files/polls");
 
+/** ******************************************************** EXPRESS APP CONFIG **********************************************************/
 app.use(compression());
 app.use(
     express.static("public", {
@@ -101,7 +116,6 @@ client.on("ready", async () => {
     //Change suivix activity on Discord
     const activities = [
         "!suivix help",
-        "{students} élèves",
         "{servercount} serveurs",
         "v.{version} | suivix.xyz",
         "{requests} requêtes",
@@ -110,16 +124,17 @@ client.on("ready", async () => {
     setInterval(async () => {
         if (activityNumber >= activities.length) activityNumber = 0; //Check if the number is too big
         let [requestsQuery] = await sequelize.query(`SELECT SUM(attendance_requests + poll_requests) AS requests FROM stats`);
-        const dblGuild = client.guilds.cache.get("264445053596991498");
         const activity = activities[activityNumber].formatUnicorn({
             servercount: client.guilds.cache.size,
             version: package.version,
             requests: requestsQuery[0].requests,
-            students: client.users.cache.size - (dblGuild ? dblGuild.members.cache.size : 0),
         }); //Get and parse the activity string
         SuivixClient.setActivity(activity); //Display it
         activityNumber++;
     }, 10000); //Execute every 10 seconds
+    setInterval(async () => {
+        await RequestManager.updateAllPolls();
+    }, 45000)
 });
 
 //Trigger when a message is sent
@@ -143,9 +158,17 @@ client.on("message", (message) => {
 
 //Trigger when a reaction is add on a message
 client.on("messageReactionAdd", async (reaction, user) => {
+    try { // Handle partial reactions
+        await reaction.fetch();
+        await reaction.users.fetch();
+    } catch (error) {
+        return;
+    }
     if (user.bot) return; //If the user is a bot
     if (reaction.message.author !== client.user) return; //if the message is not sent by the bot
     await Language.handleLanguageChange(reaction, user);
+    const poll = await RequestManager.getPollRequestByMessage(reaction.message);
+    if (poll) await poll.handleVote(reaction, user);
 });
 
 //Trigger when the bot joins a guild
@@ -154,8 +177,9 @@ client.on("guildCreate", async (guild) => {
     console.log(`✅ The bot has joined a new server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
 
     //Join Message
-    guild.owner.send(await SuivixClient.getJoinMessage(guild, "fr")).catch(err => console.log("Cannot send join message!".red + separator));
-    guild.owner.send(await SuivixClient.getJoinMessage(guild, "en")).catch(err => console.log("Cannot send join message!".red + separator));
+    const owner = await guild.members.fetch(guild.ownerID);
+    owner.send(await SuivixClient.getJoinMessage(guild, "fr")).catch(err => console.log("Cannot send join message!".red + separator));
+    owner.send(await SuivixClient.getJoinMessage(guild, "en")).catch(err => console.log("Cannot send join message!".red + separator));
 
     //Update the bot guilds number on the Discord Bot List
     SuivixClient.postDBLStats();
@@ -167,7 +191,8 @@ client.on("guildDelete", async (guild) => {
     console.log(`❌ The bot has left a server!`.green + ` (server: '${guild.name}', members: '${guild.memberCount}')` + separator);
 
     //Leave Message
-    guild.owner.send(await SuivixClient.getLeaveMessage(guild)).catch(err => console.log("Unable to send the leave message.".red + separator));
+    const owner = await guild.members.cache.find(m => m.id === guild.ownerID);
+    if (owner) owner.send(await SuivixClient.getLeaveMessage(guild)).catch(err => console.log("Unable to send the leave message.".red + separator));
 
     //Update the bot guilds number on the Discord Bot List
     SuivixClient.postDBLStats();

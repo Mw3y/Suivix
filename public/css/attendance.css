@@ -74,7 +74,7 @@ body {
     color: #fff;
     font-weight: 500;
     font-size: 11px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
     position: absolute;
     bottom: 25px;
     right: -3px;
@@ -88,7 +88,7 @@ body {
 .loading-text {
     height: 25px;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32, 34, 37) 0%, rgb(32, 34, 37) 40%, rgb(54, 56, 59) 50%, rgb(32, 34, 37) 60%, rgb(32, 34, 37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
     vertical-align: middle;
     opacity: 0.5;
@@ -98,15 +98,23 @@ body {
 .loading-select {
     height: 30px;
     border-radius: 5px;
-    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32, 34, 37) 0%, rgb(32, 34, 37) 40%, rgb(54, 56, 59) 50%, rgb(32, 34, 37) 60%, rgb(32, 34, 37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
+}
+
+.loading-select span {
+    margin-left: 8px;
+    margin-right: 8px;
+    color: #b9bbbe;
+    font-size: 14px;
+    line-height: 30px;
 }
 
 .loading-image {
     width: 25px;
     height: 25px;
     border-radius: 100%;
-    background: linear-gradient(90deg, rgb(32,34,37) 0%, rgb(32,34,37) 40%, rgb(54, 56, 59) 50%, rgb(32,34,37) 60%, rgb(32,34,37) 100%) 0% 0% / 400%;
+    background: linear-gradient(90deg, rgb(32, 34, 37) 0%, rgb(32, 34, 37) 40%, rgb(54, 56, 59) 50%, rgb(32, 34, 37) 60%, rgb(32, 34, 37) 100%) 0% 0% / 400%;
     animation: 0.7s linear 0s infinite normal none running loading;
     opacity: 0.5;
     float: right;
@@ -147,10 +155,10 @@ body {
     white-space: nowrap;
     background: #191a1d;
     z-index: 350;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.3);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
-.navbar .title {
+.navbar .logo {
     color: #fff;
     font-weight: 700;
     font-size: 25px;
@@ -158,47 +166,75 @@ body {
     text-decoration: none;
 }
 
-.navbar .language {
-    color: #fff;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    text-decoration: none;
+.navbar .logo img {
+    max-width: 125px;
+}
+
+.navbar .button {
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition-property: all;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
+    border: none;
     float: right;
+    margin-top: -5px;
+    text-decoration: none;
+    color: #fff;
+    height: 23px;
 }
 
-.navbar .language:hover {
-    opacity: 0.9;
+.navbar .smallAvatar {
+    max-height: 24px;
+    border-radius: 100px;
 }
 
-.navbar .margin {
-    margin-right: 75px;
+.navbar .buttonSmall {
+    border-radius: 28px;
+    font-size: 16px;
+    padding: 6px 22px;
+    line-height: 22px;
+    margin-right: 5px;
 }
-
-.navbar .margin-15 {
+.navbar .buttonRound {
+    border-radius: 28px;
+    font-size: 16px;
+    padding: 6px 9px;
+    line-height: 22px;
     margin-right: 5px;
 }
 
-.user img {
-    display: inline;
-    max-height: 25px;
-    border-radius: 100%;
-    float: right;
-}
-
-.user {
-    display: inline;
+.navbar .buttonGrey {
+    background: #23272a;
     color: #fff;
-    font-size: 15px;
-    line-height: 25px;
-    margin-left: 10px;
-    float: right;
-    border-radius: 8px;
 }
 
-#discriminator {
-    margin-right: 10px;
-    font-weight: 500;
+.navbar .buttonGrey:hover {
+    background: #2a2e30;
+}
+
+.navbar .buttonUserHover {
+    display: none;
+}
+
+.navbar .buttonUser:hover .buttonUserNormal {
+    display: none;
+}
+
+.navbar .buttonUser:hover .buttonUserHover {
+    display: block;
+}
+
+/* Show the dropdown menu on hover */
+.buttonLanguage:hover {
+    background-color: #fff;
+    color: #23272a;
+}
+
+.languageIcon {
+    width: 18px;
 }
 
 .container {
@@ -220,18 +256,30 @@ body {
     max-height: 1000px;
     background-color: #36393f;
     border-radius: 5px;
-    box-shadow: 0 2px 10px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
 }
 
-.container .attendance-card .content {
+.container .rectangle-card {
+    position: relative;
+    min-height: 200px;
+    max-height: 650px;
+    min-width: 300px;
+    max-width: 500px;
+    background-color: #36393f;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
+}
+
+.content {
     padding: 12px 22px;
 }
 
-.container .attendance-card .content .header {
+.content .header {
     margin-bottom: 25px;
+    max-width: 100%;
 }
 
-.container .attendance-card .content .header .logo {
+.content .header .logo {
     max-width: 125px;
     margin: 15px;
     display: block;
@@ -239,10 +287,10 @@ body {
     margin-right: auto;
     animation: float 6s ease-in-out infinite;
     border-radius: 150px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
-.container .attendance-card .content .header .big-logo {
+.content .header .big-logo {
     max-width: 150px;
     padding: 15px;
     display: block;
@@ -252,20 +300,28 @@ body {
     border-radius: 150px;
 }
 
-.container .attendance-card .content .header .title {
+.content .header .full-logo {
+    max-width: 90%;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content .header .title {
     color: #fff;
     font-size: 32px;
     text-align: center;
 }
 
-.container .attendance-card .content .header .description {
+.content .header .description {
     color: #b9bbbe;
     font-size: 16px;
     text-align: justify;
     text-align-last: center;
 }
 
-.container .attendance-card .content .infos .expiresIn {
+.content .infos .expiresIn {
     color: #fff;
     font-size: 14px;
     text-align: left;
@@ -273,16 +329,16 @@ body {
     vertical-align: middle;
 }
 
-.container .attendance-card .content .infos .select {
+.content .infos .select {
     color: #fff;
     font-size: 14px;
     text-align: left;
     font-weight: 500;
 }
 
-.container .attendance-card .content .select-custom {
+.content .select-custom {
     margin-top: 8px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
 .button {
@@ -318,7 +374,7 @@ button {
     height: 45px;
     width: 45px;
     transition: all .3s ease-in-out;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
 }
 
 .margin-top-5 {
@@ -456,7 +512,7 @@ button {
     margin-bottom: 3px;
     cursor: pointer;
     transition: 0.3s;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
 }
 
 .server-card .loading-text {
@@ -639,7 +695,12 @@ button {
 }
 
 .buttonLogin:hover {
-    background-color:#1b1c1e;
+    background-color: #1b1c1e;
+    transform: scale(0.99, 0.99);
+}
+
+.buttonHover:hover {
+    background-color: #1b1c1e;
     transform: scale(0.99, 0.99);
 }
 
@@ -663,6 +724,37 @@ button {
     margin-top: 10px;
 }
 
+
+.alert {
+    padding: 8px 5%;
+    background-color: #ffb414;
+    margin: 0 10px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    opacity: 0.9;
+}
+
+.alert p {
+    color: #fff;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: #fff;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+
 @media (max-height: 700px) {
     .footer {
         display: none;
@@ -674,6 +766,15 @@ button {
 }
 
 @media only screen and (max-width: 800px) {
+
+    .alert p {
+        font-size: 12px;
+    }
+
+    .navbar .isVisible {
+        display: none;
+    }
+
     .container {
         display: flex;
         justify-content: center;
@@ -688,11 +789,17 @@ button {
         max-width: 400px;
     }
 
-    .container .attendance-card .content .header {
+    .container .rectangle-card {
+        margin-top: 10%;
+        width: 95vw;
+        max-width: 400px;
+    }
+
+    .content .header {
         margin-bottom: 25px;
     }
 
-    .container .attendance-card .content .header .logo {
+    .content .header .logo {
         max-width: 125px;
         display: block;
         margin-left: auto;
@@ -700,25 +807,25 @@ button {
         animation: float 6s ease-in-out infinite;
     }
 
-    .container .attendance-card .content .header .title {
+    .content .header .title {
         color: #fff;
         font-size: 26px;
         text-align: center;
     }
 
-    .container .attendance-card .content .header .description {
+    .content .header .description {
         color: #b9bbbe;
         font-size: 14px;
         text-align: center;
     }
 
-    .container .attendance-card .content .infos .expiresIn {
+    .content .infos .expiresIn {
         color: #fff;
         font-size: 11px;
         text-align: left;
     }
 
-    .container .attendance-card .content .infos .select {
+    .content .infos .select {
         color: #fff;
         font-size: 12px;
         text-align: left;
@@ -729,8 +836,6 @@ button {
         font-size: 14px;
     }
 
-    #username,
-    #discriminator,
     #user-loader,
     .loading-image {
         display: none;
@@ -740,8 +845,8 @@ button {
         display: none;
     }
 
-    .navbar .margin {
-        margin-right: 5px;
+    .navbar .buttonLanguage {
+        margin-right: 0;
     }
 
 }

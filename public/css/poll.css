@@ -1,0 +1,311 @@
+textarea {
+    background-color: rgb(32, 34, 37);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    resize: none;
+    outline: 0;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+}
+
+.pollSubject {
+    margin-top: 8px;
+    width: 98.3%;
+    height: 30px;
+    padding: 3px;
+}
+
+.pollDescription {
+    margin-top: 4px;
+    width: 98.3%;
+    height: 60px;
+    padding: 3px;
+}
+
+textarea::placeholder {
+    padding: 0 6px;
+    color: #686869;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+.numbersArea {
+    background-color: rgb(32, 34, 37);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    resize: none;
+    outline: 0;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+    width: 100%;
+    height: 34px;
+    overflow: hidden;
+    line-height: 34px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+[contenteditable=true]:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block;
+    /* For Firefox */
+    padding: 0 4px;
+    color: #686869;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #202225;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+    width: 15px
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #36393f;
+    border: 5px solid transparent;
+    border-radius: 9px;
+    background-clip: content-box;
+    max-height: 15px;
+}
+
+.checkboxContainer {
+    margin-top: 8px;
+}
+
+.checkboxContainer label {
+    display: inline-block;
+    background-color: #f04747;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 10px;
+    cursor: pointer;
+    padding-left: 8px;
+    padding-right: 9px;
+    height: 34px;
+    line-height: 34px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+}
+
+.checkboxContainer label:before {
+    display: inline-block;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 10px;
+    line-height: 30px;
+    padding: 2px 6px 2px 2px;
+    content: "\f00d";
+    transition: transform .3s ease-in-out;
+}
+
+.checkboxContainer input[type="checkbox"]:checked+label::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;
+}
+
+.checkboxContainer input[type="checkbox"]:checked+label {
+    background-color: #43b581;
+    color: #fff;
+    transition: all .2s;
+}
+
+.checkboxContainer input[type="checkbox"] {
+    display: absolute;
+}
+
+.checkboxContainer input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+.container .poll-card {
+    position: relative;
+    min-width: 350px;
+    max-width: 400px;
+    min-height: 550px;
+    max-height: 1000px;
+    background-color: #36393f;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
+}
+
+.container .poll-card .content {
+    padding: 12px 22px;
+}
+
+.rows {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+}
+
+.left-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 2px;
+    width: 37%;
+}
+
+.middle-row {
+    display: flex;
+    justify-content: flex-start;
+    width: 40%;
+}
+
+.right-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 5px;
+    width: 26%;
+}
+
+.container .poll-card .content .header .logo {
+    max-width: 125px;
+    margin: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+}
+
+.container .poll-card .content .header .big-logo {
+    max-width: 150px;
+    padding: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    animation: float 6s ease-in-out infinite;
+    border-radius: 150px;
+}
+
+.container .poll-card .content .header .title {
+    color: #fff;
+    font-size: 32px;
+    text-align: center;
+}
+
+.container .poll-card .content .header .description {
+    color: #b9bbbe;
+    font-size: 16px;
+    text-align: justify;
+    text-align-last: center;
+}
+
+.container .poll-card .content .infos .expiresIn {
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    display: inline;
+    vertical-align: middle;
+}
+
+.container .poll-card .content .infos .select {
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    font-weight: 500;
+}
+
+.container .poll-card .content .select-custom {
+    margin-top: 8px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-height: 700px) {
+    .container {
+        margin: 15px auto !important;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .footer {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        transform: none;
+        margin: 15% auto;
+    }
+
+    .poll-card {
+        width: 95vw;
+        max-width: 400px;
+    }
+
+    .content .header {
+        margin-bottom: 25px;
+    }
+
+    .content .header .logo {
+        max-width: 125px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .content .header .title {
+        color: #fff;
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .content .header .description {
+        color: #b9bbbe;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .content .infos .expiresIn {
+        color: #fff;
+        font-size: 11px;
+        text-align: left;
+    }
+
+    .content .infos .select {
+        color: #fff;
+        font-size: 12px;
+        text-align: left;
+        font-weight: 500;
+    }
+
+    .checkboxContainer input[type="checkbox"]:checked+label::before {
+        display: none;
+    }
+
+    .checkboxContainer label:before {
+        display: none;
+    }
+
+    .numbersArea {
+        font-size: 12px;
+    }
+
+    [contenteditable=true]:empty:before {
+        font-size: 12px;
+    }
+}

@@ -31,7 +31,7 @@ function init() {
     //and performs a token refresh if needed
 
     var oauthStartegy = new OAuth2Strategy({
-            authorizationURL: 'https://discord.com/oauth2/authorize?client_id=' + Config.DISCORD_CLIENT_ID + '&scope=' + Config.DISCORD_OAUTH_SCOPES,
+            authorizationURL: 'https://discord.com/oauth2/authorize?client_id=' + Config.DISCORD_CLIENT_ID + '&scope=' + Config.DISCORD_OAUTH_SCOPES + "&prompt=none",
             tokenURL: 'https://discord.com/api/oauth2/token',
             clientID: Config.DISCORD_CLIENT_ID,
             clientSecret: Config.DISCORD_CLIENT_SECRET,

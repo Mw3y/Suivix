@@ -1,0 +1,72 @@
+{
+    "translations": {
+        "en": {
+            "anonymous": "Anonymous",
+            "publicResult": "Public result",
+            "expiresIn": "Expires in",
+            "canAnswer": " can answer this poll.",
+            "true": "yes",
+            "false": "no",
+            "footer": "suivix.xyz | Poll create by ",
+            "connector": "and",
+            "expired": "Expired",
+            "resultsTitle": "Poll result",
+            "isAnonymous": "As this poll is anonymous, each participant's choice is not displayed.",
+            "url": "Find the original poll by clicking [here]",
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Your poll creation has failed",
+                        "unableToSendMessageInChannel": "We were unable to send the poll in the requested channel. Before creating a poll, please make sure to allow Suivix to send messages in this channel."
+                    },
+                    "success": {
+                        "title": "Your request has been finalized",
+                        "channel": "You have successfully created a poll. It has been sent in the \"#{channel}\" channel on your Discord server. Please make sure Suivix can send you private message."
+                    }
+                }
+            },
+            "polls": {
+                "warning": "⚠️ Warning,",
+                "privacyError": "This poll is marked as **'Anonymous'** but the bot doesn't have the permission **'MANAGE_MESSAGES'**, so it can't delete your vote.\nContact the server administrator to solve this problem or **remove the reaction** manually.",
+                "voteSaved": "✅ Your vote has been saved!",
+                "voteSavedDescription": "Feel free to change your vote before the end of the poll.",
+                "voteUpdated": "⚙️ Your vote has been updated!",
+                "voteUpdatedDescription": "Feel free to change your vote again before the end of the poll."
+            }
+        },
+        "fr": {
+            "anonymous": "Anonyme",
+            "publicResult": "Résultat public",
+            "expiresIn": "Expire dans",
+            "canAnswer": " peut/peuvent répondre à ce sondage.",
+            "true": "oui",
+            "false": "non",
+            "footer": "suivix.xyz | Sondage créé par ",
+            "connector": "et",
+            "expired": "Expiré",
+            "resultsTitle": "Résultats du sondage",
+            "isAnonymous": "Ce sondage étant anonyme, le choix de chaque participant n'est pas affiché.",
+            "url": "Retrouvez le sondage d'origine en cliquant [ici]",
+            "website": {
+                "statement": {
+                    "errors": {
+                        "title": "Votre sondage n'a pas été créé",
+                        "unableToSendMessageInChannel": "Nous n'avons pas pu vous envoyer le sondage dans le salon désiré. Avant de créer un sondage, veuillez vous assurer que Suivix est autorisé à envoyer des messages dans ce salon."
+                    },
+                    "success": {
+                        "title": "Votre sondage a été créé",
+                        "channel": "Votre sondage a été crée avec succès. Vous le trouverez dans le salon \"#{channel}\" de votre serveur Discord. Merci de vous assurer que Suivix peut vous envoyer des messages privés."
+                    }
+                }
+            },
+            "polls": {
+                "warning": "⚠️ Attention,",
+                "privacyError": "Ce sondage est marqué comme **'Anonyme'** mais le bot n'a pas la permission **'MANAGE_MESSAGES'**, donc il ne peut pas supprimer votre vote.\nContactez l'administrateur du serveur pour résoudre ce problème ou **retirez la réaction** manuellement.",
+                "voteSaved": "✅ Votre vote a été sauvegardé !",
+                "voteSavedDescription": "N'hésitez pas à modifier votre vote avant la fin du sondage.",
+                "voteUpdated": "⚙️ Votre vote a été mis à jour !",
+                "voteUpdatedDescription": "N'hésitez pas à de nouveau modifier votre vote avant la fin du sondage."
+            }
+        }
+    }
+}

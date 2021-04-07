@@ -11,7 +11,7 @@
     <link id="favicon" rel="icon" href="/ressources/icon.ico" type="image/x-icon">
 
     <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/css/attendance-main.css">
+    <link rel="stylesheet" href="/css/attendance.css">
     <link rel="stylesheet" href="/css/popup.css">
     <link rel="stylesheet" href="/css/microtip.css">
     <link href="/css/select2.css" rel="stylesheet" />
@@ -89,16 +89,11 @@
         </div>
     </div>
     <div class="navbar">
-        <a href="/" class="title">SUIVIX</a>
-        <a href="/auth/logout?redirectTo=/" class="user" aria-label="Déconnexion" data-microtip-position="bottom"
-            role="tooltip"><i class="fas fa-sign-out-alt"></i></a>
-        <div class="loading-image" id="user-loader-image"></div>
-        <div style="width: 150px;" class="loading-text" id="user-loader"></div>
-        <p class="user" id="user-infos">
-            <var id="username"></var><var class="discriminator" id="discriminator"></var><img class="avatar"
-                id="avatar"></p>
-        <a href="javascript:void(0)" class="language margin">FR.</a>
-        <a href="?language=en" class="language margin-15">EN.</a>
+        <a class="logo" href="/"><img src="/images/logo.png" alt="logo"></a>
+        <a class="button buttonGrey buttonSmall buttonUser isVisible" href="/auth/login">Connexion</a>
+        <a class="button buttonGrey buttonRound isVisible" href="/"><i class="fas fa-home"></i></a>
+        <a class="button buttonSmall buttonLanguage" href="?language=en"><i
+                class="fas fa-globe-americas buttonSmallIcon"></i>English</a>
     </div>
     <div class="container">
         <div class="attendance-card" id="card">
@@ -111,7 +106,7 @@
                         à la plupart des situations.</p>
                 </div>
                 <div class="infos ">
-                    <img src="/icons/clock.svg" class="emoji"></img>
+                    <img src="/icons/clock.gif" class="emoji"></img>
                     <p class="expiresIn"> Ce suivi expirera dans 1h.</p>
                     <p class="select ">Sélectionnez vos salons et vos rôles ci-dessous :</p>
                 </div>

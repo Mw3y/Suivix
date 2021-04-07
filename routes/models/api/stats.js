@@ -14,6 +14,5 @@ module.exports = async (req, res) => {
         version: package.version,
         guilds: client.guilds.cache.size,
         users: usersQuery[0].users,
-        students: client.users.cache.size - (dblGuild ? dblGuild.members.cache.size : 0)
     })
 };

@@ -19,12 +19,12 @@ const initAttendance = function (lang) {
 
     request.onload = function () {
         const response = JSON.parse(this.response);
-        document.getElementById("username").innerHTML = response.username;
-        document.getElementById("discriminator").innerHTML = "#" + response.discriminator;
-        document.getElementById("avatar").src = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
-        $("#user-loader").hide();
-        $("#user-loader-image").hide();
-        $("#user-infos").show();
+        const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
+        const navUser = $(".buttonUser");
+        if (navUser.is(":visible")) navUser.html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+                '</p><p class="buttonUserHover">' +
+                (lang === "en" ? "Logout" : "Déconnexion") + '</p>')
+            .attr("href", "/auth/logout?redirectTo=/");
 
         displayChangelog(lang, document.getElementById("version"), document.getElementById("changelogText"));
 
@@ -110,7 +110,7 @@ function getAttendanceStatement(channels, roles) {
     request.send();
 }
 
-function initSelect2RoleList(lang) {
+function initSelect2RoleList(lang, customPlaceholder, max = 8) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/roles`, window), true)
     request.onload = function () {
@@ -118,9 +118,9 @@ function initSelect2RoleList(lang) {
         if (this.status === 404) {
             return;
         }
-        const placeholder = (lang === "fr" ? "Rôles" : "Roles") + " 📚";
+        const placeholder = customPlaceholder ? customPlaceholder : (lang === "fr" ? "Rôles" : "Roles") + " 📚";
         document.getElementById("select-roles").innerHTML = "<select id='select-2'multiple><option> <select></option></select > ";
-        initSelect2($("#select-2"), placeholder, [], 8)
+        initSelect2($("#select-2"), placeholder, [], max)
         let i = 0;
         for (let key in response) {
             var newOption = new Option(reductText(response[key].name, 32) + "<span class='select2-users big'><img class='select2-users-icon' src='/icons/users.png'><var class='select2-users-text'> " + response[key].users + "</var></span>", key, false, false);
@@ -518,7 +518,7 @@ function closePopup(id) {
 
 }
 
-function initSelect2ChannelList(parents, lang) {
+function initSelect2ChannelList(parents, lang, customPlaceholder, max = 8, showUsers = true) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/channels`, window), true)
     request.onload = function () {
@@ -527,11 +527,11 @@ function initSelect2ChannelList(parents, lang) {
             return;
         }
         const channelsJSON = JSON.parse(this.response);
-        const placeholder = (lang === "fr" ? "Salons" : "Channels") + " 🎧";
+        const placeholder = customPlaceholder ? customPlaceholder : (lang === "fr" ? "Salons" : "Channels") + " 🎧";
         document.getElementById("select-channels").innerHTML = "<select id='select-1'multiple><option > <select> </option></select > ";
-        initSelect2($("#select-1"), placeholder, [], 8)
+        initSelect2($("#select-1"), placeholder, [], max)
         for (let key in channelsJSON) {
-            const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>";
+            const text = (parents ? reductText(channelsJSON[key].category, 30, true) + " " + reductText(channelsJSON[key].name, 75) : reductText(channelsJSON[key].name, 75)) + (showUsers ? "<span class='select2-users small'><img class='select2-users-icon' src='/icons/voice.png'><var class='select2-users-text'> " + channelsJSON[key].users + "</var></span>" : "");
             var newOption = new Option(text, key, false, false);
             $('#select-1').append(newOption).trigger('change');
         }
@@ -547,7 +547,7 @@ function clearSelection() {
 
 function deleteRequest(type = "attendance") {
     if (type === "attendance") redirect("ATTENDANCE_DELETE", undefined);
-    else redirect("PAULL_DELETE", undefined);
+    else redirect("POLL_DELETE", undefined);
 }
 
 const reductText = function (name, maxLength, separator = false) {
@@ -678,13 +678,18 @@ function initChoice(language) {
     var request = new XMLHttpRequest()
     request.open('GET', getUrl(`api/get/user`, window), true)
     request.withCredentials = true;
-
     request.onload = function () {
         const response = JSON.parse(this.response);
+        const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
         $(".username").text(response.username);
-        $("#user-loader-image").html(`<img class="avatar" src="${response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "/icons/avatar.png"}"></div><var class="accountType"></var>`)
+        $("#user-loader-image").html(`<img class="avatar" src="${avatar}"></div><var class="accountType"></var>`)
         displayAccountType(response);
 
+        const navUser = $(".buttonUser");
+        if (navUser.is(":visible")) navUser.html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+                '</p><p class="buttonUserHover">' +
+                (language === "en" ? "Logout" : "Déconnexion") + '</p>')
+            .attr("href", "/auth/logout?redirectTo=/");
 
         $("#user-loader").hide();
         $("#welcome").show();
@@ -711,6 +716,22 @@ function initChoice(language) {
             });
         }
 
+        if (response.poll_request && !response.poll_request.isExpired) {
+            if (language === "en") {
+                $("#create-poll").text("Continue creating the poll");
+            } else {
+                $("#create-poll").text("Continuer de créer le sondage");
+            }
+            $("#poll-option").on("click", function () {
+                redirect("POLL_PAGE", undefined)
+            });
+        } else {
+            $("#poll-option").on("click", function () {
+                initServerSelection(language, "poll")
+            });
+        }
+
+
     }
     request.send();
 
@@ -719,11 +740,19 @@ function initChoice(language) {
 function displayAccountType(response) {
     $(".accountType").text(response.account_type.name);
     $(".accountType").css('background-color', response.account_type.color)
-    if(response.account_type.type > 1) $(".accountType").show();
+    if (response.account_type.type > 1) $(".accountType").show();
 }
 
 function initServerSelection(language, type) {
     let redirectTo = "ATTENDANCE_NEWREQUEST";
+    if (type === "poll") {
+        redirectTo = "POLL_NEWREQUEST";
+        $("#attendance-desc").hide();
+        $("#poll-desc").show();
+        $("#take-attendance").show();
+    } else {
+        $("#create-poll").show();
+    }
     $("#overlay").fadeOut(200);
 
     let request = new XMLHttpRequest();
@@ -778,32 +807,6 @@ function initServerSelection(language, type) {
 
 }
 
-function initParallax() {
-
-    if (!$('.parallax div')) return;
-    var currentX = '';
-    var currentY = '';
-    var movementConstant = .004;
-    $(document).mousemove(function (e) {
-        if (currentX == '') currentX = e.pageX;
-        var xdiff = e.pageX - currentX;
-        currentX = e.pageX;
-        if (currentY == '') currentY = e.pageY;
-        var ydiff = e.pageY - currentY;
-        currentY = e.pageY;
-        $('.parallax div').each(function (i, el) {
-            var movement = (i + 1) * (xdiff * movementConstant);
-            var movementy = (i + 1) * (ydiff * movementConstant);
-            var newX = $(el).position().left + movement;
-            var newY = $(el).position().top + movementy;
-            $(el).css('left', newX + 'px');
-            $(el).css('top', newY + 'px');
-        });
-    });
-}
-//initParallax();
-
-
 function shake() {
     $("#card").effect("shake");
 }
@@ -829,7 +832,6 @@ function initHomePage(language) {
             const response = JSON.parse(this.responseText);
             animateValue(document.getElementById("guilds"), 0, response.guilds, 700);
             animateValue(document.getElementById("users"), 0, response.users, 700);
-            animateValue(document.getElementById("students"), 0, response.students, 700);
             document.getElementById("version").innerHTML = response.version;
         }
     }
@@ -845,8 +847,8 @@ function loadUser(language) {
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             const response = JSON.parse(this.responseText);
             const avatar = response.avatar ? "https://cdn.discordapp.com/avatars/" + response.id + "/" + response.avatar : "https://cdn.discordapp.com/embed/avatars/2.png";
-            $(".buttonUser")
-                .html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
+            const navUser = $(".buttonUser");
+            if (navUser.is(":visible")) navUser.html('<img class="smallAvatar buttonSmallIcon" src="' + avatar + '"><p class="buttonUserNormal">' + response.username +
                     '</p><p class="buttonUserHover">' +
                     (language === "en" ? "Logout" : "Déconnexion") + '</p>')
                 .attr("href", "/auth/logout?redirectTo=/");

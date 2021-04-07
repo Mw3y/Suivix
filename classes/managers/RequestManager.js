@@ -3,7 +3,9 @@
  * Copyrights licensed under the GNU General Public License v3.0.
  * See the accompanying LICENSE file for terms.
  */
-const AttendanceRequest = require('../AttendanceRequest');
+const AttendanceRequest = require('../AttendanceRequest'),
+    PollRequest = require('../PollRequest'),
+    Poll = require('../Poll');
 
 /**
  * Represents a RequestManager
@@ -13,16 +15,38 @@ const AttendanceRequest = require('../AttendanceRequest');
 class RequestManager {
 
     /**
-     * Fetch an attendance request
+     * Fetch a request
      * @param {*} request - The request 
      */
     async getRequest(request) {
         if (!request || (Math.abs(new Date(request.date) - new Date()) / 36e5) > parseInt(Config.ATTENDANCE_VALIDITY_TIME)) return undefined;
         let guild = await client.guilds.cache.get(request.guild_id);
-        let channel = guild.channels.cache.get(request.channel_id);
-        let author = guild.member(request.author);
-        if (!guild || !author) return undefined;
-        return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
+        if(!guild) return undefined;
+        let channel = request.channel_id ? guild.channels.cache.get(request.channel_id) : undefined;
+        let author = await guild.members.fetch(request.author);
+        if(!author) return undefined;
+        if (request.type === "attendance") return new AttendanceRequest(request.id, author, new Date(request.date), guild, channel);
+        else return new PollRequest(request.id, author, new Date(request.date), guild, channel);
+    }
+
+    /**
+     * Fetch a poll by its message
+     * @param {*} message - The message 
+     */
+    async getPollRequestByMessage(message) {
+        const [poll] = await sequelize.query(`SELECT * FROM poll WHERE messageId = ${message.id}`);
+        if (!poll[0]) return undefined;
+        return new Poll(poll[0]);
+    }
+
+    /**
+     * Update all the polls which are not expired
+     */
+    async updateAllPolls() {
+        const [polls] = await sequelize.query(`SELECT * FROM poll`);
+        for(let i = 0; i < polls.length; i++) {
+            await (new Poll(polls[i])).updateTimeLeft();
+        }
     }
 
     /** 
@@ -53,7 +77,7 @@ class RequestManager {
      * @param {*} request - The request
      */
     deleteRequest(request) {
-        console.log("⚠   An attendance request has been deleted!".red + ` (id: ${request.id})` + separator);
+        console.log("⚠   A(n) ".red + request.type.red + " request has been deleted!".red + ` (id: ${request.id})` + separator);
         return undefined;
     }
 
